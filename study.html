@@ -1,0 +1,2216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EDEAE0">
+<meta name="description" content="Every question on the Pre-Solo 5.1 form worked through, with a live METAR decoder and crosswind calculator.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pre-Solo">
+<title>Pre-Solo 5.1 — Study Deck</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%9B%A9%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%9B%A9%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Pre-Solo 5.1 — Study Deck">
+<meta property="og:description" content="Every question on the Pre-Solo 5.1 form worked through, with a live METAR decoder and crosswind calculator.">
+<meta property="og:type" content="website">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('presolo.theme');
+      if (t === 'light' || t === 'dark') { document.documentElement.setAttribute('data-theme', t); }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  #__nav {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 999;
+    display: flex; gap: 2px; padding: 3px; border-radius: 99px;
+    background: rgba(128, 140, 150, .16);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px -4px rgba(0, 0, 0, .4);
+    opacity: .55; transition: opacity .2s;
+  }
+  #__nav:hover, #__nav:focus-within { opacity: 1; }
+  #__nav a, #__nav button {
+    font: 600 .75rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .06em;
+    color: inherit; background: transparent; border: 0; cursor: pointer;
+    padding: .5rem .7rem; border-radius: 99px; text-decoration: none;
+    display: inline-flex; align-items: center; white-space: nowrap;
+  }
+  #__nav a:hover, #__nav button:hover { background: rgba(128, 140, 150, .3); }
+  #__nav a:focus-visible, #__nav button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+  @media print { #__nav { display: none; } }
+</style>
+</head>
+<body>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   PRE-SOLO 5.1 STUDY DECK
+   Visual language: VFR sectional chart —
+   chart stock, Class D dashed blue, sectional magenta, terrain wash.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --paper:      #EDEAE0;
+  --surface:    #F7F5EF;
+  --surface-2:  #E2DFD2;
+  --ink:        #15202A;
+  --ink-2:      #4C5C68;
+  --ink-3:      #7B8A94;
+  --rule:       #CECABB;
+  --rule-soft:  #DEDBCE;
+
+  --blue:       #23577D;
+  --blue-soft:  #D5E3EC;
+  --magenta:    #9C3364;
+  --magenta-soft: #F0DCE6;
+  --amber:      #916419;
+  --amber-soft: #F1E4C6;
+  --green:      #376744;
+  --green-soft: #D9E6D9;
+
+  --shadow: 0 1px 2px rgba(21,32,42,.05), 0 6px 18px -10px rgba(21,32,42,.22);
+
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --s1: .25rem; --s2: .5rem; --s3: .75rem; --s4: 1rem;
+  --s5: 1.5rem; --s6: 2rem; --s7: 3rem; --s8: 4.5rem;
+
+  --maxw: 50rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:      #0F161C;
+    --surface:    #172129;
+    --surface-2:  #1F2B34;
+    --ink:        #E5EAED;
+    --ink-2:      #A0B1BC;
+    --ink-3:      #6B7D8A;
+    --rule:       #29373F;
+    --rule-soft:  #202C34;
+
+    --blue:       #7CB7DE;
+    --blue-soft:  #14303F;
+    --magenta:    #E68CB2;
+    --magenta-soft: #391F2E;
+    --amber:      #DCAC4E;
+    --amber-soft: #322710;
+    --green:      #82BE90;
+    --green-soft: #14301C;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px -12px rgba(0,0,0,.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper:      #0F161C;
+  --surface:    #172129;
+  --surface-2:  #1F2B34;
+  --ink:        #E5EAED;
+  --ink-2:      #A0B1BC;
+  --ink-3:      #6B7D8A;
+  --rule:       #29373F;
+  --rule-soft:  #202C34;
+  --blue:       #7CB7DE;
+  --blue-soft:  #14303F;
+  --magenta:    #E68CB2;
+  --magenta-soft: #391F2E;
+  --amber:      #DCAC4E;
+  --amber-soft: #322710;
+  --green:      #82BE90;
+  --green-soft: #14301C;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px -12px rgba(0,0,0,.6);
+}
+
+:root[data-theme="light"] {
+  --paper:      #EDEAE0;
+  --surface:    #F7F5EF;
+  --surface-2:  #E2DFD2;
+  --ink:        #15202A;
+  --ink-2:      #4C5C68;
+  --ink-3:      #7B8A94;
+  --rule:       #CECABB;
+  --rule-soft:  #DEDBCE;
+  --blue:       #23577D;
+  --blue-soft:  #D5E3EC;
+  --magenta:    #9C3364;
+  --magenta-soft: #F0DCE6;
+  --amber:      #916419;
+  --amber-soft: #F1E4C6;
+  --green:      #376744;
+  --green-soft: #D9E6D9;
+  --shadow: 0 1px 2px rgba(21,32,42,.05), 0 6px 18px -10px rgba(21,32,42,.22);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Chart-grid backdrop ───────────────────────────────────── */
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+  opacity: .22;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 78%);
+}
+
+.shell { position: relative; z-index: 1; }
+
+/* ── Typography primitives ─────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: .6875rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; font-weight: 640; letter-spacing: -.012em; }
+h1 { font-size: 1.75rem; line-height: 1.15; }
+h2 { font-size: 1.3125rem; line-height: 1.2; }
+h3 { font-size: 1.0625rem; line-height: 1.35; }
+h4 { font-size: .9375rem; line-height: 1.4; }
+
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 1.1rem; }
+li + li { margin-top: .3rem; }
+strong { font-weight: 640; }
+
+code, .mono { font-family: var(--font-mono); font-size: .875em; }
+code {
+  background: var(--surface-2);
+  padding: .1em .38em;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ── Masthead ──────────────────────────────────────────────── */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+}
+.masthead-in {
+  max-width: 78rem; margin: 0 auto;
+  padding: var(--s5) var(--s5) var(--s4);
+  display: flex; flex-wrap: wrap; gap: var(--s5);
+  align-items: flex-end; justify-content: space-between;
+}
+.brand { display: flex; flex-direction: column; gap: .3rem; }
+.brand-line {
+  display: flex; align-items: center; gap: .55rem;
+  font-family: var(--font-mono);
+  font-size: .6875rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--blue);
+}
+.brand-line .tick {
+  width: 1.6rem; height: 0;
+  border-top: 2px dashed var(--blue);
+}
+.brand h1 { font-size: 1.9rem; }
+.brand .sub { color: var(--ink-2); font-size: .9375rem; max-width: 34rem; }
+
+.gauge { display: flex; align-items: center; gap: var(--s4); }
+.gauge-fig { display: flex; flex-direction: column; gap: .2rem; }
+.gauge-fig .n {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.5rem; line-height: 1; color: var(--ink);
+}
+.gauge-fig .n span { color: var(--ink-3); font-size: 1rem; }
+.gauge-fig .l {
+  font-family: var(--font-mono); font-size: .625rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+}
+.bar {
+  width: 11rem; height: 6px; border-radius: 99px;
+  background: var(--surface-2); overflow: hidden;
+  display: flex;
+}
+.bar i { display: block; height: 100%; transition: width .35s ease; }
+.bar .fill-solid  { background: var(--green); }
+.bar .fill-review { background: var(--magenta); }
+
+/* ── Toolbar ───────────────────────────────────────────────── */
+.toolbar {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.toolbar-in {
+  max-width: 78rem; margin: 0 auto;
+  padding: var(--s2) var(--s5);
+  display: flex; flex-wrap: wrap; gap: var(--s3);
+  align-items: center; justify-content: space-between;
+}
+.seg { display: flex; gap: 2px; background: var(--surface-2); padding: 2px; border-radius: 5px; }
+.seg button {
+  font-family: var(--font-mono); font-size: .6875rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .34rem .7rem; border: 0; border-radius: 4px;
+  background: transparent; color: var(--ink-2); cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--blue); box-shadow: var(--shadow); }
+.toolbar .tools { display: flex; gap: var(--s3); align-items: center; flex-wrap: wrap; }
+.linkbtn {
+  font-family: var(--font-mono); font-size: .6875rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  background: none; border: 0; color: var(--ink-3); cursor: pointer; padding: .34rem .2rem;
+}
+.linkbtn:hover { color: var(--magenta); }
+
+/* ── Page frame ────────────────────────────────────────────── */
+.frame {
+  max-width: 78rem; margin: 0 auto;
+  padding: var(--s6) var(--s5) var(--s8);
+  display: grid; grid-template-columns: 13.5rem minmax(0, 1fr);
+  gap: var(--s7);
+  align-items: start;
+}
+
+/* ── Side index ────────────────────────────────────────────── */
+.index { position: sticky; top: 3.6rem; display: flex; flex-direction: column; gap: var(--s2); }
+.index .eyebrow { padding-bottom: var(--s2); border-bottom: 1px solid var(--rule); }
+.index a {
+  display: grid; grid-template-columns: 1.6rem 1fr auto;
+  align-items: baseline; gap: .5rem;
+  padding: .34rem .1rem;
+  text-decoration: none; color: var(--ink-2); font-size: .8125rem; line-height: 1.3;
+  border-bottom: 1px solid transparent;
+}
+.index a:hover { color: var(--blue); }
+.index a .ix {
+  font-family: var(--font-mono); font-size: .625rem;
+  color: var(--ink-3); font-variant-numeric: tabular-nums;
+}
+.index a .ct {
+  font-family: var(--font-mono); font-size: .625rem;
+  color: var(--ink-3); font-variant-numeric: tabular-nums;
+}
+.index a.done .ct { color: var(--green); }
+
+/* ── Sections ──────────────────────────────────────────────── */
+main { display: flex; flex-direction: column; gap: var(--s7); min-width: 0; }
+section { display: flex; flex-direction: column; gap: var(--s4); scroll-margin-top: 4rem; }
+.sec-hd { display: flex; flex-direction: column; gap: .25rem; padding-bottom: var(--s3); border-bottom: 2px solid var(--ink); }
+.sec-hd .row { display: flex; align-items: baseline; gap: .7rem; }
+.sec-hd .ix {
+  font-family: var(--font-mono); font-size: .75rem; color: var(--magenta);
+  letter-spacing: .1em;
+}
+.sec-hd .note { font-size: .875rem; color: var(--ink-2); max-width: var(--maxw); }
+
+/* ── Cards ─────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--rule);
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: border-left-color .2s;
+}
+.card[data-status="solid"]  { border-left-color: var(--green); }
+.card[data-status="review"] { border-left-color: var(--magenta); }
+.card.hidden { display: none; }
+
+.card-hd {
+  display: grid; grid-template-columns: 2.2rem minmax(0,1fr) auto;
+  gap: var(--s3); align-items: baseline;
+  padding: var(--s4) var(--s5);
+}
+.card-hd .qnum {
+  font-family: var(--font-mono); font-size: .8125rem;
+  color: var(--ink-3); font-variant-numeric: tabular-nums;
+}
+.card-hd .pts {
+  font-family: var(--font-mono); font-size: .625rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-3); white-space: nowrap;
+}
+.card-hd .opts {
+  grid-column: 2 / -1;
+  font-family: var(--font-mono); font-size: .6875rem;
+  color: var(--ink-3); letter-spacing: .04em; margin-top: .3rem;
+}
+
+.card-bd {
+  padding: 0 var(--s5) var(--s5);
+  margin-left: 2.2rem;
+  display: flex; flex-direction: column; gap: var(--s4);
+  font-size: .9375rem;
+  border-top: 1px dashed var(--rule);
+  padding-top: var(--s4);
+}
+.card-bd[hidden] { display: none; }
+.card-bd > .lead { color: var(--ink); font-size: 1rem; }
+
+.card-ft {
+  display: flex; gap: var(--s2); align-items: center; flex-wrap: wrap;
+  padding: 0 var(--s5) var(--s4);
+  margin-left: 2.2rem;
+}
+.card-ft.only { padding-top: 0; }
+
+button.act {
+  font-family: var(--font-mono); font-size: .6875rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .4rem .85rem; border-radius: 4px; cursor: pointer;
+  border: 1px solid var(--rule); background: var(--surface-2); color: var(--ink-2);
+  transition: background .15s, color .15s, border-color .15s;
+}
+button.act:hover { border-color: var(--blue); color: var(--blue); }
+button.act.primary { background: var(--blue-soft); border-color: transparent; color: var(--blue); }
+button.act.good[aria-pressed="true"] { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+button.act.bad[aria-pressed="true"]  { background: var(--magenta-soft); border-color: var(--magenta); color: var(--magenta); }
+
+.status-chip {
+  font-family: var(--font-mono); font-size: .625rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-left: auto; color: var(--ink-3);
+}
+.card[data-status="solid"]  .status-chip { color: var(--green); }
+.card[data-status="review"] .status-chip { color: var(--magenta); }
+
+/* ── Content blocks inside answers ─────────────────────────── */
+.block {
+  background: var(--surface-2);
+  border-radius: 3px;
+  padding: var(--s3) var(--s4);
+  display: flex; flex-direction: column; gap: var(--s2);
+}
+.block .eyebrow { color: var(--ink-2); }
+
+.flag {
+  border-left: 2px solid var(--amber);
+  background: var(--amber-soft);
+  padding: var(--s3) var(--s4);
+  border-radius: 0 3px 3px 0;
+  font-size: .875rem;
+  color: var(--ink);
+  display: flex; flex-direction: column; gap: var(--s2);
+}
+.flag .eyebrow { color: var(--amber); }
+
+.reg {
+  border-left: 2px solid var(--blue);
+  background: var(--blue-soft);
+  padding: var(--s3) var(--s4);
+  border-radius: 0 3px 3px 0;
+  font-size: .875rem;
+  display: flex; flex-direction: column; gap: var(--s2);
+}
+.reg .eyebrow { color: var(--blue); }
+
+.mnemonic {
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.mnemonic .row { display: grid; grid-template-columns: 1.5rem 1fr; gap: .6rem; align-items: baseline; }
+.mnemonic .k {
+  font-family: var(--font-mono); font-size: 1rem; font-weight: 600;
+  color: var(--magenta); line-height: 1.2;
+}
+
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 3px; }
+table { border-collapse: collapse; width: 100%; font-size: .875rem; min-width: 30rem; }
+th, td { text-align: left; padding: .5rem .75rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+thead th {
+  font-family: var(--font-mono); font-size: .625rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  background: var(--surface-2); border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0;
+}
+tbody tr:last-child td { border-bottom: 0; }
+td.mono, th.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.swatch { display: inline-flex; align-items: center; gap: .45rem; }
+.swatch i { width: .7rem; height: .7rem; border-radius: 99px; flex: none; border: 1px solid rgba(128,128,128,.35); }
+
+/* ── V-speed / POH inputs ──────────────────────────────────── */
+.poh { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--s3); }
+.field { display: flex; flex-direction: column; gap: .25rem; }
+.field label {
+  font-family: var(--font-mono); font-size: .625rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+}
+.field input, .field textarea, .field select {
+  font-family: var(--font-mono); font-size: .875rem;
+  font-variant-numeric: tabular-nums;
+  padding: .45rem .6rem;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: 3px;
+  width: 100%;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--ink-3); opacity: .8; }
+.field input:focus, .field textarea:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-soft); }
+.field .hint { font-size: .6875rem; color: var(--ink-3); }
+
+/* ── METAR decoder ─────────────────────────────────────────── */
+.decoder { display: flex; flex-direction: column; gap: var(--s4); }
+.metar-in {
+  font-family: var(--font-mono); font-size: .875rem;
+  width: 100%; min-height: 4.5rem; resize: vertical;
+  padding: var(--s3); letter-spacing: .02em; line-height: 1.6;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: 3px;
+}
+.metar-in:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-soft); }
+
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.chip {
+  font-family: var(--font-mono); font-size: .8125rem;
+  padding: .3rem .55rem; border-radius: 3px; cursor: pointer;
+  border: 1px solid var(--rule); background: var(--surface);
+  color: var(--ink); letter-spacing: .02em;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.chip:hover { border-color: var(--blue); color: var(--blue); }
+.chip[aria-pressed="true"] { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
+.chip.k-unknown { color: var(--ink-3); border-style: dashed; }
+
+.decode-out { display: flex; flex-direction: column; gap: var(--s2); }
+.decode-row {
+  display: grid; grid-template-columns: 8.5rem minmax(0,1fr);
+  gap: var(--s3); align-items: baseline;
+  padding: .4rem 0; border-bottom: 1px solid var(--rule-soft);
+  font-size: .875rem;
+}
+.decode-row:last-child { border-bottom: 0; }
+.decode-row .g {
+  font-family: var(--font-mono); font-size: .8125rem;
+  color: var(--magenta); word-break: break-all;
+}
+.decode-row.hl { background: var(--blue-soft); border-radius: 3px; padding-left: .5rem; padding-right: .5rem; }
+.plain {
+  font-size: .9375rem; color: var(--ink);
+  padding: var(--s3) var(--s4); background: var(--surface-2); border-radius: 3px;
+}
+
+.presets { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.presets .eyebrow { margin-right: .3rem; }
+.preset {
+  font-family: var(--font-mono); font-size: .6875rem;
+  padding: .25rem .5rem; border-radius: 3px; cursor: pointer;
+  border: 1px dashed var(--rule); background: transparent; color: var(--ink-2);
+}
+.preset:hover { border-color: var(--magenta); color: var(--magenta); border-style: solid; }
+
+/* ── Crosswind ─────────────────────────────────────────────── */
+.xw-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: var(--s3); }
+.rwy {
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: var(--s3); background: var(--surface);
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.rwy .id {
+  font-family: var(--font-mono); font-size: 1rem; letter-spacing: .06em;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.rwy .n {
+  font-family: var(--font-mono); font-size: .8125rem;
+  font-variant-numeric: tabular-nums; color: var(--ink-2);
+  display: flex; justify-content: space-between; gap: .5rem;
+}
+.rwy .n b { font-weight: 600; color: var(--ink); }
+.rwy[data-state="over"] { border-color: var(--magenta); background: var(--magenta-soft); }
+.rwy[data-state="best"] { border-color: var(--green); background: var(--green-soft); }
+.rwy .tag {
+  font-family: var(--font-mono); font-size: .5625rem;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.rwy[data-state="over"] .tag { color: var(--magenta); }
+.rwy[data-state="best"] .tag { color: var(--green); }
+.rwy[data-state="ok"] .tag { color: var(--ink-3); }
+.rwy .tail { color: var(--magenta); }
+
+/* ── Footer ────────────────────────────────────────────────── */
+.colophon {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--s6);
+  padding-top: var(--s4);
+  display: flex; flex-direction: column; gap: var(--s3);
+  font-size: .8125rem; color: var(--ink-2);
+  max-width: var(--maxw);
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 62rem) {
+  .frame { grid-template-columns: 1fr; gap: var(--s5); }
+  .index {
+    position: static;
+    flex-direction: row; overflow-x: auto; gap: var(--s4);
+    padding-bottom: var(--s2); border-bottom: 1px solid var(--rule);
+  }
+  .index .eyebrow { display: none; }
+  .index a { grid-template-columns: auto auto; white-space: nowrap; border-bottom: 0; }
+  .index a .ix { display: none; }
+}
+@media (max-width: 34rem) {
+  .masthead-in, .toolbar-in, .frame { padding-left: var(--s4); padding-right: var(--s4); }
+  .card-hd, .card-bd, .card-ft { padding-left: var(--s4); padding-right: var(--s4); }
+  .card-bd, .card-ft { margin-left: 0; }
+  .card-hd { grid-template-columns: 2rem minmax(0,1fr); }
+  .card-hd .pts { grid-column: 1 / -1; grid-row: 2; }
+  .decode-row { grid-template-columns: 1fr; gap: .1rem; }
+  .brand h1 { font-size: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+@media print {
+  .toolbar, .index, .grid-bg, .card-ft, .gauge { display: none !important; }
+  .frame { grid-template-columns: 1fr; padding: 0; }
+  .card { break-inside: avoid; box-shadow: none; }
+  .card-bd[hidden] { display: flex !important; }
+  body { background: #fff; color: #000; }
+}
+</style>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<div class="shell">
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div class="brand">
+      <p class="brand-line"><span class="tick"></span> Aurora Muni · KARR · Class D</p>
+      <h1>Pre-Solo 5.1 — Study Deck</h1>
+      <p class="sub">Every question on the form, worked through. Reveal an answer, mark it solid or flag it for review, and come back to the flagged ones.</p>
+    </div>
+    <div class="gauge">
+      <div class="gauge-fig">
+        <div class="n" id="g-solid">0<span>/24</span></div>
+        <div class="l">Solid</div>
+      </div>
+      <div class="gauge-fig">
+        <div class="n" id="g-review">0</div>
+        <div class="l">Flagged</div>
+      </div>
+      <div class="gauge-fig">
+        <div class="bar" role="img" aria-label="Study progress">
+          <i class="fill-solid"  id="bar-solid"  style="width:0%"></i>
+          <i class="fill-review" id="bar-review" style="width:0%"></i>
+        </div>
+        <div class="l">Progress</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-in">
+    <div class="seg" role="group" aria-label="Filter cards">
+      <button type="button" data-filter="all"    aria-pressed="true">All</button>
+      <button type="button" data-filter="review" aria-pressed="false">Flagged</button>
+      <button type="button" data-filter="unseen" aria-pressed="false">Not yet studied</button>
+    </div>
+    <div class="tools">
+      <button type="button" class="linkbtn" id="reveal-all">Reveal all</button>
+      <button type="button" class="linkbtn" id="hide-all">Hide all</button>
+      <button type="button" class="linkbtn" id="reset">Reset marks</button>
+    </div>
+  </div>
+</div>
+
+<div class="frame">
+
+  <nav class="index" aria-label="Sections">
+    <p class="eyebrow">Sections</p>
+    <a href="#s01"><span class="ix">01</span><span>Paperwork</span><span class="ct" data-count="paperwork"></span></a>
+    <a href="#s02"><span class="ix">02</span><span>Airspace</span><span class="ct" data-count="airspace"></span></a>
+    <a href="#s03"><span class="ix">03</span><span>Weather</span><span class="ct" data-count="weather"></span></a>
+    <a href="#s04"><span class="ix">04</span><span>Aerodynamics</span><span class="ct" data-count="aero"></span></a>
+    <a href="#s05"><span class="ix">05</span><span>Systems</span><span class="ct" data-count="systems"></span></a>
+    <a href="#s06"><span class="ix">06</span><span>Emergencies</span><span class="ct" data-count="emerg"></span></a>
+    <a href="#s07"><span class="ix">07</span><span>V-speeds</span><span class="ct" data-count="vspeeds"></span></a>
+    <a href="#s08"><span class="ix">08</span><span>Regs &amp; scenarios</span><span class="ct" data-count="regs"></span></a>
+    <a href="#s09"><span class="ix">09</span><span>Weight &amp; balance</span><span class="ct" data-count="wb"></span></a>
+    <a href="#s10"><span class="ix">10</span><span>Day of the flight</span><span class="ct" data-count="dayof"></span></a>
+  </nav>
+
+  <main>
+
+  <!-- ═══════════════ 01 PAPERWORK ═══════════════ -->
+  <section id="s01">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">01</span><h2>Paperwork</h2></div>
+      <p class="note">Two questions that look alike and are not. One is about the airplane, one is about you.</p>
+    </div>
+
+    <article class="card" data-id="q02" data-sec="paperwork">
+      <div class="card-hd">
+        <span class="qnum">02</span>
+        <h3>What documents do you need on the airplane?</h3>
+        <span class="pts">Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>ARROW</strong> — the documents that must be aboard the aircraft.</p>
+        <div class="block mnemonic">
+          <div class="row"><span class="k">A</span><span><strong>Airworthiness certificate</strong> — must be displayed where it's legible to passengers and crew. No expiration date; valid as long as the aircraft is maintained per the regs.</span></div>
+          <div class="row"><span class="k">R</span><span><strong>Registration</strong> — current. (Registrations expire and get renewed; check the date.)</span></div>
+          <div class="row"><span class="k">R</span><span><strong>Radio station license</strong> — <em>only</em> required for international flight. Not needed domestically.</span></div>
+          <div class="row"><span class="k">O</span><span><strong>Operating limitations</strong> — the POH/AFM, plus placards, instrument markings, and any supplements. All three together make up the limitations.</span></div>
+          <div class="row"><span class="k">W</span><span><strong>Weight &amp; balance data</strong> — current, specific to <em>this</em> tail number, including the equipment list.</span></div>
+        </div>
+        <div class="reg">
+          <p class="eyebrow">Where it comes from</p>
+          <p>14 CFR §91.203 (certificate and registration), §91.9 (operating limitations aboard), §91.203(a)(2). The radio station license is an FCC requirement, not FAA.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">The follow-up they'll ask</p>
+          <p>"How do you know it's airworthy?" — that's <strong>AV1ATE</strong>: <strong>A</strong>irworthiness directives complied with, <strong>V</strong>OR check (IFR only, 30 days), <strong>1</strong>00-hour inspection (if for hire or flight instruction for hire), <strong>A</strong>nnual inspection (12 calendar months), <strong>T</strong>ransponder (24 calendar months), <strong>E</strong>LT (12 calendar months, or 1 hour cumulative use, or ½ battery life). Know where each of those is recorded in the maintenance logs.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q03" data-sec="paperwork">
+      <div class="card-hd">
+        <span class="qnum">03</span>
+        <h3>What documents do you need with you?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Three things on your person, and for a student solo, a fourth that matters just as much.</p>
+        <div class="block mnemonic">
+          <div class="row"><span class="k">1</span><span><strong>Student pilot certificate</strong> — the plastic card from the FAA. It does not expire.</span></div>
+          <div class="row"><span class="k">2</span><span><strong>Medical certificate</strong> — at least third class, current. For a student solo this is what makes the student pilot certificate usable.</span></div>
+          <div class="row"><span class="k">3</span><span><strong>Government-issued photo ID</strong> — driver's license or passport. Explicitly required by §61.3(a)(2).</span></div>
+          <div class="row"><span class="k">4</span><span><strong>Logbook with your endorsements</strong> — your §61.87 pre-solo endorsement and the 90-day solo endorsement live here. On a solo cross-country you must carry it; carry it every solo anyway.</span></div>
+        </div>
+        <div class="reg">
+          <p class="eyebrow">Where it comes from</p>
+          <p>§61.3(a) and (c) — certificate, medical, photo ID. §61.51(i) — student pilots must present the logbook with the required endorsements on solo cross-country flights. §61.87(n) and §61.93(c) — the endorsements themselves, and the 90-day currency on the solo endorsement.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Easy point to lose</p>
+          <p>People forget the <strong>photo ID</strong>. It is a separate, explicit regulatory requirement — not just a practical suggestion.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 02 AIRSPACE ═══════════════ -->
+  <section id="s02">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">02</span><h2>Airspace</h2></div>
+      <p class="note">One question, but the reasoning behind it is worth more than the letter.</p>
+    </div>
+
+    <article class="card" data-id="q04" data-sec="airspace">
+      <div class="card-hd">
+        <span class="qnum">04</span>
+        <h3>What airspace is Aurora?</h3>
+        <span class="pts">5 pts · Multiple choice</span>
+        <p class="opts">A &nbsp;·&nbsp; B &nbsp;·&nbsp; C &nbsp;·&nbsp; <b>D</b> &nbsp;·&nbsp; E</p>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>Class D.</strong> Aurora Municipal (KARR) has an operating control tower and no radar approach control of its own — that's the definition of Class D.</p>
+        <div class="block">
+          <p class="eyebrow">How to reason to it, not memorize it</p>
+          <ul>
+            <li><strong>Class B</strong> — the big ones. O'Hare (KORD) and Midway (KMDW) are the Class B/C airspace near you. Solid blue lines on the sectional. Students are prohibited from KORD and other §91.131(b)(1) airports entirely.</li>
+            <li><strong>Class C</strong> — tower + radar + a certain traffic volume. Magenta solid lines.</li>
+            <li><strong>Class D</strong> — tower, no radar approach control. <strong>Dashed blue</strong> on the sectional. That's Aurora.</li>
+            <li><strong>Class E</strong> — controlled but no tower at the surface; dashed magenta if it goes to the surface, faded magenta shading where it starts at 700 AGL.</li>
+          </ul>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">The question behind the question</p>
+          <p>Class D exists <strong>only while the tower is open</strong>. When KARR tower closes, the airspace reverts — usually to Class E to the surface (if weather reporting and the required infrastructure remain) or Class G. Look up KARR's tower hours in the Chart Supplement, and know the ceiling printed in the dashed blue box on the sectional. Your CFI may well ask, "It's 2200 local, what airspace are you in now, and who do you talk to?"</p>
+        </div>
+        <div class="reg">
+          <p class="eyebrow">Entry requirements — Class D</p>
+          <p>Two-way radio communication established with the tower before entry (§91.129). "Established" means they used your callsign without a restriction — <em>"Skyhawk 12345, standby"</em> counts; <em>"aircraft calling, standby"</em> does not. Weather minimums are 3 SM visibility and 1,000 above / 500 below / 2,000 horizontal from clouds. No transponder required for Class D itself, but you're under the KORD Mode C veil — check whether KARR falls inside the 30 NM ring on your chart.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 03 WEATHER ═══════════════ -->
+  <section id="s03">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">03</span><h2>Weather</h2></div>
+      <p class="note">The form shows you a METAR and asks you to decode it and make a call. Paste the actual one from the form into the decoder below.</p>
+    </div>
+
+    <article class="card" data-id="q05" data-sec="weather">
+      <div class="card-hd">
+        <span class="qnum">05</span>
+        <h3>What source(s) do you use to get a weather brief?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Name an <em>official</em> source first, then your supplements. The word "source<strong>(s)</strong>" is a hint that they want more than one.</p>
+        <div class="block">
+          <p class="eyebrow">Official / loggable</p>
+          <ul>
+            <li><strong>1800wxbrief.com</strong> or <strong>1-800-WX-BRIEF</strong> — Leidos Flight Service. This is the standard-briefing source and it creates a record that you got a briefing.</li>
+            <li><strong>aviationweather.gov</strong> — NWS Aviation Weather Center. METARs, TAFs, graphical forecasts, PIREPs, AIRMET/SIGMET.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Supplemental</p>
+          <ul>
+            <li><strong>ForeFlight / Garmin Pilot</strong> — most EFBs can file a Leidos briefing through the app, which makes it official rather than just supplemental.</li>
+            <li><strong>ATIS at KARR</strong>, and <strong>AWOS/ASOS</strong> at your destination or alternates.</li>
+            <li><strong>Looking outside</strong> and talking to a pilot who just landed — a live PIREP is worth a lot.</li>
+          </ul>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Say the three briefing types</p>
+          <p><strong>Standard</strong> (the full picture — use it), <strong>Abbreviated</strong> (updating or filling a gap in a brief you already have), <strong>Outlook</strong> (departure is 6+ hours out). §91.103 requires you to become familiar with <em>all available information</em> concerning the flight — a weather brief is how you do that.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q06" data-sec="weather">
+      <div class="card-hd">
+        <span class="qnum">06</span>
+        <h3>Decode the above METAR</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Paste the METAR from the form below and it'll break apart group by group. Then read it back out loud in plain English — that's what they want on paper.</p>
+
+        <div class="decoder">
+          <div class="field">
+            <label for="metar-input">METAR</label>
+            <textarea id="metar-input" class="metar-in" spellcheck="false" autocapitalize="characters"
+              aria-describedby="metar-hint">METAR KARR 141953Z 27012G18KT 240V300 10SM FEW045 SCT070 BKN120 22/13 A3001 RMK AO2</textarea>
+            <p class="hint" id="metar-hint">Paste any METAR. Click a group below to highlight what it means.</p>
+          </div>
+
+          <div class="presets">
+            <span class="eyebrow">Try:</span>
+            <button type="button" class="preset" data-metar="METAR KARR 141953Z 27012G18KT 240V300 10SM FEW045 SCT070 BKN120 22/13 A3001 RMK AO2">Nice day</button>
+            <button type="button" class="preset" data-metar="METAR KARR 150853Z 01018G27KT 2SM -SN BR OVC007 M04/M06 A2978 RMK AO2">Winter, marginal</button>
+            <button type="button" class="preset" data-metar="METAR KARR 152253Z 20014G22KT 5SM +TSRA BKN025CB OVC060 26/22 A2985 RMK AO2 TSB48">Thunderstorm</button>
+            <button type="button" class="preset" data-metar="METAR KARR 160653Z 00000KT 1/4SM FG VV002 14/14 A3012 RMK AO2">Fog</button>
+          </div>
+
+          <div>
+            <p class="eyebrow" style="margin-bottom:.5rem">Groups</p>
+            <div class="chips" id="metar-chips"></div>
+          </div>
+
+          <div>
+            <p class="eyebrow" style="margin-bottom:.5rem">Decoded</p>
+            <div class="decode-out" id="metar-out"></div>
+          </div>
+
+          <div>
+            <p class="eyebrow" style="margin-bottom:.5rem">Read it back like this</p>
+            <p class="plain" id="metar-plain"></p>
+          </div>
+        </div>
+
+        <div class="block">
+          <p class="eyebrow">The order never changes</p>
+          <p class="mono" style="font-size:.75rem; letter-spacing:.02em; line-height:2">TYPE · STATION · DAY/TIME<b>Z</b> · AUTO · WIND · VIS · WEATHER · SKY · TEMP/DEW · ALTIMETER · <b>RMK</b></p>
+          <p>If a group is missing, that element isn't being reported — not that it's zero. Everything before <code>RMK</code> is the body; everything after is remarks and is often where the useful detail hides (<code>AO2</code> = automated with a precipitation discriminator, <code>TSB48</code> = thunderstorm began at :48).</p>
+        </div>
+
+        <div class="flag">
+          <p class="eyebrow">Two things that trip people up</p>
+          <ul>
+            <li><strong>METAR winds are true north referenced.</strong> ATIS, tower, and AWOS winds spoken over the radio are <strong>magnetic</strong>. Near Aurora the difference is only a few degrees, but say it out loud on the oral and you look sharp.</li>
+            <li><strong>Ceiling</strong> is the lowest <code>BKN</code>, <code>OVC</code>, or <code>VV</code> layer. <code>FEW</code> and <code>SCT</code> are <em>not</em> ceilings. All heights are AGL above the station.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q07" data-sec="weather">
+      <div class="card-hd">
+        <span class="qnum">07</span>
+        <h3>Is this good flying weather?</h3>
+        <span class="pts">2 pts · Yes / No</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">The answer depends on the METAR they showed you — but the <em>reasoning</em> is what earns the points, and it's the same every time. Run it against three gates, in this order.</p>
+
+        <div class="reg">
+          <p class="eyebrow">Gate 1 — the regs for a student solo</p>
+          <ul>
+            <li>Flight and surface visibility at least <strong>3 SM</strong> by day, <strong>5 SM</strong> at night (§61.89(a)(6)–(7)).</li>
+            <li>You must be able to <strong>fly by visual reference to the surface</strong> (§61.89(a)(8)).</li>
+            <li>Class D VFR minimums: 3 SM, and 1,000 ft above / 500 ft below / 2,000 ft horizontal from clouds.</li>
+            <li>No solo in Class B airspace or at the §91.131(b)(1) airports without specific training and endorsement.</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <p class="eyebrow">Gate 2 — your endorsement</p>
+          <p>Your CFI's solo endorsement almost certainly carries limits that are tighter than the regs — a maximum surface wind, a maximum crosswind component, a ceiling and visibility floor, and often "no gusts above X." <strong>Those are the real limits.</strong> Write yours in here so it's in front of you:</p>
+          <div class="poh">
+            <div class="field">
+              <label for="lim-wind">Max surface wind (kt)</label>
+              <input id="lim-wind" type="number" inputmode="numeric" data-store="lim-wind" placeholder="e.g. 15">
+            </div>
+            <div class="field">
+              <label for="lim-xw">Max crosswind (kt)</label>
+              <input id="lim-xw" type="number" inputmode="numeric" data-store="lim-xw" placeholder="e.g. 8">
+            </div>
+            <div class="field">
+              <label for="lim-ceil">Min ceiling (ft AGL)</label>
+              <input id="lim-ceil" type="number" inputmode="numeric" data-store="lim-ceil" placeholder="e.g. 3000">
+            </div>
+            <div class="field">
+              <label for="lim-vis">Min visibility (SM)</label>
+              <input id="lim-vis" type="number" inputmode="decimal" step="any" data-store="lim-vis" placeholder="e.g. 5">
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <p class="eyebrow">Gate 3 — crosswind, actually computed</p>
+          <p>Wind is pulled from the METAR you decoded above. Edit the runways if these don't match the current Chart Supplement.</p>
+          <div class="poh" style="grid-template-columns: repeat(auto-fit, minmax(7rem,1fr))">
+            <div class="field">
+              <label for="xw-dir">Wind from (°)</label>
+              <input id="xw-dir" type="number" inputmode="numeric" min="0" max="360" value="270">
+            </div>
+            <div class="field">
+              <label for="xw-spd">Speed (kt)</label>
+              <input id="xw-spd" type="number" inputmode="numeric" min="0" value="12">
+            </div>
+            <div class="field">
+              <label for="xw-gust">Gust (kt)</label>
+              <input id="xw-gust" type="number" inputmode="numeric" min="0" value="18">
+            </div>
+            <div class="field">
+              <label for="xw-rwys">Runways</label>
+              <input id="xw-rwys" type="text" value="9/27, 15/33, 18/36" data-store="rwys">
+            </div>
+          </div>
+          <div class="xw-grid" id="xw-out" style="margin-top:.5rem"></div>
+          <p class="hint">Computed against the <strong>gust</strong> when one is reported — that's the number that matters on short final. Crosswind = speed × sin(angle), headwind = speed × cos(angle).</p>
+        </div>
+
+        <div class="flag">
+          <p class="eyebrow">How to write the answer</p>
+          <p>Don't just circle Yes or No. Write the reason: <em>"No — 2 SM in mist is below the 3 SM student solo minimum, and the 700 ft overcast is below my endorsement's 3,000 ft ceiling."</em> Or: <em>"Yes — 10 SM, ceiling 12,000 broken, and the 270/12G18 gives 8 kt of crosswind on Runway 27, inside my 10 kt limit."</em> That's the answer that earns full credit and, more to the point, it's the habit that keeps you alive.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 04 AERODYNAMICS ═══════════════ -->
+  <section id="s04">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">04</span><h2>Aerodynamics</h2></div>
+      <p class="note">Two open questions where the trap is answering too briefly.</p>
+    </div>
+
+    <article class="card" data-id="q08" data-sec="aero">
+      <div class="card-hd">
+        <span class="qnum">08</span>
+        <h3>Explain lift</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Give <strong>both</strong> explanations. Answering with only Bernoulli is the single most common way to leave points on the table here.</p>
+        <div class="block">
+          <p class="eyebrow">Newton — the one that actually carries the weight</p>
+          <p>The wing meets the air at a positive angle of attack and <strong>deflects a large mass of air downward</strong>. Every action has an equal and opposite reaction, so the air pushes the wing up. Downwash is the visible evidence.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Bernoulli — the pressure picture</p>
+          <p>Air moving over the curved upper surface travels faster than the air beneath. In a streamline, an increase in velocity comes with a decrease in static pressure — so pressure on top is lower than pressure below, and the net pressure difference is an upward force.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Then close with the equation</p>
+          <p class="mono" style="font-size:1rem; letter-spacing:.02em">L = C<sub>L</sub> × ½ρV² × S</p>
+          <ul>
+            <li><strong>C<sub>L</sub></strong> — coefficient of lift, which the pilot changes with <strong>angle of attack</strong> and flaps</li>
+            <li><strong>ρ</strong> — air density (falls with altitude, heat, and humidity)</li>
+            <li><strong>V</strong> — velocity, and note it's <em>squared</em> — double the speed, four times the lift</li>
+            <li><strong>S</strong> — wing surface area</li>
+          </ul>
+          <p>The two things you control in flight are <strong>angle of attack</strong> and <strong>airspeed</strong>.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Where this is going</p>
+          <p>The follow-up is always the stall. A wing stalls when it exceeds its <strong>critical angle of attack</strong> — and it will do that at <em>any</em> airspeed, any attitude, any power setting, and any weight. That last sentence is the one to have memorized.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q09" data-sec="aero">
+      <div class="card-hd">
+        <span class="qnum">09</span>
+        <h3>What are the left turning tendencies?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Four of them. Name each, say what causes it, and say <em>when</em> you feel it.</p>
+        <div class="block mnemonic">
+          <div class="row"><span class="k">P</span><span><strong>P-factor</strong> (asymmetric propeller loading). At a high angle of attack the descending blade on the right side takes a bigger bite of air than the ascending blade on the left, so the right side of the disc makes more thrust and the nose yaws left. <em>Felt: climbs, slow flight, takeoff.</em></span></div>
+          <div class="row"><span class="k">A</span><span><strong>Accelerating</strong> — the condition that brings the rest on. Some texts use the A for the accelerated slipstream; the useful point is that all of these bite hardest at <strong>high power, low airspeed, high angle of attack</strong>.</span></div>
+          <div class="row"><span class="k">S</span><span><strong>Spiraling slipstream</strong>. The prop wash corkscrews around the fuselage and strikes the <strong>left side of the vertical stabilizer</strong>, pushing the tail right and yawing the nose left. <em>Felt: strongest at high power and low speed — the takeoff roll.</em></span></div>
+          <div class="row"><span class="k">T</span><span><strong>Torque</strong>. The prop turns clockwise from the cockpit, so by Newton's third law the airframe wants to roll <strong>left</strong>. On the ground this puts weight on the left main, and the extra friction yaws you left too. <em>Felt: any power application.</em></span></div>
+        </div>
+        <div class="block">
+          <p class="eyebrow">And the fourth, which the mnemonic hides</p>
+          <p><strong>Gyroscopic precession.</strong> The spinning propeller is a gyroscope: a force applied to it is felt <strong>90° ahead in the direction of rotation</strong>. Push the nose over and the force applied at the top of the disc shows up on the right side — yawing the nose left. <em>Felt: pitch changes; dramatic in a tailwheel airplane when the tail comes up, mild in a 172.</em></p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">The answer they want next</p>
+          <p><strong>Right rudder.</strong> And the reason the airplane is rigged the way it is: the engine is mounted with a slight right offset and the vertical stabilizer is offset, so the tendencies cancel out at cruise. That's why you need almost no rudder in level cruise and a bootful on a full-power climb.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 05 SYSTEMS ═══════════════ -->
+  <section id="s05">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">05</span><h2>Systems</h2></div>
+      <p class="note">These answers are aircraft-specific. Fill in your airplane's details once and they'll follow you through the rest of the deck.</p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--blue)">
+      <div class="card-hd">
+        <span class="qnum">✱</span>
+        <h3>Your airplane</h3>
+        <span class="pts">Saved locally</span>
+      </div>
+      <div class="card-bd">
+        <div class="poh">
+          <div class="field">
+            <label for="ac-type">Make / model</label>
+            <input id="ac-type" type="text" data-store="ac-type" placeholder="Cessna 172S">
+          </div>
+          <div class="field">
+            <label for="ac-tail">Tail number</label>
+            <input id="ac-tail" type="text" data-store="ac-tail" placeholder="N————">
+          </div>
+          <div class="field">
+            <label for="ac-eng">Engine</label>
+            <input id="ac-eng" type="text" data-store="ac-eng" placeholder="Lycoming IO-360-L2A">
+          </div>
+          <div class="field">
+            <label for="ac-hp">Horsepower</label>
+            <input id="ac-hp" type="text" data-store="ac-hp" placeholder="180 @ 2700 RPM">
+          </div>
+          <div class="field">
+            <label for="ac-fuel-tot">Fuel total (gal)</label>
+            <input id="ac-fuel-tot" type="text" data-store="ac-fuel-tot" placeholder="56">
+          </div>
+          <div class="field">
+            <label for="ac-fuel-use">Fuel usable (gal)</label>
+            <input id="ac-fuel-use" type="text" data-store="ac-fuel-use" placeholder="53">
+          </div>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Read this before you trust any number on this page</p>
+          <p>Every figure shown in grey below is a <strong>Cessna 172S example</strong>, printed only to show you the shape of the answer. A 172N has a carbureted <strong>O-320</strong> and different speeds entirely. <strong>Open the POH for your tail number, Section 1 and Section 5, and copy the real numbers in.</strong> The form is graded against your airplane, not against a typical one.</p>
+        </div>
+      </div>
+      <div class="card-ft only"></div>
+    </div>
+
+    <article class="card" data-id="q10" data-sec="systems">
+      <div class="card-hd">
+        <span class="qnum">10</span>
+        <h3>Describe the engine</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">There's a standard six-part formula for this answer. Walk it in order and you can't leave anything out.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Attribute</th><th>Your answer</th><th>172S example</th></tr></thead>
+            <tbody>
+              <tr><td>Cylinders</td><td>How many?</td><td class="mono">Four</td></tr>
+              <tr><td>Arrangement</td><td>Opposed, radial, inline?</td><td class="mono">Horizontally opposed</td></tr>
+              <tr><td>Cooling</td><td>Air or liquid?</td><td class="mono">Air-cooled</td></tr>
+              <tr><td>Fuel metering</td><td>Carbureted or injected?</td><td class="mono">Fuel-injected</td></tr>
+              <tr><td>Induction</td><td>Normally aspirated or turbo?</td><td class="mono">Normally aspirated</td></tr>
+              <tr><td>Drive</td><td>Direct or geared?</td><td class="mono">Direct drive</td></tr>
+              <tr><td>Rated power</td><td>HP at what RPM?</td><td class="mono">180 hp @ 2700</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="block">
+          <p class="eyebrow">The sentence to write</p>
+          <p>"A <em>[Lycoming IO-360-L2A]</em>: a four-cylinder, horizontally opposed, air-cooled, fuel-injected, normally aspirated, direct-drive engine producing <em>[180]</em> horsepower at <em>[2700]</em> RPM."</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Decode the model number — it's free points</p>
+          <p>In <code>IO-360</code>: <strong>I</strong> = fuel injected (an <code>O-320</code> with no I is carbureted), <strong>O</strong> = horizontally opposed, <strong>360</strong> = displacement in cubic inches. <strong>Know whether yours has an I.</strong> If it does, you have no carburetor heat — and that changes your answer to the rough-engine question two cards down.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Be ready for the four-stroke cycle</p>
+          <p><strong>Intake, compression, power, exhaust</strong> — "suck, squeeze, bang, blow." Two crankshaft revolutions per complete cycle. And the ignition system: <strong>two magnets</strong>, engine-driven and completely independent of the electrical system, each firing one of two spark plugs per cylinder. That gives you redundancy <em>and</em> a more complete burn — which is exactly why the RPM drops slightly when you check each mag individually.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q11" data-sec="systems">
+      <div class="card-hd">
+        <span class="qnum">11</span>
+        <h3>Describe the fuel system</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Trace the fuel from the filler cap to the cylinder. If you can narrate the path, you can answer any version of this question.</p>
+        <div class="block">
+          <p class="eyebrow">The path — high-wing Cessna</p>
+          <ol>
+            <li><strong>Two vented wing tanks</strong>, one per wing. The vents matter: block a vent and fuel stops flowing as a vacuum forms.</li>
+            <li><strong>Gravity feed.</strong> The tanks are above the engine, so no fuel pump is required for the engine to run. This is the headline fact for a high-wing.</li>
+            <li><strong>Fuel selector valve</strong> — <code>BOTH</code>, <code>LEFT</code>, <code>RIGHT</code>, <code>OFF</code>. Normal operation in a 172 is <code>BOTH</code>.</li>
+            <li><strong>Fuel shutoff valve</strong> — cuts fuel to the engine; part of the engine fire checklist.</li>
+            <li><strong>Fuel strainer / gascolator</strong> — the low point of the system, where water and sediment collect. This is the drain you sump on preflight along with the tank drains.</li>
+            <li><strong>Injected:</strong> engine-driven fuel pump → fuel/air control unit → flow divider → injector nozzle at each cylinder. An <strong>electric auxiliary pump</strong> is used for starting and as a backup.<br>
+                <strong>Carbureted:</strong> → carburetor, where fuel is drawn into the venturi and mixed with air, plus a <strong>primer</strong> for starting.</li>
+            <li><strong>Mixture control</strong> sets fuel-to-air ratio; you lean as you climb because air density falls while fuel flow doesn't.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <p class="eyebrow">The numbers to know cold</p>
+          <ul>
+            <li><strong>Capacity</strong> — total <em>and</em> usable. They're different, and the difference is unusable fuel that shows on the gauge but won't reach the engine. <em>172S example: 56 total, 53 usable.</em></li>
+            <li><strong>Grade and color</strong> — <strong>100LL, dyed blue.</strong> 100 octane, low lead. Jet A is clear and smells like kerosene; if a truck ever puts it in your wing, you'll see the dye wash out.</li>
+            <li><strong>Fuel burn</strong> in cruise, from Section 5 of the POH — you need this for endurance and for the weight and balance question.</li>
+          </ul>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Preflight follow-up they'll ask</p>
+          <p>"Why do you sump?" — to check for <strong>water</strong> (sinks to the bottom, appears as clear beads or a distinct line), <strong>sediment</strong>, and <strong>correct grade</strong> (blue). And "why sump all the drains?" — because water pools at whichever low point the airplane's attitude puts it in; one drain isn't proof.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 06 EMERGENCIES ═══════════════ -->
+  <section id="s06">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">06</span><h2>Emergencies</h2></div>
+      <p class="note">A two-part scenario. The second half is the one people fumble, because it isn't about flying.</p>
+    </div>
+
+    <article class="card" data-id="q12" data-sec="emerg">
+      <div class="card-hd">
+        <span class="qnum">12</span>
+        <h3>Your engine is running rough. What do you do?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Lead with the first three words, always: <strong>fly the airplane.</strong> Then troubleshoot the things that feed the engine, in order.</p>
+        <div class="block">
+          <p class="eyebrow">Step 0 — before you touch anything</p>
+          <p><strong>Aviate. Navigate. Communicate.</strong> Pitch for best glide, pick a field, and start turning toward it before you begin troubleshooting. A rough engine can become no engine while your head is down.</p>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Carbureted (O-320)</th><th>Fuel-injected (IO-360)</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Carburetor heat — ON.</strong> Carb ice is the most likely cause and the most likely thing you can fix. Expect the engine to run <em>rougher</em> for a few seconds as the melted ice passes through, then smooth out. That roughness is the confirmation, not a reason to turn it off.</td>
+                <td><strong>No carb heat</strong> — injected engines don't ice the same way. Reach for <strong>alternate air</strong> if induction blockage is suspected (many are automatic).</td>
+              </tr>
+              <tr><td colspan="2"><strong>Mixture — adjust.</strong> Full rich first; if that doesn't help, lean it. Roughness from an over-rich or over-lean mixture is common and instantly reversible.</td></tr>
+              <tr><td colspan="2"><strong>Fuel selector — BOTH,</strong> or switch tanks. Confirm the fuel shutoff is in.</td></tr>
+              <tr><td>—</td><td><strong>Auxiliary fuel pump — ON.</strong> Covers an engine-driven pump failure.</td></tr>
+              <tr><td colspan="2"><strong>Magnetos — check L, then R, then BOTH.</strong> If it runs smoother on one mag, leave it there — you have a fouled plug or a bad mag. Fouled plugs sometimes clear with aggressive leaning at higher power.</td></tr>
+              <tr><td colspan="2"><strong>Engine instruments — scan.</strong> Oil pressure and temperature, CHT, EGT, fuel flow, ammeter. This tells you whether it's fuel, ignition, or something mechanical.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Then commit to a decision</p>
+          <p><strong>Land as soon as practical.</strong> An engine that ran rough once will run rough again, and there is nothing to be gained by pressing on. Tell ATC — at KARR, tell the tower; away from the field, use <strong>121.5</strong> or whoever you're already talking to. Say <em>"Mayday"</em> if the engine is failing, <em>"Pan-pan"</em> if it's degraded but running. Squawk <strong>7700</strong>. Nobody has ever been disciplined for declaring an emergency they didn't strictly need; people have died avoiding the word.</p>
+        </div>
+        <div class="reg">
+          <p class="eyebrow">The authority you already have</p>
+          <p>§91.3(b): in an in-flight emergency requiring immediate action, the pilot in command <strong>may deviate from any rule in Part 91</strong> to the extent required to meet that emergency. You do not need anyone's permission first.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q13" data-sec="emerg">
+      <div class="card-hd">
+        <span class="qnum">13</span>
+        <h3>You successfully handle the situation above. You land anywhere but back at ARR. What do you do?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">The trap in this question is the temptation to fly home. <strong>You do not fly the airplane again.</strong> Everything else follows from that.</p>
+        <div class="block mnemonic">
+          <div class="row"><span class="k">1</span><span><strong>Secure the airplane.</strong> Mixture idle cutoff, fuel selector off, mags off, master off. Get clear of the runway or movement area if you can do it safely. Chock and tie down if you're staying.</span></div>
+          <div class="row"><span class="k">2</span><span><strong>Make sure everyone knows you're down and safe.</strong> If you declared, ATC and search-and-rescue are watching for you — close that loop. If you were on flight following or had a flight plan, <strong>close it</strong>, or an alert notice goes out and people start looking.</span></div>
+          <div class="row"><span class="k">3</span><span><strong>Call your CFI and the flight school. Immediately.</strong> Before you call anyone else, before you post anything. Your instructor decides what happens to the airplane and to you.</span></div>
+          <div class="row"><span class="k">4</span><span><strong>Do not fly it home.</strong> Not "it seems fine now," not "it was just carb ice." A mechanic has to look at it and sign it off. Beyond the airworthiness question, your solo endorsement authorized a specific flight — it does not authorize you to ferry a broken airplane back from an unfamiliar field.</span></div>
+          <div class="row"><span class="k">5</span><span><strong>Write it all down while it's fresh.</strong> Times, altitudes, indications, what you did and in what order, who you talked to. Do this within the hour. Your memory of it is worse than you think and it will keep getting worse.</span></div>
+        </div>
+        <div class="reg">
+          <p class="eyebrow">The reporting rules — know that these exist</p>
+          <ul>
+            <li><strong>§91.3(c)</strong> — if you deviated from a rule under emergency authority, you must send a written report to the FAA <em>if the Administrator asks for one</em>. Not automatically; on request.</li>
+            <li><strong>NTSB Part 830</strong> — immediate notification is required for an <strong>accident</strong> (substantial damage, or a serious injury or death) or for certain <strong>serious incidents</strong>, which include a <strong>complete loss of engine power</strong> requiring an off-airport landing. A precautionary landing at an airport with the engine still running is generally neither.</li>
+            <li><strong>NASA ASRS</strong> — file the report at asrs.arc.nasa.gov. It's confidential, and a timely filing can waive the sanction for an inadvertent violation. Filing costs you nothing.</li>
+          </ul>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">The thing that actually matters</p>
+          <p>If you handled an engine problem and got the airplane on the ground with nobody hurt, <strong>you did the job</strong>. Students sometimes hide these events out of embarrassment. Don't. Call your instructor and tell them everything, including the parts you'd rather not.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 07 V-SPEEDS ═══════════════ -->
+  <section id="s07">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">07</span><h2>V-speeds</h2></div>
+      <p class="note">Six questions, thirty points — the biggest block on the form. Each wants a <strong>definition and a number</strong>. Half credit for either one alone.</p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--blue)">
+      <div class="card-hd">
+        <span class="qnum">✱</span>
+        <h3>Your numbers, from your POH</h3>
+        <span class="pts">Saved locally</span>
+      </div>
+      <div class="card-bd">
+        <p>POH Section 1 and the airspeed indicator markings. Type them in once — they'll show up on each card below.</p>
+        <div class="poh">
+          <div class="field"><label for="v-vx">Vx</label><input id="v-vx" type="text" data-store="v-vx" placeholder="62 KIAS"></div>
+          <div class="field"><label for="v-vy">Vy</label><input id="v-vy" type="text" data-store="v-vy" placeholder="74 KIAS"></div>
+          <div class="field"><label for="v-vso">Vso</label><input id="v-vso" type="text" data-store="v-vso" placeholder="40 KCAS"></div>
+          <div class="field"><label for="v-vs1">Vs1</label><input id="v-vs1" type="text" data-store="v-vs1" placeholder="48 KCAS"></div>
+          <div class="field"><label for="v-vr">Vr</label><input id="v-vr" type="text" data-store="v-vr" placeholder="55 KIAS"></div>
+          <div class="field"><label for="v-vfe">Vfe</label><input id="v-vfe" type="text" data-store="v-vfe" placeholder="110 / 85 KIAS"></div>
+          <div class="field"><label for="v-va">Va</label><input id="v-va" type="text" data-store="v-va" placeholder="105 KIAS @ gross"></div>
+          <div class="field"><label for="v-vno">Vno</label><input id="v-vno" type="text" data-store="v-vno" placeholder="129 KIAS"></div>
+          <div class="field"><label for="v-vne">Vne</label><input id="v-vne" type="text" data-store="v-vne" placeholder="163 KIAS"></div>
+          <div class="field"><label for="v-vg">Best glide</label><input id="v-vg" type="text" data-store="v-vg" placeholder="68 KIAS"></div>
+        </div>
+        <div class="block">
+          <p class="eyebrow">The arcs on the airspeed indicator — free points</p>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Arc</th><th>From</th><th>To</th><th>Means</th></tr></thead>
+              <tbody>
+                <tr><td><span class="swatch"><i style="background:#ffffff"></i> White</span></td><td class="mono">Vso</td><td class="mono">Vfe</td><td>Full-flap operating range</td></tr>
+                <tr><td><span class="swatch"><i style="background:#2f9e4f"></i> Green</span></td><td class="mono">Vs1</td><td class="mono">Vno</td><td>Normal operating range</td></tr>
+                <tr><td><span class="swatch"><i style="background:#e0a92b"></i> Yellow</span></td><td class="mono">Vno</td><td class="mono">Vne</td><td>Caution — smooth air only</td></tr>
+                <tr><td><span class="swatch"><i style="background:#c9342e"></i> Red line</span></td><td class="mono" colspan="2">Vne</td><td>Never exceed. Ever.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="hint">Note the arcs <em>define</em> four V-speeds by where they start and stop. If you know the arcs you know Vso, Vs1, Vfe, Vno, and Vne.</p>
+        </div>
+      </div>
+      <div class="card-ft only"></div>
+    </div>
+
+    <article class="card" data-id="q14" data-sec="vspeeds">
+      <div class="card-hd">
+        <span class="qnum">14</span>
+        <h3>What is the definition and speed for Vx?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>Best angle of climb</strong> — the greatest gain in <em>altitude per unit of horizontal distance</em>.</p>
+        <p>Your number: <strong class="mono" data-echo="v-vx">—</strong></p>
+        <div class="block">
+          <p class="eyebrow">When you use it</p>
+          <p>Short field takeoff, and any time there's an obstacle off the departure end. It gets you the most height in the least <em>ground</em> covered — you clear the trees. It's slower and it climbs less per minute, so you come off it as soon as the obstacle is behind you.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Aerodynamically</p>
+          <p>Vx is where <strong>excess thrust</strong> is greatest. As you climb, Vx <strong>increases</strong> with altitude while Vy decreases — the two converge at the airplane's <strong>absolute ceiling</strong>, where excess power is zero and you can no longer climb at all.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Keep them straight</p>
+          <p><strong>X</strong> for the <strong>x-axis</strong> — horizontal distance. Angle. Trees. <br><strong>Y</strong> for the <strong>y-axis</strong> — altitude over time. Rate. Cruise climb.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q15" data-sec="vspeeds">
+      <div class="card-hd">
+        <span class="qnum">15</span>
+        <h3>What is the definition and speed for Vy?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>Best rate of climb</strong> — the greatest gain in <em>altitude per unit of time</em>.</p>
+        <p>Your number: <strong class="mono" data-echo="v-vy">—</strong></p>
+        <div class="block">
+          <p class="eyebrow">When you use it</p>
+          <p>The normal takeoff climb, and any time you just want altitude quickly with nothing in the way. It's the everyday climb speed.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Aerodynamically</p>
+          <p>Vy is where <strong>excess power</strong> is greatest. It <strong>decreases</strong> with altitude, meeting Vx at the absolute ceiling.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Say this and you'll sound like you understand it</p>
+          <p>"Vx gets me over the obstacle in the least distance; Vy gets me to altitude in the least time. On a normal departure at Aurora I use Vy, unless there's something to clear off the end — then Vx until I'm past it, then lower the nose to Vy."</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q16" data-sec="vspeeds">
+      <div class="card-hd">
+        <span class="qnum">16</span>
+        <h3>What is the definition and speed for Vso?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>The stalling speed, or minimum steady flight speed, in the <em>landing configuration</em></strong> — full flaps, gear down if retractable, power off, at maximum gross weight.</p>
+        <p>Your number: <strong class="mono" data-echo="v-vso">—</strong></p>
+        <div class="block">
+          <p class="eyebrow">Read the subscript</p>
+          <p>The <strong>S</strong> is stall. The <strong>0</strong> means <strong>zero flap retraction</strong> — flaps fully <em>extended</em>, i.e. the landing configuration. Compare <strong>Vs1</strong>, where the <strong>1</strong> means a <em>specific</em> configuration, conventionally clean: flaps up, gear up, power off. Vso is always the lower of the two, because flaps let the wing fly slower.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Where you find it without opening a book</p>
+          <p><strong>The bottom of the white arc</strong> on the airspeed indicator. Vs1 is the bottom of the green arc.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">The qualifier that sets up question 18</p>
+          <p>Vso is published at <strong>maximum gross weight</strong>. Stall speed is not a fixed property of the airplane — it goes <strong>down</strong> as weight goes down, and <strong>up</strong> with load factor in a turn. Solo with half tanks, your airplane actually stalls meaningfully below the published Vso. Hold on to that, because the next question but one depends on it.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Two derived numbers you should have</p>
+          <p>Vso is the reference for both. Your <strong>final approach speed</strong> is typically about <strong>1.3 × Vso</strong>, and the FAA's short-field runway-length guidance uses <strong>1.3 Vso</strong> over the threshold. Know what 1.3 Vso is for your airplane.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q17" data-sec="vspeeds">
+      <div class="card-hd">
+        <span class="qnum">17</span>
+        <h3>What is the definition and speed of Vr?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>Rotation speed</strong> — the speed on the takeoff roll at which you apply back pressure to raise the nosewheel and rotate to the takeoff attitude.</p>
+        <p>Your number: <strong class="mono" data-echo="v-vr">—</strong></p>
+        <div class="block">
+          <p class="eyebrow">The honest caveat</p>
+          <p>Vr is a transport-category certification speed. Light singles often don't publish it as a marked limitation at all — instead the POH's takeoff procedure says something like <em>"lift off at 55 KIAS."</em> That number <strong>is</strong> your Vr. Look in POH <strong>Section 4, Normal Procedures</strong>, and note that the short-field takeoff usually specifies a different, lower rotation speed than the normal takeoff.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Why rotating at the wrong speed hurts</p>
+          <ul>
+            <li><strong>Too early</strong> — high angle of attack at low airspeed, enormous induced drag, and the airplane staggers off in ground effect without enough energy to climb out of it. This is a classic accident.</li>
+            <li><strong>Too late</strong> — you use runway you didn't need to use, and you wheelbarrow on the nosewheel, which is neither strong nor steerable in that regime.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q18" data-sec="vspeeds">
+      <div class="card-hd">
+        <span class="qnum">18</span>
+        <h3>Can Vr be less than Vso?</h3>
+        <span class="pts">5 pts · Yes / No</span>
+        <p class="opts"><b>Yes</b> &nbsp;·&nbsp; No</p>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong>Yes.</strong> This is the trick question on the form, and it works because people treat Vso as a hard floor. It isn't — it's a number measured under one specific set of conditions.</p>
+        <div class="block">
+          <p class="eyebrow">Three reasons, and you should be able to give all three</p>
+          <ol>
+            <li><strong>Vso is published at maximum gross weight.</strong> Stall speed varies with the square root of weight. Fly solo with partial fuel and the wing genuinely stalls several knots below the book Vso — so a rotation speed below the published number can still be above the <em>actual</em> stall speed that day.</li>
+            <li><strong>Ground effect.</strong> Within about one wingspan of the surface, the ground interferes with the wingtip vortices, cutting induced drag and increasing effective lift for the same angle of attack. An airplane can and does become airborne in ground effect below its free-air stall speed — and then settles back on when it climbs out of the cushion. That's the whole mechanism behind the soft-field takeoff.</li>
+            <li><strong>Configuration and units.</strong> Vso is measured in the <em>landing</em> configuration, but you take off in a different one. And Vso is often published in <strong>KCAS</strong> while your rotation speed is read in <strong>KIAS</strong> — near the stall, the position error between the two is at its largest, so you can be comparing two numbers that aren't on the same scale.</li>
+          </ol>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Where this lives in real flying</p>
+          <p>The <strong>soft-field takeoff.</strong> Full aft elevator, the airplane lifts off at the lowest possible speed — below Vso — and then you <em>lower the nose and accelerate in ground effect</em> to Vx or Vy before climbing. If you pull it out of ground effect early, the wing quits. This is the question, dressed up as a definition.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Before you write it down</p>
+          <p>Answer keys on homemade forms vary. Write <strong>Yes</strong> and give the ground-effect and weight reasoning — that reasoning is correct regardless of what the key says, and it's what your CFI actually wants to hear at the oral. If they mark it wrong, you have the conversation, and that conversation is worth more than the five points.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q19" data-sec="vspeeds">
+      <div class="card-hd">
+        <span class="qnum">19</span>
+        <h3>What is the "V" in V-speed?</h3>
+        <span class="pts">5 pts · Short answer</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead"><strong><em>Vitesse</em></strong> — French for <strong>speed</strong> (or velocity).</p>
+        <div class="block">
+          <p>The convention comes from early international aviation standards work, which was conducted largely in French. It's why every one of these is a V followed by a subscript, and why the letter never stands for anything English no matter how hard people try to make "velocity" fit.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Five free points</p>
+          <p>This is a gift question with exactly one right answer. Don't overthink it and don't write "velocity" — write <strong>vitesse</strong>, and note it's French.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 08 REGS & SCENARIOS ═══════════════ -->
+  <section id="s08">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">08</span><h2>Regs &amp; scenarios</h2></div>
+      <p class="note">Three yes/no or multiple-choice questions where the reasoning is the whole point.</p>
+    </div>
+
+    <article class="card" data-id="q20" data-sec="regs">
+      <div class="card-hd">
+        <span class="qnum">20</span>
+        <h3>You own a coffee bean company…</h3>
+        <span class="pts">5 pts · Yes / No</span>
+        <p class="opts">Yes &nbsp;·&nbsp; <b>No</b> &nbsp;— <span style="color:var(--amber)">read the note</span></p>
+      </div>
+      <div class="card-bd" hidden>
+        <div class="flag">
+          <p class="eyebrow">Heads up</p>
+          <p>The full wording of this scenario didn't come through when I read the form. It's the classic setup — <em>can you use the airplane to move your product, or fly for your business?</em> — so here's the rule that governs it. <strong>Read the actual question on the form carefully before answering.</strong></p>
+        </div>
+        <p class="lead">For a <strong>student pilot</strong>, the answer to essentially every version of this is <strong>No.</strong> §61.89 is unusually blunt.</p>
+        <div class="reg">
+          <p class="eyebrow">§61.89 — Student pilot limitations</p>
+          <p>A student pilot may not act as pilot in command of an aircraft:</p>
+          <ul>
+            <li>That is <strong>carrying a passenger</strong>;</li>
+            <li>That is <strong>carrying property for compensation or hire</strong>;</li>
+            <li><strong>For compensation or hire</strong>;</li>
+            <li><strong>In furtherance of a business</strong>;</li>
+            <li>On an international flight (with narrow exceptions);</li>
+            <li>With a flight or surface visibility below 3 SM by day / 5 SM by night;</li>
+            <li>When unable to see the surface by visual reference;</li>
+            <li>In a manner contrary to any limitation in their logbook endorsements.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <p class="eyebrow">"In furtherance of a business" is the wide one</p>
+          <p>It doesn't require that you be paid. Flying your own beans to your own shop, flying to a supplier meeting, flying an employee anywhere — all of it advances the business, and all of it is out. Even flying <em>empty</em> to a meeting you're attending for the company is in furtherance of the business.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">How this changes when you get the private certificate</p>
+          <p>Under <strong>§61.113(a)</strong>, a private pilot still may not act as PIC for compensation or hire. But <strong>§61.113(b)</strong> carves out the case you're being set up for: a private pilot <em>may</em> fly in connection with a business or employment if the flight is <strong>only incidental</strong> to that business, and the aircraft carries <strong>no passengers or property for compensation or hire</strong>. The test is whether the flight itself is the thing of value being sold. If you'd have made the trip by car and the flying is just how you got there, it's incidental. If someone is buying the transportation, it isn't.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q21" data-sec="regs">
+      <div class="card-hd">
+        <span class="qnum">21</span>
+        <h3>You preflight the airplane and find the navigation light inoperative…</h3>
+        <span class="pts">5 pts · Yes / No</span>
+        <p class="opts">Yes &nbsp;·&nbsp; No &nbsp;— <span style="color:var(--amber)">depends on the wording</span></p>
+      </div>
+      <div class="card-bd" hidden>
+        <div class="flag">
+          <p class="eyebrow">Heads up</p>
+          <p>The rest of this question didn't come through in full — it hinges on whether the flight is <strong>day or night</strong>, so check that on the form. As a student on a solo, the practical answer is almost always <strong>No, don't go</strong> — but know the flow, because that's what earns the points.</p>
+        </div>
+        <p class="lead">Position (navigation) lights are required for <strong>night</strong> flight, not for day VFR. So the reg answer differs — but the <em>student</em> answer doesn't.</p>
+        <div class="reg">
+          <p class="eyebrow">§91.205 — what has to work</p>
+          <p><strong>Day VFR (§91.205(b))</strong> — <strong>A TOMATO FLAMES</strong>: Altimeter, Tachometer, Oil pressure gauge, Manifold pressure (if applicable), Airspeed indicator, Temperature gauge (liquid-cooled), Oil temperature (air-cooled), Fuel gauge, Landing gear position lights, Anticollision lights, Magnetic compass, ELT, Seatbelts. <em>Position lights are not on this list.</em></p>
+          <p><strong>Night VFR (§91.205(c))</strong> adds <strong>FLAPS</strong>: Fuses (spares), Landing light (only if for hire), Anticollision lights, <strong>Position lights</strong>, Source of power. <em>Now it's required.</em></p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">§91.213(d) — the inoperative-equipment flow for a light single with no MEL</p>
+          <ol>
+            <li>Is it required by the <strong>VFR-day type certification</strong> (the KOEL / equipment list in POH Section 6)?</li>
+            <li>Is it required by <strong>§91.205</strong> for the kind of flight you're making?</li>
+            <li>Is it required by an <strong>airworthiness directive</strong>?</li>
+            <li>If <strong>no</strong> to all three: it must be <strong>deactivated or removed</strong> and <strong>placarded "INOPERATIVE"</strong> — and the removal/deactivation is maintenance, which means a <strong>certificated mechanic or repairman</strong> does it and makes the logbook entry. Then the <strong>PIC determines</strong> whether the aircraft is still safe to fly.</li>
+            <li>If <strong>yes</strong> to any: the airplane is not airworthy for that flight. It doesn't go.</li>
+          </ol>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">The answer to give as a student</p>
+          <p>"<strong>No — I don't go.</strong> Even if it's a day VFR flight where position lights aren't required by §91.205, the discrepancy has to be deactivated and placarded by maintenance before it's legal, and that's not something I can do or sign off. I'd write it up in the squawk sheet and call my instructor and dispatch." <br><br>Nobody has ever been criticized for grounding an airplane over a light. As a solo student, "when in doubt, it doesn't fly" is both the right answer and the right instinct.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q22" data-sec="regs">
+      <div class="card-hd">
+        <span class="qnum">22</span>
+        <h3>You are in the traffic pattern and your radios go out…</h3>
+        <span class="pts">5 pts · Multiple choice</span>
+        <p class="opts"><b>Cleared to land</b> &nbsp;·&nbsp; Cleared for the option &nbsp;·&nbsp; Depart the airspace immediately &nbsp;·&nbsp; Use extreme caution</p>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">The four options are <strong>light gun signal meanings</strong> — so the question is asking what a particular light from the tower tells you. The one you'll be given in the pattern is <strong>steady green: cleared to land.</strong></p>
+        <div class="block">
+          <p class="eyebrow">What you actually do first</p>
+          <ol>
+            <li><strong>Squawk 7600</strong> — the transponder code for lost communications.</li>
+            <li><strong>Stay in the pattern</strong> and keep flying the airplane. Don't leave, don't do anything abrupt. The tower can see you.</li>
+            <li><strong>Watch the tower</strong> for the light gun.</li>
+            <li><strong>Acknowledge</strong>: <strong>rock your wings</strong> by day, <strong>blink your landing light</strong> at night.</li>
+            <li>Troubleshoot only after that: volume, squelch, frequency, the audio panel, headset jacks, the comm circuit breaker, the second radio, the handheld if there's one aboard.</li>
+          </ol>
+        </div>
+        <p class="eyebrow" style="margin-top:.25rem">The full table — memorize this</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Signal</th><th>In flight</th><th>On the ground</th></tr></thead>
+            <tbody>
+              <tr><td><span class="swatch"><i style="background:#2f9e4f"></i> Steady green</span></td><td><strong>Cleared to land</strong></td><td>Cleared for takeoff</td></tr>
+              <tr><td><span class="swatch"><i style="background:#2f9e4f"></i> Flashing green</span></td><td>Return for landing — a steady green will follow</td><td>Cleared to taxi</td></tr>
+              <tr><td><span class="swatch"><i style="background:#c9342e"></i> Steady red</span></td><td>Give way to other aircraft and continue circling</td><td>Stop</td></tr>
+              <tr><td><span class="swatch"><i style="background:#c9342e"></i> Flashing red</span></td><td>Airport unsafe — do not land</td><td>Taxi clear of the runway in use</td></tr>
+              <tr><td><span class="swatch"><i style="background:#ffffff"></i> Flashing white</span></td><td>—</td><td>Return to your starting point on the airport</td></tr>
+              <tr><td><span class="swatch"><i style="background:#c9342e"></i><i style="background:#2f9e4f"></i> Alternating red/green</span></td><td colspan="2"><strong>General warning — exercise extreme caution</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="block">
+          <p class="eyebrow">A memory hook that survives the checkride</p>
+          <p><strong>Green means go, red means no</strong> — in both columns. <strong>Steady = now, flashing = not yet / go somewhere else.</strong> Flashing white only ever appears on the ground, because "return to your starting point" is meaningless in the air. Alternating red and green is the only signal that means the same thing in both columns, and it never means "cleared" for anything.</p>
+        </div>
+        <div class="reg">
+          <p class="eyebrow">You're allowed to be there</p>
+          <p>§91.126–§91.131 require two-way radio communication for Class D — but §91.129(d)(2) provides for exactly this: if the radio fails <em>in flight</em>, you may continue to the airport, enter the pattern, and land, provided you have the tower's light gun clearance and weather permits. A radio failure inbound is different from one that existed before you departed.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 09 WEIGHT & BALANCE ═══════════════ -->
+  <section id="s09">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">09</span><h2>Weight &amp; balance</h2></div>
+      <p class="note">The one question that needs work done before you sit down — and the one you'll upload a file for.</p>
+    </div>
+
+    <article class="card" data-id="q23" data-sec="wb">
+      <div class="card-hd">
+        <span class="qnum">23</span>
+        <h3>Complete a weight and balance</h3>
+        <span class="pts">3 pts · Short answer + file upload</span>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">The form asks for eight specific outputs. Here's what each one is and where it comes from.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Required output</th><th>What it is / where it comes from</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">Crew weight</td><td>You, plus your CFI if they're aboard. Actual weight with what you're wearing and carrying — not your driver's license weight.</td></tr>
+              <tr><td class="mono">Maximum fuel weight</td><td><strong>Usable</strong> fuel × <strong>6 lb/gal</strong> for 100LL. Then check: does full fuel plus crew exceed max gross? On many trainers with two adults it does — that's the point of the question.</td></tr>
+              <tr><td class="mono">Zero fuel weight</td><td>Everything <em>except</em> fuel: empty weight + crew + baggage. The floor your weight can never drop below in flight.</td></tr>
+              <tr><td class="mono">Projected landing weight</td><td>Takeoff weight − fuel burned. Estimate the burn from POH Section 5 for your planned time aloft, and <strong>re-check the CG at that weight</strong> — burning fuel moves it.</td></tr>
+              <tr><td class="mono">Takeoff distance — ground roll</td><td>POH Section 5. Interpolate for pressure altitude and temperature.</td></tr>
+              <tr><td class="mono">Takeoff over a 50 ft obstacle</td><td>Same table, second column. Always the larger number.</td></tr>
+              <tr><td class="mono">Landing distance — ground roll</td><td>POH Section 5 landing chart.</td></tr>
+              <tr><td class="mono">Landing over a 50 ft obstacle</td><td>Same chart, second column.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="block">
+          <p class="eyebrow">The arithmetic, in one line</p>
+          <p class="mono" style="font-size:.9375rem">Moment = Weight × Arm &nbsp;&nbsp;→&nbsp;&nbsp; CG = Total Moment ÷ Total Weight</p>
+          <p>Build the table — empty aircraft, front seats, rear seats, baggage area 1, baggage area 2, fuel — with a weight, an arm, and a moment on each row. Sum the weight column and the moment column, divide, and plot the result on the <strong>CG envelope</strong> in POH Section 6. Two answers matter: is total weight at or below <strong>max gross</strong>, and does the CG fall <strong>inside the envelope</strong>? Both must be yes. Use the weight and balance sheet for <em>your specific tail number</em> — empty weight and arm differ airplane to airplane and change when equipment changes.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Corrections that make the distances real</p>
+          <ul>
+            <li><strong>Pressure altitude</strong> — set 29.92 in the altimeter and read it, or compute it. Not field elevation.</li>
+            <li><strong>Temperature</strong> — hot air is thin air. Interpolate; don't round in your favor.</li>
+            <li><strong>Wind</strong> — the chart notes tell you how much to subtract per knot of headwind and, more importantly, <strong>add</strong> per knot of tailwind. The tailwind penalty is brutal.</li>
+            <li><strong>Surface</strong> — dry grass typically adds ~15% to the ground roll; the exact figure is in the chart notes.</li>
+            <li><strong>Then add your own margin.</strong> The book numbers were flown by a factory test pilot in a new airplane. Give yourself at least 50%.</li>
+          </ul>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Know what being out of limits does</p>
+          <p><strong>Overweight</strong> — longer takeoff roll, worse climb, higher stall speed, longer landing roll, reduced structural margin.<br>
+          <strong>CG too far forward</strong> — nose-heavy, higher stall speed, needs more elevator to flare, may be impossible to round out; worse cruise performance.<br>
+          <strong>CG too far aft</strong> — the dangerous one. Unstable in pitch, and it can make the airplane <strong>unrecoverable from a spin</strong>. If you're near the aft limit, know it.</p>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">Practical</p>
+          <p>Do this on paper or in ForeFlight, <strong>photograph or export it, and have the file ready before you open the form</strong> — the question wants an upload and you don't want to be scrambling.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <!-- ═══════════════ 10 DAY OF ═══════════════ -->
+  <section id="s10">
+    <div class="sec-hd">
+      <div class="row"><span class="ix">10</span><h2>Day of the flight</h2></div>
+      <p class="note">The last two are logistics. They're free points — and forgetting the third item on the list can cancel your solo.</p>
+    </div>
+
+    <article class="card" data-id="q24" data-sec="dayof">
+      <div class="card-hd">
+        <span class="qnum">24</span>
+        <h3>"Our flight today will depart south…" — confirm</h3>
+        <span class="pts">Yes / No</span>
+      </div>
+      <div class="card-bd" hidden>
+        <div class="flag">
+          <p class="eyebrow">Heads up</p>
+          <p>The full text of this one didn't come through when I read the form. It's a confirmation that you've read and understood the plan for the flight — <strong>read what it actually says before you check Yes</strong>, and make sure the departure direction and route match what you briefed.</p>
+        </div>
+        <div class="block">
+          <p class="eyebrow">If it's a departure to the south from KARR, be ready to talk about</p>
+          <ul>
+            <li>Which runway that implies given the wind, and the pattern direction for it.</li>
+            <li>The tower frequency, ground, and the ATIS — have them written on your kneeboard, not just in your head.</li>
+            <li>The <strong>practice area</strong> boundaries your school uses and how you'll know you're inside them.</li>
+            <li>What's underneath and around you to the south — terrain, other airports, and any airspace shelves. Have the sectional out and know your landmarks for finding the field again.</li>
+            <li>Your <strong>emergency landing options</strong> along that departure path. Point at them on the chart before you fly.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+
+    <article class="card" data-id="q25" data-sec="dayof">
+      <div class="card-hd">
+        <span class="qnum">25</span>
+        <h3>Bring with you</h3>
+        <span class="pts">0 pts · Checkboxes</span>
+        <p class="opts">Student pilot certificate &nbsp;·&nbsp; Medical &nbsp;·&nbsp; Logbook</p>
+      </div>
+      <div class="card-bd" hidden>
+        <p class="lead">Zero points, and the single highest-consequence question on the form. Without the logbook, your instructor cannot write the endorsement, and <strong>you do not fly.</strong></p>
+        <div class="block mnemonic">
+          <div class="row"><span class="k">☐</span><span><strong>Student pilot certificate</strong> — the plastic card. Not the application, not a screenshot of IACRA.</span></div>
+          <div class="row"><span class="k">☐</span><span><strong>Medical certificate</strong> — check the expiration date <em>tonight</em>, not in the morning. Third class medicals expire on the last day of the month.</span></div>
+          <div class="row"><span class="k">☐</span><span><strong>Logbook</strong> — this is where the §61.87 pre-solo endorsement and the 90-day solo endorsement get written. No logbook, no endorsement, no solo. Put it in the bag now.</span></div>
+        </div>
+        <div class="block">
+          <p class="eyebrow">Not on the list, but bring it anyway</p>
+          <ul>
+            <li><strong>Government photo ID</strong> — required by §61.3(a)(2) and easy to leave behind.</li>
+            <li><strong>Current sectional</strong> (paper or the EFB, and a charged device with a backup power source).</li>
+            <li><strong>Headset</strong>, kneeboard, two pens, and your <strong>completed weight and balance</strong>.</li>
+            <li><strong>Water.</strong> You'll be more nervous and more dehydrated than you expect, and both degrade your flying.</li>
+          </ul>
+        </div>
+        <div class="flag">
+          <p class="eyebrow">One more thing</p>
+          <p>Your instructor is not going to sign you off unless they're confident. If the weather is wrong or the day feels wrong, saying so is a mark of judgment, not a failure — and judgment is the thing a solo endorsement is actually certifying. The airplane will still be there next week.</p>
+        </div>
+      </div>
+      <div class="card-ft"></div>
+    </article>
+  </section>
+
+  <footer class="colophon">
+    <p class="eyebrow">About this deck</p>
+    <p>Built from the questions on the <strong>Pre-Solo 5.1</strong> form. It's a study aid, not an authority — <strong>the POH for your tail number, the current FARs, and your CFI are the authority</strong>, in that order, and they win over anything written here. Regulation citations are given so you can look them up yourself, which you should. Questions 20, 21, and 24 were only partially readable when I pulled the form, so read the actual wording before answering those.</p>
+    <p>Your marks, aircraft details, and V-speeds are saved in this browser only. Nothing is sent anywhere.</p>
+  </footer>
+
+  </main>
+</div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── storage ─────────────────────────────────────────────── */
+  var KEY = 'presolo51.v1';
+  var store = { marks: {}, fields: {} };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        store.marks  = parsed.marks  || {};
+        store.fields = parsed.fields || {};
+      }
+    }
+  } catch (e) { /* private mode, or corrupt — carry on with defaults */ }
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
+  }
+
+  /* ── cards: reveal + mark ────────────────────────────────── */
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-id]'));
+
+  cards.forEach(function (card) {
+    var id   = card.getAttribute('data-id');
+    var body = card.querySelector('.card-bd');
+    var foot = card.querySelector('.card-ft');
+
+    var reveal = document.createElement('button');
+    reveal.type = 'button';
+    reveal.className = 'act primary';
+    reveal.textContent = 'Show answer';
+
+    var good = document.createElement('button');
+    good.type = 'button';
+    good.className = 'act good';
+    good.textContent = 'Got it';
+    good.setAttribute('aria-pressed', 'false');
+
+    var bad = document.createElement('button');
+    bad.type = 'button';
+    bad.className = 'act bad';
+    bad.textContent = 'Flag for review';
+    bad.setAttribute('aria-pressed', 'false');
+
+    var chip = document.createElement('span');
+    chip.className = 'status-chip';
+
+    foot.appendChild(reveal);
+    foot.appendChild(good);
+    foot.appendChild(bad);
+    foot.appendChild(chip);
+
+    function setOpen(open) {
+      body.hidden = !open;
+      reveal.textContent = open ? 'Hide answer' : 'Show answer';
+      reveal.setAttribute('aria-expanded', String(open));
+    }
+    setOpen(false);
+
+    reveal.addEventListener('click', function () { setOpen(body.hidden); });
+    card._setOpen = setOpen;
+
+    function applyStatus() {
+      var s = store.marks[id] || 'unseen';
+      card.setAttribute('data-status', s);
+      good.setAttribute('aria-pressed', String(s === 'solid'));
+      bad.setAttribute('aria-pressed',  String(s === 'review'));
+      chip.textContent = s === 'solid' ? 'Solid' : s === 'review' ? 'Review' : '';
+      card.setAttribute('data-state', s);
+    }
+
+    function mark(next) {
+      store.marks[id] = (store.marks[id] === next) ? 'unseen' : next;
+      if (store.marks[id] === 'unseen') { delete store.marks[id]; }
+      save(); applyStatus(); refresh();
+    }
+
+    good.addEventListener('click', function () { mark('solid'); });
+    bad.addEventListener('click',  function () { mark('review'); });
+
+    card._applyStatus = applyStatus;
+    applyStatus();
+  });
+
+  /* ── progress + filters ──────────────────────────────────── */
+  var filter = 'all';
+  var elSolid  = document.getElementById('g-solid');
+  var elReview = document.getElementById('g-review');
+  var barSolid = document.getElementById('bar-solid');
+  var barReview= document.getElementById('bar-review');
+  var total    = cards.length;
+
+  function refresh() {
+    var nSolid = 0, nReview = 0;
+    var perSec = {};
+
+    cards.forEach(function (card) {
+      var id = card.getAttribute('data-id');
+      var sec = card.getAttribute('data-sec');
+      var s = store.marks[id] || 'unseen';
+      if (s === 'solid')  { nSolid++; }
+      if (s === 'review') { nReview++; }
+
+      if (!perSec[sec]) { perSec[sec] = { solid: 0, total: 0 }; }
+      perSec[sec].total++;
+      if (s === 'solid') { perSec[sec].solid++; }
+
+      var show = filter === 'all'
+        || (filter === 'review' && s === 'review')
+        || (filter === 'unseen' && s === 'unseen');
+      card.classList.toggle('hidden', !show);
+    });
+
+    elSolid.innerHTML = nSolid + '<span>/' + total + '</span>';
+    elReview.textContent = nReview;
+    barSolid.style.width  = (nSolid  / total * 100) + '%';
+    barReview.style.width = (nReview / total * 100) + '%';
+
+    Object.keys(perSec).forEach(function (sec) {
+      var el = document.querySelector('.ct[data-count="' + sec + '"]');
+      if (!el) { return; }
+      var d = perSec[sec];
+      el.textContent = d.solid + '/' + d.total;
+      var link = el.closest('a');
+      if (link) { link.classList.toggle('done', d.solid === d.total); }
+    });
+
+    // Hide a section heading entirely when a filter empties it.
+    document.querySelectorAll('main section').forEach(function (sec) {
+      var any = Array.prototype.some.call(
+        sec.querySelectorAll('.card[data-id]'),
+        function (c) { return !c.classList.contains('hidden'); }
+      );
+      sec.style.display = any ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.seg [data-filter]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filter = btn.getAttribute('data-filter');
+      document.querySelectorAll('.seg [data-filter]').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      refresh();
+    });
+  });
+
+  document.getElementById('reveal-all').addEventListener('click', function () {
+    cards.forEach(function (c) { c._setOpen(true); });
+  });
+  document.getElementById('hide-all').addEventListener('click', function () {
+    cards.forEach(function (c) { c._setOpen(false); });
+  });
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!window.confirm('Clear every Got it / Flag mark? Your aircraft details and V-speeds are kept.')) { return; }
+    store.marks = {};
+    save();
+    cards.forEach(function (c) { c._applyStatus(); });
+    refresh();
+  });
+
+  /* ── persisted text fields + echoes ──────────────────────── */
+  function echo(key, value) {
+    document.querySelectorAll('[data-echo="' + key + '"]').forEach(function (el) {
+      var input = document.querySelector('[data-store="' + key + '"]');
+      var ph = input ? input.getAttribute('placeholder') : '';
+      if (value) {
+        el.textContent = value;
+        el.style.color = '';
+      } else {
+        el.textContent = ph ? ph + '  (example — replace with yours)' : '—';
+        el.style.color = 'var(--ink-3)';
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-store]').forEach(function (input) {
+    var key = input.getAttribute('data-store');
+    if (store.fields[key] != null) { input.value = store.fields[key]; }
+    echo(key, input.value);
+    input.addEventListener('input', function () {
+      store.fields[key] = input.value;
+      save();
+      echo(key, input.value);
+      if (key === 'rwys') { drawXwind(); }
+    });
+  });
+
+  /* ── METAR decoding ──────────────────────────────────────── */
+  var CLOUD = { FEW: 'few (1–2 oktas)', SCT: 'scattered (3–4 oktas)', BKN: 'broken (5–7 oktas)', OVC: 'overcast (8 oktas)' };
+  var INTENSITY = { '-': 'light', '+': 'heavy', 'VC': 'in the vicinity (5–10 SM from the field)' };
+  var DESC = { MI: 'shallow', PR: 'partial', BC: 'patches of', DR: 'low drifting', BL: 'blowing', SH: 'showers of', TS: 'thunderstorm', FZ: 'freezing' };
+  var PRECIP = { DZ: 'drizzle', RA: 'rain', SN: 'snow', SG: 'snow grains', IC: 'ice crystals', PL: 'ice pellets', GR: 'hail', GS: 'small hail / snow pellets', UP: 'unknown precipitation' };
+  var OBSC = { BR: 'mist (visibility 5/8 to 6 SM)', FG: 'fog (visibility under 5/8 SM)', FU: 'smoke', VA: 'volcanic ash', DU: 'widespread dust', SA: 'sand', HZ: 'haze', PY: 'spray' };
+  var OTHER = { PO: 'dust/sand whirls', SQ: 'squalls', FC: 'funnel cloud or tornado', SS: 'sandstorm', DS: 'duststorm' };
+
+  function parseVis(tok) {
+    var m = tok.match(/^(M)?(\d+)?\s*(?:(\d+)\/(\d+))?SM$/);
+    if (!m) { return null; }
+    var v = 0;
+    if (m[2]) { v += parseInt(m[2], 10); }
+    if (m[3] && m[4]) { v += parseInt(m[3], 10) / parseInt(m[4], 10); }
+    return { miles: v, less: !!m[1] };
+  }
+
+  function decodeWx(tok) {
+    var rest = tok, out = [];
+    var inten = '';
+    if (rest.charAt(0) === '-' || rest.charAt(0) === '+') { inten = INTENSITY[rest.charAt(0)]; rest = rest.slice(1); }
+    else if (rest.indexOf('VC') === 0) { inten = INTENSITY.VC; rest = rest.slice(2); }
+    while (rest.length >= 2) {
+      var pair = rest.slice(0, 2);
+      if (DESC[pair])        { out.push(DESC[pair]); }
+      else if (PRECIP[pair]) { out.push(PRECIP[pair]); }
+      else if (OBSC[pair])   { out.push(OBSC[pair]); }
+      else if (OTHER[pair])  { out.push(OTHER[pair]); }
+      else { return null; }
+      rest = rest.slice(2);
+    }
+    if (!out.length) { return null; }
+    return (inten ? inten + ' ' : '') + out.join(' ');
+  }
+
+  function parseMetar(text) {
+    var toks = text.toUpperCase().replace(/=+\s*$/, '').trim().split(/\s+/).filter(Boolean);
+    var rows = [];
+    var data = { wind: null, vis: null, ceiling: null, layers: [], wx: [] };
+    var inRmk = false;
+    var i = 0;
+
+    while (i < toks.length) {
+      var t = toks[i];
+
+      if (inRmk) { rows.push({ g: t, d: 'Remark', k: 'rmk' }); i++; continue; }
+
+      if (t === 'RMK') { rows.push({ g: t, d: 'Start of remarks — everything after this is supplemental', k: 'rmk' }); inRmk = true; i++; continue; }
+      if (t === 'METAR') { rows.push({ g: t, d: 'Routine hourly observation', k: 'type' }); i++; continue; }
+      if (t === 'SPECI') { rows.push({ g: t, d: 'Special observation — issued off-schedule because conditions changed significantly', k: 'type' }); i++; continue; }
+      if (t === 'AUTO')  { rows.push({ g: t, d: 'Fully automated observation, no human augmentation', k: 'mod' }); i++; continue; }
+      if (t === 'COR')   { rows.push({ g: t, d: 'Corrected observation — replaces an earlier one', k: 'mod' }); i++; continue; }
+      if (t === 'NOSIG') { rows.push({ g: t, d: 'No significant change expected in the next 2 hours', k: 'mod' }); i++; continue; }
+
+      if (/^[A-Z]{4}$/.test(t) && rows.filter(function (r) { return r.k === 'stn'; }).length === 0
+          && !/^(CAVOK|NSC|NCD)$/.test(t)) {
+        rows.push({ g: t, d: 'Reporting station — ICAO identifier' + (t === 'KARR' ? ' (Aurora Municipal)' : ''), k: 'stn' });
+        i++; continue;
+      }
+
+      var mt = t.match(/^(\d{2})(\d{2})(\d{2})Z$/);
+      if (mt) {
+        rows.push({ g: t, d: 'Day ' + mt[1] + ' of the month at ' + mt[2] + ':' + mt[3] + ' Zulu (UTC). Central Daylight is UTC−5; Central Standard is UTC−6.', k: 'time' });
+        i++; continue;
+      }
+
+      var mw = t.match(/^(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT$/);
+      if (mw) {
+        var dir = mw[1], spd = parseInt(mw[2], 10), gst = mw[3] ? parseInt(mw[3], 10) : null;
+        var d;
+        if (dir === 'VRB')            { d = 'Wind variable in direction at ' + spd + ' kt'; }
+        else if (spd === 0)           { d = 'Calm'; }
+        else                          { d = 'Wind from ' + parseInt(dir, 10) + '° true at ' + spd + ' kt'; }
+        if (gst) { d += ', gusting ' + gst + ' kt'; }
+        d += '. (Winds in a METAR are referenced to true north; ATIS and tower give magnetic.)';
+        rows.push({ g: t, d: d, k: 'wind' });
+        data.wind = { dir: dir === 'VRB' ? null : parseInt(dir, 10), spd: spd, gust: gst };
+        i++; continue;
+      }
+
+      var mv = t.match(/^(\d{3})V(\d{3})$/);
+      if (mv) { rows.push({ g: t, d: 'Wind direction varying between ' + parseInt(mv[1], 10) + '° and ' + parseInt(mv[2], 10) + '°', k: 'wind' }); i++; continue; }
+
+      // Visibility, including the two-token "1 1/2SM" form
+      if (/^\d$/.test(t) && i + 1 < toks.length && /^\d+\/\d+SM$/.test(toks[i + 1])) {
+        var combo = t + ' ' + toks[i + 1];
+        var pv2 = parseVis(combo);
+        rows.push({ g: combo, d: 'Visibility ' + combo.replace('SM', '') + ' statute miles', k: 'vis' });
+        if (pv2) { data.vis = pv2; }
+        i += 2; continue;
+      }
+      if (/SM$/.test(t)) {
+        var pv = parseVis(t);
+        if (pv) {
+          rows.push({ g: t, d: 'Visibility ' + (pv.less ? 'less than ' : '') + t.replace(/^M/, '').replace('SM', '') + ' statute miles' + (pv.miles >= 10 ? ' — 10 SM is reported as the maximum, so it may be more' : ''), k: 'vis' });
+          data.vis = pv;
+          i++; continue;
+        }
+      }
+
+      if (t === 'CAVOK') { rows.push({ g: t, d: 'Ceiling and visibility OK — 10 km+, no cloud below 5,000 ft, no significant weather (international format)', k: 'vis' }); i++; continue; }
+
+      var mr = t.match(/^R(\d{2}[LCR]?)\/(.+)$/);
+      if (mr) { rows.push({ g: t, d: 'Runway visual range for Runway ' + mr[1] + ': ' + mr[2].replace('FT', ' feet'), k: 'rvr' }); i++; continue; }
+
+      var msky = t.match(/^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?$/);
+      if (msky) {
+        var ft = parseInt(msky[2], 10) * 100;
+        var d2 = CLOUD[msky[1]] + ' at ' + ft.toLocaleString() + ' ft AGL';
+        if (msky[3] === 'CB')  { d2 += ' — cumulonimbus: thunderstorms, turbulence, hail, wind shear'; }
+        if (msky[3] === 'TCU') { d2 += ' — towering cumulus: strong updrafts, developing'; }
+        if (msky[1] === 'BKN' || msky[1] === 'OVC') {
+          d2 += '. This is a CEILING.';
+          if (data.ceiling === null) { data.ceiling = ft; }
+        }
+        rows.push({ g: t, d: d2, k: 'sky' });
+        data.layers.push({ cov: msky[1], ft: ft });
+        i++; continue;
+      }
+      if (t === 'CLR') { rows.push({ g: t, d: 'No clouds detected below 12,000 ft (automated station)', k: 'sky' }); i++; continue; }
+      if (t === 'SKC') { rows.push({ g: t, d: 'Sky clear (human observer)', k: 'sky' }); i++; continue; }
+
+      var mvv = t.match(/^VV(\d{3})$/);
+      if (mvv) {
+        var vft = parseInt(mvv[1], 10) * 100;
+        rows.push({ g: t, d: 'Vertical visibility ' + vft + ' ft — the sky is obscured and you cannot see up through it. This counts as the CEILING.', k: 'sky' });
+        if (data.ceiling === null) { data.ceiling = vft; }
+        i++; continue;
+      }
+
+      var mtd = t.match(/^(M?\d{2})\/(M?\d{2})$/);
+      if (mtd) {
+        var tc = (mtd[1].charAt(0) === 'M' ? -1 : 1) * parseInt(mtd[1].replace('M', ''), 10);
+        var dp = (mtd[2].charAt(0) === 'M' ? -1 : 1) * parseInt(mtd[2].replace('M', ''), 10);
+        var spread = tc - dp;
+        var note = 'Temperature ' + tc + '°C, dewpoint ' + dp + '°C. Spread ' + spread + '°C';
+        if (spread <= 2) { note += ' — a small spread means the air is near saturation: expect fog or low stratus.'; }
+        else { note += '.'; }
+        if (tc <= 15 && tc >= -5 && spread <= 10) { note += ' This range is prime carburetor-icing territory for a carbureted engine, even in summer.'; }
+        rows.push({ g: t, d: note, k: 'temp' });
+        data.temp = tc; data.dew = dp;
+        i++; continue;
+      }
+
+      var ma = t.match(/^A(\d{4})$/);
+      if (ma) {
+        var inhg = (parseInt(ma[1], 10) / 100).toFixed(2);
+        rows.push({ g: t, d: 'Altimeter setting ' + inhg + ' inHg' + (parseFloat(inhg) < 29.92 ? ' — below standard, so your true altitude is lower than indicated if you fly on 29.92' : ''), k: 'alt' });
+        i++; continue;
+      }
+      var mq = t.match(/^Q(\d{4})$/);
+      if (mq) { rows.push({ g: t, d: 'Altimeter setting ' + parseInt(mq[1], 10) + ' hectopascals (international format)', k: 'alt' }); i++; continue; }
+
+      var wx = decodeWx(t);
+      if (wx) { rows.push({ g: t, d: 'Present weather: ' + wx, k: 'wx' }); data.wx.push(wx); i++; continue; }
+
+      rows.push({ g: t, d: 'Not recognized — check the spelling, or look it up in the AIM', k: 'unknown' });
+      i++;
+    }
+
+    return { rows: rows, data: data };
+  }
+
+  function plainEnglish(d) {
+    var bits = [];
+    if (d.wind) {
+      if (d.wind.spd === 0) { bits.push('Wind calm'); }
+      else {
+        bits.push('Wind ' + (d.wind.dir === null ? 'variable' : 'from ' + d.wind.dir + '°') +
+          ' at ' + d.wind.spd + ' knots' + (d.wind.gust ? ' gusting to ' + d.wind.gust : ''));
+      }
+    }
+    if (d.vis) {
+      var v = d.vis.miles;
+      var vs = (v % 1 === 0) ? String(v) : (Math.round(v * 100) / 100).toString();
+      bits.push('visibility ' + (d.vis.less ? 'less than ' : '') + vs + ' statute miles');
+    }
+    if (d.wx.length) { bits.push(d.wx.join(', ')); }
+    if (d.ceiling !== null) { bits.push('ceiling ' + d.ceiling.toLocaleString() + ' feet'); }
+    else if (d.layers.length) { bits.push('no ceiling — highest layer reported is ' + d.layers[d.layers.length - 1].ft.toLocaleString() + ' feet'); }
+    else { bits.push('no significant cloud reported'); }
+    if (typeof d.temp === 'number') { bits.push('temperature ' + d.temp + ', dewpoint ' + d.dew); }
+
+    var s = bits.join(', ') + '.';
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+
+    // Measure against student solo minimums and whatever limits are saved.
+    var flags = [];
+    var minVis  = parseFloat(store.fields['lim-vis'])  || 3;
+    var minCeil = parseFloat(store.fields['lim-ceil']) || null;
+    if (d.vis && d.vis.miles < 3) { flags.push('Below the 3 SM student solo minimum (§61.89).'); }
+    else if (d.vis && minVis > 3 && d.vis.miles < minVis) { flags.push('Below your own ' + minVis + ' SM personal minimum.'); }
+    if (minCeil && d.ceiling !== null && d.ceiling < minCeil) { flags.push('Ceiling is below your ' + minCeil.toLocaleString() + ' ft limit.'); }
+    if (d.ceiling !== null && d.ceiling < 1000) { flags.push('Ceiling under 1,000 ft — not VFR in Class D.'); }
+    var maxWind = parseFloat(store.fields['lim-wind']) || null;
+    if (maxWind && d.wind && Math.max(d.wind.spd, d.wind.gust || 0) > maxWind) {
+      flags.push('Wind exceeds your ' + maxWind + ' kt limit.');
+    }
+    if (flags.length) { s += '  ⚑ ' + flags.join(' '); }
+    return s;
+  }
+
+  var elInput  = document.getElementById('metar-input');
+  var elChips  = document.getElementById('metar-chips');
+  var elOut    = document.getElementById('metar-out');
+  var elPlain  = document.getElementById('metar-plain');
+
+  function renderMetar() {
+    var res = parseMetar(elInput.value);
+    elChips.innerHTML = '';
+    elOut.innerHTML = '';
+
+    res.rows.forEach(function (row, idx) {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip' + (row.k === 'unknown' ? ' k-unknown' : '');
+      chip.textContent = row.g;
+      chip.setAttribute('aria-pressed', 'false');
+
+      var line = document.createElement('div');
+      line.className = 'decode-row';
+      var g = document.createElement('span'); g.className = 'g'; g.textContent = row.g;
+      var d = document.createElement('span'); d.textContent = row.d;
+      line.appendChild(g); line.appendChild(d);
+      elOut.appendChild(line);
+
+      chip.addEventListener('click', function () {
+        var on = chip.getAttribute('aria-pressed') !== 'true';
+        elChips.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+        elOut.querySelectorAll('.decode-row').forEach(function (r) { r.classList.remove('hl'); });
+        if (on) {
+          chip.setAttribute('aria-pressed', 'true');
+          line.classList.add('hl');
+          line.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      });
+      elChips.appendChild(chip);
+    });
+
+    elPlain.textContent = res.rows.length ? plainEnglish(res.data) : 'Paste a METAR above.';
+
+    if (res.data.wind) {
+      document.getElementById('xw-dir').value  = res.data.wind.dir === null ? '' : res.data.wind.dir;
+      document.getElementById('xw-spd').value  = res.data.wind.spd;
+      document.getElementById('xw-gust').value = res.data.wind.gust || '';
+      drawXwind();
+    }
+  }
+
+  elInput.addEventListener('input', renderMetar);
+  document.querySelectorAll('.preset').forEach(function (b) {
+    b.addEventListener('click', function () {
+      elInput.value = b.getAttribute('data-metar');
+      renderMetar();
+    });
+  });
+
+  /* ── crosswind ───────────────────────────────────────────── */
+  var xwDir  = document.getElementById('xw-dir');
+  var xwSpd  = document.getElementById('xw-spd');
+  var xwGust = document.getElementById('xw-gust');
+  var xwRwys = document.getElementById('xw-rwys');
+  var xwOut  = document.getElementById('xw-out');
+
+  function drawXwind() {
+    var dir  = parseFloat(xwDir.value);
+    var spd  = parseFloat(xwSpd.value);
+    var gust = parseFloat(xwGust.value);
+    var use  = (!isNaN(gust) && gust > 0) ? gust : spd;
+    var limit = parseFloat(store.fields['lim-xw']);
+
+    xwOut.innerHTML = '';
+    if (isNaN(dir) || isNaN(use) || use <= 0) {
+      var p = document.createElement('p');
+      p.className = 'hint';
+      p.textContent = isNaN(dir) ? 'Wind is variable or calm — no crosswind component to compute.' : 'Enter a wind direction and speed.';
+      xwOut.appendChild(p);
+      return;
+    }
+
+    var ends = [];
+    xwRwys.value.split(/[,\s]+/).forEach(function (grp) {
+      grp.split('/').forEach(function (r) {
+        var n = parseInt(r.replace(/[^0-9]/g, ''), 10);
+        if (!isNaN(n) && n >= 1 && n <= 36) { ends.push(n); }
+      });
+    });
+    if (!ends.length) { return; }
+
+    var results = ends.map(function (n) {
+      var hdg = n * 10;
+      var ang = Math.abs(dir - hdg);
+      if (ang > 180) { ang = 360 - ang; }
+      var rad = ang * Math.PI / 180;
+      return {
+        n: n,
+        xw: Math.round(use * Math.sin(rad)),
+        hw: Math.round(use * Math.cos(rad)),
+        ang: Math.round(ang)
+      };
+    });
+
+    var best = results.reduce(function (a, b) {
+      if (b.hw !== a.hw) { return b.hw > a.hw ? b : a; }
+      return b.xw < a.xw ? b : a;
+    });
+
+    results.forEach(function (r) {
+      var el = document.createElement('div');
+      el.className = 'rwy';
+      var over = !isNaN(limit) && limit > 0 && r.xw > limit;
+      el.setAttribute('data-state', over ? 'over' : (r === best ? 'best' : 'ok'));
+
+      var tag = over ? 'Over your limit' : (r === best ? 'Best option' : (r.hw < 0 ? 'Tailwind' : ''));
+
+      el.innerHTML =
+        '<div class="id">RWY ' + String(r.n).padStart(2, '0') + '</div>' +
+        '<div class="n"><span>Crosswind</span><b>' + r.xw + ' kt</b></div>' +
+        '<div class="n"><span>' + (r.hw < 0 ? 'Tailwind' : 'Headwind') + '</span><b class="' + (r.hw < 0 ? 'tail' : '') + '">' + Math.abs(r.hw) + ' kt</b></div>' +
+        '<div class="tag">' + tag + '</div>';
+      xwOut.appendChild(el);
+    });
+  }
+
+  [xwDir, xwSpd, xwGust, xwRwys].forEach(function (el) {
+    el.addEventListener('input', drawXwind);
+  });
+  var limXw = document.getElementById('lim-xw');
+  if (limXw) { limXw.addEventListener('input', function () { drawXwind(); renderMetar(); }); }
+  ['lim-vis', 'lim-ceil', 'lim-wind'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) { el.addEventListener('input', renderMetar); }
+  });
+
+  /* ── go ──────────────────────────────────────────────────── */
+  renderMetar();
+  refresh();
+})();
+</script>
+
+<nav id="__nav" aria-label="Site"><a href="./">Home</a><a href="quiz.html">Quiz</a><button type="button" id="__theme" aria-label="Switch between light and dark">Theme</button></nav>
+
+<script>
+  (function () {
+    var btn = document.getElementById('__theme');
+    if (!btn) { return; }
+    btn.addEventListener('click', function () {
+      var root = document.documentElement;
+      var cur = root.getAttribute('data-theme');
+      if (!cur) {
+        cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('presolo.theme', next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

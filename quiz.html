@@ -1,0 +1,1758 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0A1119">
+<meta name="description" content="Multiple-choice quiz game for the Pre-Solo 5.1 exam. 100 questions, points for speed and streaks.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pre-Solo">
+<title>Pre-Solo Checkride — Quiz Game</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Pre-Solo Checkride — Quiz Game">
+<meta property="og:description" content="Multiple-choice quiz game for the Pre-Solo 5.1 exam. 100 questions, points for speed and streaks.">
+<meta property="og:type" content="website">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('presolo.theme');
+      if (t === 'light' || t === 'dark') { document.documentElement.setAttribute('data-theme', t); }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  #__nav {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 999;
+    display: flex; gap: 2px; padding: 3px; border-radius: 99px;
+    background: rgba(128, 140, 150, .16);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px -4px rgba(0, 0, 0, .4);
+    opacity: .55; transition: opacity .2s;
+  }
+  #__nav:hover, #__nav:focus-within { opacity: 1; }
+  #__nav a, #__nav button {
+    font: 600 .75rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .06em;
+    color: inherit; background: transparent; border: 0; cursor: pointer;
+    padding: .5rem .7rem; border-radius: 99px; text-decoration: none;
+    display: inline-flex; align-items: center; white-space: nowrap;
+  }
+  #__nav a:hover, #__nav button:hover { background: rgba(128, 140, 150, .3); }
+  #__nav a:focus-visible, #__nav button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+  @media print { #__nav { display: none; } }
+</style>
+</head>
+<body>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   PRE-SOLO CHECKRIDE — quiz game
+   Visual language: glass cockpit / EFIS.
+   Night mode is the default; "day mode" is the light theme,
+   the way a real PFD switches for daylight readability.
+   Four answer tiles use the four PFD signal hues.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: dark;
+  --bg:      #0A1119;
+  --bg-2:    #060B11;
+  --panel:   #121E2A;
+  --panel-2: #1A2836;
+  --ink:     #EAF1F6;
+  --ink-2:   #92A8B8;
+  --ink-3:   #5F7688;
+  --rule:    #24384A;
+  --amber:   #F2B23E;
+  --ok:      #3FC176;
+  --no:      #EE6259;
+
+  --a0: #1D7F9C;  --a0-hi: #2A9CBD;
+  --a1: #AE3D79;  --a1-hi: #CB4C8F;
+  --a2: #2C8A4B;  --a2-hi: #38A65C;
+  --a3: #A96D18;  --a3-hi: #C68320;
+  --a-ink: #FFFFFF;
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --lift: 0 2px 4px rgba(0,0,0,.35), 0 14px 34px -18px rgba(0,0,0,.8);
+  --r: 10px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg:      #DDE5EA;
+    --bg-2:    #CBD6DD;
+    --panel:   #FFFFFF;
+    --panel-2: #EDF2F5;
+    --ink:     #0D1A24;
+    --ink-2:   #4A6072;
+    --ink-3:   #7B8F9E;
+    --rule:    #C4D2DA;
+    --amber:   #A56712;
+    --ok:      #1E8A4E;
+    --no:      #C93F36;
+    --a0: #196E88;  --a0-hi: #1D82A1;
+    --a1: #9C3369;  --a1-hi: #B63C7B;
+    --a2: #24713D;  --a2-hi: #2C8A4B;
+    --a3: #8F5A11;  --a3-hi: #A96D18;
+    --lift: 0 1px 2px rgba(13,26,36,.08), 0 12px 28px -16px rgba(13,26,36,.4);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg:      #DDE5EA;
+  --bg-2:    #CBD6DD;
+  --panel:   #FFFFFF;
+  --panel-2: #EDF2F5;
+  --ink:     #0D1A24;
+  --ink-2:   #4A6072;
+  --ink-3:   #7B8F9E;
+  --rule:    #C4D2DA;
+  --amber:   #A56712;
+  --ok:      #1E8A4E;
+  --no:      #C93F36;
+  --a0: #196E88;  --a0-hi: #1D82A1;
+  --a1: #9C3369;  --a1-hi: #B63C7B;
+  --a2: #24713D;  --a2-hi: #2C8A4B;
+  --a3: #8F5A11;  --a3-hi: #A96D18;
+  --lift: 0 1px 2px rgba(13,26,36,.08), 0 12px 28px -16px rgba(13,26,36,.4);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:      #0A1119;
+  --bg-2:    #060B11;
+  --panel:   #121E2A;
+  --panel-2: #1A2836;
+  --ink:     #EAF1F6;
+  --ink-2:   #92A8B8;
+  --ink-3:   #5F7688;
+  --rule:    #24384A;
+  --amber:   #F2B23E;
+  --ok:      #3FC176;
+  --no:      #EE6259;
+  --a0: #1D7F9C;  --a0-hi: #2A9CBD;
+  --a1: #AE3D79;  --a1-hi: #CB4C8F;
+  --a2: #2C8A4B;  --a2-hi: #38A65C;
+  --a3: #A96D18;  --a3-hi: #C68320;
+  --lift: 0 2px 4px rgba(0,0,0,.35), 0 14px 34px -18px rgba(0,0,0,.8);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse 120% 80% at 50% -10%, var(--bg) 0%, var(--bg-2) 100%);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -.018em; text-wrap: balance; }
+p { margin: 0; }
+ul { margin: 0; padding-left: 1.15rem; }
+li + li { margin-top: .25rem; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+.wrap {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+.screen { display: none; flex-direction: column; gap: 1.5rem; flex: 1; }
+.screen.on { display: flex; }
+
+/* ── Attitude-indicator band ──────────────────────────────── */
+.horizon {
+  position: relative; height: 4.5rem; border-radius: var(--r);
+  overflow: hidden; border: 1px solid var(--rule);
+  background: var(--panel);
+}
+.horizon .sky, .horizon .gnd {
+  position: absolute; left: -25%; width: 150%; height: 200%;
+  transform-origin: 50% 50%;
+}
+.horizon .sky { top: -100%; background: linear-gradient(#1E5C82, #2E80AE); transform: rotate(-6deg) translateY(46%); }
+.horizon .gnd { top: 0;     background: linear-gradient(#6B4A22, #4A3216); transform: rotate(-6deg) translateY(-4%); }
+:root[data-theme="light"] .horizon .sky { background: linear-gradient(#3E97C9, #63B4DD); }
+@media (prefers-color-scheme: light) { :root:not([data-theme]) .horizon .sky { background: linear-gradient(#3E97C9, #63B4DD); } }
+.horizon .bars {
+  position: absolute; inset: 0; display: flex; flex-direction: row;
+  align-items: center; justify-content: center; gap: .5rem;
+}
+.horizon .bars i { display: block; height: 3px; background: var(--amber); border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+.horizon .bars i.l, .horizon .bars i.r { width: 3.2rem; }
+.horizon .bars i.c { width: 10px; height: 10px; border-radius: 99px; background: transparent; border: 3px solid var(--amber); box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+.horizon .cap {
+  position: absolute; inset: auto 0 0 0; padding: .35rem .75rem;
+  font-family: var(--mono); font-size: .625rem; letter-spacing: .18em; text-transform: uppercase;
+  color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.55));
+  display: flex; justify-content: space-between;
+}
+
+/* ── Setup ────────────────────────────────────────────────── */
+.hero { display: flex; flex-direction: column; gap: .5rem; }
+.hero h1 { font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.05; }
+.hero .sub { color: var(--ink-2); max-width: 38rem; font-size: 1.0625rem; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip {
+  font-family: var(--mono); font-size: .75rem; letter-spacing: .04em;
+  padding: .45rem .75rem; border-radius: 99px; cursor: pointer;
+  border: 1px solid var(--rule); background: var(--panel-2); color: var(--ink-2);
+  transition: background .15s, color .15s, border-color .15s;
+  display: inline-flex; align-items: center; gap: .4rem;
+}
+.chip:hover { color: var(--ink); border-color: var(--ink-3); }
+.chip[aria-pressed="true"] { background: var(--amber); border-color: var(--amber); color: #10161C; font-weight: 600; }
+.chip .n { opacity: .65; font-size: .6875rem; }
+.chip[aria-pressed="true"] .n { opacity: .8; }
+
+.rowset { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; }
+.setting { display: flex; flex-direction: column; gap: .5rem; }
+.seg { display: inline-flex; gap: 2px; background: var(--panel-2); padding: 3px; border-radius: 8px; border: 1px solid var(--rule); }
+.seg button {
+  flex: 1; font-family: var(--mono); font-size: .75rem;
+  padding: .4rem .6rem; border: 0; border-radius: 6px; cursor: pointer;
+  background: transparent; color: var(--ink-2); transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--amber); box-shadow: var(--lift); }
+
+.btn {
+  font-family: var(--font); font-size: 1rem; font-weight: 650;
+  padding: .85rem 1.6rem; border-radius: var(--r); cursor: pointer;
+  border: 1px solid transparent; background: var(--amber); color: #10161C;
+  transition: transform .12s, filter .15s;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; border-color: var(--rule); color: var(--ink); }
+.btn.ghost:hover { border-color: var(--amber); color: var(--amber); }
+.btn.sm { font-size: .875rem; padding: .55rem 1rem; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.startrow { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.startrow .note { font-size: .8125rem; color: var(--ink-3); }
+
+.best {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  padding-top: .25rem; border-top: 1px solid var(--rule);
+}
+.best div { display: flex; flex-direction: column; }
+.best .v { font-family: var(--mono); font-size: 1.25rem; font-variant-numeric: tabular-nums; color: var(--ink); }
+.best .k { font-family: var(--mono); font-size: .5625rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ── HUD ──────────────────────────────────────────────────── */
+.hud { display: flex; flex-direction: column; gap: .6rem; }
+.hud-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.hud-stats { display: flex; gap: 1.25rem; align-items: baseline; }
+.stat { display: flex; align-items: baseline; gap: .4rem; }
+.stat .k { font-family: var(--mono); font-size: .5625rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.stat .v { font-family: var(--mono); font-size: 1.05rem; font-variant-numeric: tabular-nums; color: var(--ink); }
+.stat .v.hot { color: var(--amber); }
+
+.streak {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em;
+  padding: .2rem .5rem; border-radius: 99px;
+  background: var(--panel-2); color: var(--ink-3); border: 1px solid var(--rule);
+}
+.streak.live { background: var(--amber); color: #10161C; border-color: var(--amber); font-weight: 700; }
+
+.progress { height: 5px; border-radius: 99px; background: var(--panel-2); overflow: hidden; border: 1px solid var(--rule); }
+.progress i { display: block; height: 100%; background: var(--ink-3); transition: width .3s ease; }
+
+.timer { height: 8px; border-radius: 99px; background: var(--panel-2); overflow: hidden; border: 1px solid var(--rule); }
+.timer i { display: block; height: 100%; width: 100%; background: var(--ok); transition: width .1s linear, background .3s; }
+.timer i.warn { background: var(--amber); }
+.timer i.crit { background: var(--no); }
+.timer.off { display: none; }
+
+/* ── Question ─────────────────────────────────────────────── */
+.qcard {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  display: flex; flex-direction: column; gap: .75rem;
+  box-shadow: var(--lift);
+  min-height: 8rem;
+  justify-content: center;
+}
+.qcard .topic {
+  font-family: var(--mono); font-size: .625rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--amber);
+}
+.qcard h2 { font-size: clamp(1.15rem, 3.2vw, 1.6rem); line-height: 1.3; }
+
+.tiles {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
+}
+.tile {
+  position: relative;
+  display: grid; grid-template-columns: 1.75rem 1fr; gap: .75rem; align-items: start;
+  text-align: left;
+  font-family: var(--font); font-size: 1rem; font-weight: 550; line-height: 1.35;
+  color: var(--a-ink);
+  background: var(--fill);
+  border: 2px solid transparent;
+  border-radius: var(--r);
+  padding: 1.05rem 1.15rem;
+  cursor: pointer;
+  min-height: 5.25rem;
+  transition: transform .12s ease, filter .15s, opacity .2s, border-color .15s;
+}
+.tile:hover:not(:disabled) { filter: brightness(1.12); transform: translateY(-2px); }
+.tile:active:not(:disabled) { transform: translateY(0); }
+.tile .key {
+  font-family: var(--mono); font-size: .8125rem; font-weight: 700;
+  width: 1.75rem; height: 1.75rem; border-radius: 5px;
+  display: grid; place-items: center;
+  background: rgba(0,0,0,.28); color: #fff;
+}
+.tile.t0 { --fill: var(--a0); } .tile.t0:hover:not(:disabled) { --fill: var(--a0-hi); }
+.tile.t1 { --fill: var(--a1); } .tile.t1:hover:not(:disabled) { --fill: var(--a1-hi); }
+.tile.t2 { --fill: var(--a2); } .tile.t2:hover:not(:disabled) { --fill: var(--a2-hi); }
+.tile.t3 { --fill: var(--a3); } .tile.t3:hover:not(:disabled) { --fill: var(--a3-hi); }
+
+.tiles.locked .tile { cursor: default; }
+.tiles.locked .tile:not(.right):not(.wrong) { opacity: .3; filter: grayscale(.5); }
+.tile.right { border-color: var(--ok); animation: pop .4s ease; }
+.tile.right::after {
+  content: "✓"; position: absolute; top: .55rem; right: .7rem;
+  font-size: 1.1rem; font-weight: 800; color: #fff;
+}
+.tile.wrong { border-color: var(--no); animation: shake .38s ease; }
+.tile.wrong::after {
+  content: "✕"; position: absolute; top: .55rem; right: .7rem;
+  font-size: 1rem; font-weight: 800; color: #fff;
+}
+
+@keyframes pop { 0%{transform:scale(1)} 40%{transform:scale(1.035)} 100%{transform:scale(1)} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 45%{transform:translateX(5px)} 70%{transform:translateX(-3px)} }
+
+.feedback {
+  display: flex; flex-direction: column; gap: .6rem;
+  border-left: 3px solid var(--rule);
+  background: var(--panel);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 1rem 1.15rem;
+  animation: rise .28s ease;
+}
+.feedback[data-v="right"] { border-left-color: var(--ok); }
+.feedback[data-v="wrong"] { border-left-color: var(--no); }
+.feedback[data-v="time"]  { border-left-color: var(--amber); }
+.feedback .verdict {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .16em; text-transform: uppercase;
+  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+}
+.feedback[data-v="right"] .verdict { color: var(--ok); }
+.feedback[data-v="wrong"] .verdict { color: var(--no); }
+.feedback[data-v="time"]  .verdict { color: var(--amber); }
+.feedback .verdict .pts { color: var(--amber); }
+.feedback .why { font-size: .9375rem; color: var(--ink-2); }
+.feedback .why b { color: var(--ink); font-weight: 650; }
+.feedback .next { align-self: flex-start; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── Results ──────────────────────────────────────────────── */
+.scoreline { display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-end; }
+.bigscore { display: flex; flex-direction: column; }
+.bigscore .v {
+  font-family: var(--mono); font-size: clamp(2.5rem, 9vw, 4rem); line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--amber);
+}
+.bigscore .k { font-family: var(--mono); font-size: .625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+
+.bars { display: flex; flex-direction: column; gap: .5rem; }
+.barrow { display: grid; grid-template-columns: 8.5rem 1fr 3.5rem; gap: .75rem; align-items: center; font-size: .8125rem; }
+.barrow .lab { color: var(--ink-2); }
+.barrow .track { height: 7px; border-radius: 99px; background: var(--panel-2); overflow: hidden; }
+.barrow .track i { display: block; height: 100%; border-radius: 99px; background: var(--ok); }
+.barrow .track i.mid { background: var(--amber); }
+.barrow .track i.low { background: var(--no); }
+.barrow .num { font-family: var(--mono); font-size: .75rem; font-variant-numeric: tabular-nums; color: var(--ink-3); text-align: right; }
+
+.review { display: flex; flex-direction: column; gap: .6rem; }
+.miss {
+  border: 1px solid var(--rule); border-left: 3px solid var(--no);
+  border-radius: 0 var(--r) var(--r) 0; background: var(--panel);
+  padding: .9rem 1.1rem; display: flex; flex-direction: column; gap: .4rem;
+}
+.miss .q { font-weight: 600; font-size: .9375rem; }
+.miss .yours { font-size: .8125rem; color: var(--no); }
+.miss .ans { font-size: .875rem; color: var(--ok); }
+.miss .why { font-size: .8125rem; color: var(--ink-2); }
+.miss .ans b, .miss .yours b { font-weight: 650; }
+
+.actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+
+.topbar {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding-bottom: 1rem; flex-wrap: wrap;
+}
+.topbar .brand {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-3); display: flex; align-items: center; gap: .55rem;
+}
+.topbar .brand i { width: 1.4rem; height: 0; border-top: 2px solid var(--amber); }
+.topbar .util { display: flex; gap: .3rem; }
+.iconbtn {
+  font-family: var(--mono); font-size: .625rem; letter-spacing: .12em; text-transform: uppercase;
+  background: transparent; border: 1px solid var(--rule); color: var(--ink-3);
+  padding: .35rem .65rem; border-radius: 6px; cursor: pointer;
+}
+.iconbtn:hover { color: var(--amber); border-color: var(--amber); }
+.iconbtn[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); }
+
+.hint { font-size: .75rem; color: var(--ink-3); }
+.hint kbd {
+  font-family: var(--mono); font-size: .6875rem;
+  background: var(--panel-2); border: 1px solid var(--rule); border-bottom-width: 2px;
+  border-radius: 4px; padding: .05rem .3rem; color: var(--ink-2);
+}
+
+@media (max-width: 40rem) {
+  .tiles { grid-template-columns: 1fr; }
+  .tile { min-height: 0; }
+  .barrow { grid-template-columns: 6rem 1fr 3rem; }
+  .hud-stats { gap: .9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .tile:hover:not(:disabled) { transform: none; }
+}
+</style>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <span class="brand"><i></i> Pre-Solo 5.1 · KARR</span>
+    <div class="util">
+      <button type="button" class="iconbtn" id="btn-sound" aria-pressed="true">Sound on</button>
+      <button type="button" class="iconbtn" id="btn-quit" hidden>End round</button>
+    </div>
+  </div>
+
+  <!-- ═════════════ SETUP ═════════════ -->
+  <div class="screen on" id="scr-setup">
+    <div class="horizon" aria-hidden="true">
+      <div class="sky"></div><div class="gnd"></div>
+      <div class="bars"><i class="l"></i><i class="c"></i><i class="r"></i></div>
+      <div class="cap"><span>Pre-solo oral</span><span id="bank-count"></span></div>
+    </div>
+
+    <div class="hero">
+      <h1>Answer fast, answer right.</h1>
+      <p class="sub">Multiple choice drills built from the Pre-Solo 5.1 form. Four options, one right answer, points for speed and for streaks. Miss one and you get told why before you move on.</p>
+    </div>
+
+    <div class="panel">
+      <div class="setting">
+        <p class="eyebrow">Topics</p>
+        <div class="chips" id="topic-chips"></div>
+        <div class="chips">
+          <button type="button" class="btn ghost sm" id="pick-all">Select all</button>
+          <button type="button" class="btn ghost sm" id="pick-none">Clear</button>
+          <button type="button" class="btn ghost sm" id="pick-weak">Only what I've missed before</button>
+        </div>
+      </div>
+
+      <div class="rowset">
+        <div class="setting">
+          <p class="eyebrow">Round length</p>
+          <div class="seg" id="seg-len" role="group" aria-label="Round length">
+            <button type="button" data-len="10" aria-pressed="true">10</button>
+            <button type="button" data-len="20" aria-pressed="false">20</button>
+            <button type="button" data-len="30" aria-pressed="false">30</button>
+            <button type="button" data-len="0"  aria-pressed="false">Everything</button>
+          </div>
+        </div>
+        <div class="setting">
+          <p class="eyebrow">Clock</p>
+          <div class="seg" id="seg-time" role="group" aria-label="Time per question">
+            <button type="button" data-time="10" aria-pressed="false">10s</button>
+            <button type="button" data-time="20" aria-pressed="true">20s</button>
+            <button type="button" data-time="35" aria-pressed="false">35s</button>
+            <button type="button" data-time="0"  aria-pressed="false">No clock</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="startrow">
+        <button type="button" class="btn" id="btn-start">Start round</button>
+        <span class="note" id="start-note"></span>
+      </div>
+
+      <div class="best">
+        <div><span class="v" id="best-score">0</span><span class="k">Best score</span></div>
+        <div><span class="v" id="best-acc">—</span><span class="k">Best accuracy</span></div>
+        <div><span class="v" id="best-streak">0</span><span class="k">Longest streak</span></div>
+        <div><span class="v" id="seen-count">0</span><span class="k">Questions seen</span></div>
+      </div>
+    </div>
+
+    <p class="hint">Keys: <kbd>1</kbd>–<kbd>4</kbd> or <kbd>A</kbd>–<kbd>D</kbd> to answer, <kbd>Enter</kbd> for the next question. Progress is saved in this browser.</p>
+  </div>
+
+  <!-- ═════════════ PLAY ═════════════ -->
+  <div class="screen" id="scr-play">
+    <div class="hud">
+      <div class="hud-row">
+        <div class="hud-stats">
+          <span class="stat"><span class="k">Q</span><span class="v" id="hud-q">1/10</span></span>
+          <span class="stat"><span class="k">Score</span><span class="v hot" id="hud-score">0</span></span>
+          <span class="stat"><span class="k">Right</span><span class="v" id="hud-right">0</span></span>
+        </div>
+        <span class="streak" id="hud-streak">No streak</span>
+      </div>
+      <div class="progress"><i id="hud-prog" style="width:0%"></i></div>
+      <div class="timer" id="hud-timer"><i id="hud-timer-fill"></i></div>
+    </div>
+
+    <div class="qcard">
+      <p class="topic" id="q-topic">—</p>
+      <h2 id="q-text">—</h2>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+    <div id="feedback-slot"></div>
+  </div>
+
+  <!-- ═════════════ RESULTS ═════════════ -->
+  <div class="screen" id="scr-done">
+    <div class="horizon" aria-hidden="true">
+      <div class="sky"></div><div class="gnd"></div>
+      <div class="bars"><i class="l"></i><i class="c"></i><i class="r"></i></div>
+      <div class="cap"><span>Round complete</span><span id="done-cap"></span></div>
+    </div>
+
+    <div class="panel">
+      <div class="scoreline">
+        <div class="bigscore"><span class="v" id="res-score">0</span><span class="k">Score</span></div>
+        <div class="bigscore"><span class="v" id="res-acc" style="font-size:clamp(1.6rem,5vw,2.4rem)">0%</span><span class="k">Accuracy</span></div>
+        <div class="bigscore"><span class="v" id="res-streak" style="font-size:clamp(1.6rem,5vw,2.4rem)">0</span><span class="k">Best streak</span></div>
+      </div>
+      <p id="res-verdict" style="color:var(--ink-2)"></p>
+      <div class="actions">
+        <button type="button" class="btn" id="btn-again">Play again</button>
+        <button type="button" class="btn ghost" id="btn-missed" hidden>Drill the ones I missed</button>
+        <button type="button" class="btn ghost" id="btn-home">Change topics</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p class="eyebrow">By topic</p>
+      <div class="bars" id="res-bars"></div>
+    </div>
+
+    <div class="panel" id="res-review-panel">
+      <p class="eyebrow">What you missed</p>
+      <div class="review" id="res-review"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ═══════════════ QUESTION BANK ═══════════════
+     First option in `a` is always the correct one — options are
+     shuffled at render time so position is never a tell.        */
+
+  var TOPICS = {
+    docs:    'Documents & inspections',
+    airspace:'Airspace',
+    wx:      'Weather & METARs',
+    aero:    'Aerodynamics',
+    sys:     'Engine & fuel systems',
+    emer:    'Emergencies',
+    vsp:     'V-speeds & the arcs',
+    regs:    'Regs & student limits',
+    light:   'Light gun signals',
+    wb:      'Weight, balance & performance'
+  };
+
+  var BANK = [
+    /* ── Documents & inspections ── */
+    { t:'docs', q:'Which set of documents must be aboard the aircraft?', a:[
+      'Airworthiness certificate, Registration, Radio station license (international), Operating limitations, Weight & balance',
+      'Pilot certificate, Medical, Photo ID, Logbook',
+      'POH, Sectional chart, Chart Supplement, Checklist',
+      'Registration, Insurance certificate, Rental agreement, Maintenance logs'],
+      why:'<b>ARROW.</b> The last one is the trap — maintenance logs do <i>not</i> have to be in the airplane, and insurance is not a regulatory requirement at all.' },
+
+    { t:'docs', q:'When is a radio station license actually required?', a:[
+      'Only for international flight',
+      'Any flight in Class D airspace or above',
+      'Any flight using a transponder',
+      'Every flight — it must be aboard at all times'],
+      why:'It is an <b>FCC</b> requirement, not an FAA one, and it only applies to international operations. Domestically you never need it.' },
+
+    { t:'docs', q:'Where must the airworthiness certificate be kept?', a:[
+      'Displayed where it is legible to the passengers and crew',
+      'Locked in the glovebox with the registration',
+      'On file at the flight school office',
+      'Anywhere in the aircraft, as long as it is aboard'],
+      why:'§91.203(a)(1) — it must be <b>displayed and legible</b>. That is why you see it in a little window on the doorpost or the back of the panel.' },
+
+    { t:'docs', q:'"Operating limitations" in ARROW means which of these?', a:[
+      'The POH/AFM together with placards, instrument markings, and any supplements',
+      'The POH only',
+      'The checklist card',
+      'The maximum gross weight printed on the registration'],
+      why:'All of those sources <b>together</b> make up the operating limitations. If a placard is missing or a marking is unreadable, the limitations are incomplete.' },
+
+    { t:'docs', q:'The transponder must be inspected every…', a:[
+      '24 calendar months',
+      '12 calendar months',
+      '100 hours of flight time',
+      '30 days'],
+      why:'Transponder — <b>24 calendar months</b> (§91.413). Compare: annual 12 calendar months, VOR check 30 days (IFR only), altimeter/static system 24 calendar months for IFR.' },
+
+    { t:'docs', q:'How often must the ELT be inspected?', a:[
+      'Every 12 calendar months',
+      'Every 24 calendar months',
+      'Every 100 hours',
+      'Only when the battery is replaced'],
+      why:'ELT inspection is <b>12 calendar months</b>. Separately, the battery gets replaced after <b>1 hour of cumulative use</b> or when <b>50% of its useful life</b> has expired.' },
+
+    { t:'docs', q:'A 100-hour inspection is required when the aircraft is…', a:[
+      'Carrying persons for hire, or used to give flight instruction for hire',
+      'Flown more than 100 hours in any 12-month period',
+      'Operated by a student pilot',
+      'Rented to anyone at all'],
+      why:'§91.409(b). A privately owned airplane you fly yourself needs only the <b>annual</b>, no matter how much you fly it. Your rental trainer needs both.' },
+
+    { t:'docs', q:'As a student pilot, which of these must be on your person?', a:[
+      'Student pilot certificate, medical certificate, and government photo ID',
+      'Student pilot certificate and logbook only',
+      'Medical certificate and a printed weather briefing',
+      'Photo ID and the aircraft key'],
+      why:'§61.3(a) and (c). The <b>photo ID</b> is the one people forget — it is an explicit regulatory requirement, not just good practice.' },
+
+    { t:'docs', q:'Your student pilot certificate expires…', a:[
+      'Never — it has no expiration date',
+      'After 24 calendar months',
+      'After 5 years',
+      'When your medical expires'],
+      why:'The plastic student pilot certificate does <b>not</b> expire. Your <b>medical</b> does, and your <b>solo endorsement</b> does — every 90 days.' },
+
+    /* ── Airspace ── */
+    { t:'airspace', q:'What class of airspace is Aurora Municipal (KARR)?', a:[
+      'Class D','Class C','Class B','Class E'],
+      why:'A control tower with no radar approach control of its own is the definition of <b>Class D</b>. O\'Hare is the Class B nearby.' },
+
+    { t:'airspace', q:'On a sectional chart, Class D airspace is drawn as…', a:[
+      'A dashed blue line',
+      'A solid magenta line',
+      'A dashed magenta line',
+      'A solid blue line'],
+      why:'<b>Dashed blue</b> = Class D. Solid blue = Class B. Solid magenta = Class C. Dashed magenta = Class E to the surface.' },
+
+    { t:'airspace', q:'What is required before you may enter Class D airspace?', a:[
+      'Establish two-way radio communication with the tower',
+      'A specific clearance, in the words "cleared to enter"',
+      'A Mode C transponder',
+      'A flight plan on file'],
+      why:'§91.129 — <b>two-way communication established</b>, not a clearance. No transponder is required for Class D itself.' },
+
+    { t:'airspace', q:'The tower says "Skyhawk 12345, standby." May you enter the Class D?', a:[
+      'Yes — they used your callsign without a restriction, so communication is established',
+      'No — "standby" is a denial of entry',
+      'Only if you are inbound to land',
+      'Only after you read back "standby"'],
+      why:'Your <b>callsign</b> is the test. "Skyhawk 12345, standby" = established, you may enter. <b>"Aircraft calling tower, standby"</b> = not established, stay out.' },
+
+    { t:'airspace', q:'VFR cloud clearance in Class D airspace is…', a:[
+      '1,000 above, 500 below, 2,000 horizontal',
+      '500 above, 1,000 below, 2,000 horizontal',
+      'Clear of clouds',
+      '1,000 above, 1,000 below, 1 statute mile horizontal'],
+      why:'The classic <b>"1,000 / 500 / 2,000"</b> — and 3 SM visibility. It is the same in Class C, D, and E below 10,000 ft.' },
+
+    { t:'airspace', q:'When the KARR tower closes for the night, the airspace…', a:[
+      'Reverts to Class E or Class G',
+      'Stays Class D but nobody is listening',
+      'Becomes Class C',
+      'Is closed to all traffic until the tower reopens'],
+      why:'Class D exists <b>only while the tower is open</b>. Check the Chart Supplement for tower hours and what the airspace becomes.' },
+
+    { t:'airspace', q:'A Mode C transponder is required within how far of a Class B primary airport?', a:[
+      '30 nautical miles',
+      '10 nautical miles',
+      '20 nautical miles',
+      '5 nautical miles'],
+      why:'The <b>Mode C veil</b> is a 30 NM ring from the primary Class B airport, from the surface to 10,000 ft MSL. It shows as a thin blue circle on the sectional.' },
+
+    { t:'airspace', q:'Which airspace requires an explicit "cleared into" clearance before entry?', a:[
+      'Class B',
+      'Class C',
+      'Class D',
+      'Class E'],
+      why:'Only <b>Class B</b> needs the words "cleared into the Class Bravo." C and D need two-way communication established; E and G need nothing.' },
+
+    /* ── Weather ── */
+    { t:'wx', q:'In a METAR, <code>BKN012</code> means…', a:[
+      'Broken layer at 1,200 feet AGL — and this is a ceiling',
+      'Broken layer at 120 feet AGL',
+      'Broken layer at 12,000 feet MSL',
+      'Visibility broken by an obstruction 12 miles out'],
+      why:'Cloud heights are in <b>hundreds of feet AGL</b> above the reporting station: 012 → 1,200 ft. BKN and OVC always count as ceilings.' },
+
+    { t:'wx', q:'Which cloud layers count as a ceiling?', a:[
+      'BKN, OVC, and VV',
+      'Any reported layer',
+      'SCT and above',
+      'Only OVC'],
+      why:'A ceiling is the <b>lowest broken, overcast, or vertical-visibility</b> layer. FEW and SCT are never ceilings no matter how low they are.' },
+
+    { t:'wx', q:'Winds in a METAR are referenced to…', a:[
+      'True north',
+      'Magnetic north',
+      'The active runway heading',
+      'Grid north'],
+      why:'<b>METAR and TAF winds are true.</b> Winds spoken to you over the radio — ATIS, AWOS, tower — are <b>magnetic</b>. It is a favorite oral question.' },
+
+    { t:'wx', q:'<code>A3001</code> in a METAR means…', a:[
+      'Altimeter setting 30.01 inches of mercury',
+      'Ceiling at 3,001 feet',
+      'Air temperature 30°C, dewpoint 01°C',
+      'Runway 30 in use at 01 knots crosswind'],
+      why:'The <code>A</code> group is the <b>altimeter setting in inHg</b>, with the decimal point removed. Internationally you will see <code>Q</code> followed by hectopascals instead.' },
+
+    { t:'wx', q:'<code>M04/M06</code> reports…', a:[
+      'Temperature −4°C, dewpoint −6°C',
+      'Temperature 4°C, dewpoint 6°C',
+      'Minimum temperature 4°, maximum 6°',
+      'Mist at 400 ft, 600 ft'],
+      why:'<b>M means minus.</b> The spread here is only 2°C, which means the air is close to saturation — expect fog or low stratus to form.' },
+
+    { t:'wx', q:'<code>BR</code> in a METAR is…', a:[
+      'Mist — visibility between 5/8 and 6 statute miles',
+      'Fog — visibility under 5/8 SM',
+      'Broken cloud',
+      'Freezing rain'],
+      why:'<b>BR</b> is mist (from the French <i>brume</i>), <b>FG</b> is fog. The dividing line between them is 5/8 SM visibility.' },
+
+    { t:'wx', q:'<code>VV002</code> tells you…', a:[
+      'Vertical visibility 200 ft — the sky is obscured, and this counts as the ceiling',
+      'Variable visibility, 2 SM',
+      'A cloud layer at 200 ft with clear sky above',
+      'Visibility varies between 0 and 2 miles'],
+      why:'<b>VV</b> means you cannot see the sky at all — fog, heavy snow, smoke — and 002 is how far up you <i>can</i> see. It is a ceiling.' },
+
+    { t:'wx', q:'A small temperature/dewpoint spread suggests…', a:[
+      'Fog or low stratus is likely',
+      'Strong turbulence',
+      'Thunderstorms are forming',
+      'Excellent visibility'],
+      why:'A small spread means the air is near saturation. As the temperature falls toward the dewpoint overnight, <b>visible moisture forms</b>. Watch this on any early-morning flight.' },
+
+    { t:'wx', q:'<code>+TSRA</code> means…', a:[
+      'Thunderstorm with heavy rain',
+      'Light thunderstorm and rain',
+      'Thunderstorm in the vicinity',
+      'Rain expected after the thunderstorm'],
+      why:'<code>+</code> heavy, <code>TS</code> thunderstorm, <code>RA</code> rain. A <code>−</code> would be light and <code>VC</code> would mean 5–10 SM away from the field.' },
+
+    { t:'wx', q:'A METAR reports <code>10SM</code>. That means visibility is…', a:[
+      '10 statute miles or more — 10 is the maximum reported value',
+      'Exactly 10 statute miles',
+      '10 nautical miles',
+      'Between 9 and 10 statute miles'],
+      why:'Automated stations top out at <b>10 SM</b>. It could be 40 miles of visibility and it would still read <code>10SM</code>.' },
+
+    { t:'wx', q:'Minimum flight and surface visibility for a student pilot flying solo in the daytime is…', a:[
+      '3 statute miles',
+      '1 statute mile',
+      '5 statute miles',
+      '3 nautical miles'],
+      why:'§61.89(a)(6): <b>3 SM by day, 5 SM at night</b> — and §61.89(a)(8) adds that you must be able to fly by visual reference to the surface.' },
+
+    { t:'wx', q:'Which of these gives you an official weather briefing that creates a record?', a:[
+      '1800wxbrief.com or 1-800-WX-BRIEF (Leidos Flight Service)',
+      'The ATIS at your departure airport',
+      'A weather app on your phone',
+      'Looking at the sky and the windsock'],
+      why:'<b>Leidos Flight Service</b> is the standard-briefing source, and most EFBs can file through it. Everything else is supplemental — useful, but not a briefing of record.' },
+
+    { t:'wx', q:'What are the three types of weather briefing?', a:[
+      'Standard, Abbreviated, Outlook',
+      'Full, Partial, Emergency',
+      'Local, Regional, National',
+      'VFR, IFR, Special VFR'],
+      why:'<b>Standard</b> is the full picture. <b>Abbreviated</b> updates one you already have. <b>Outlook</b> is for a departure 6 or more hours away.' },
+
+    /* ── Aerodynamics ── */
+    { t:'aero', q:'A wing stalls when…', a:[
+      'It exceeds its critical angle of attack',
+      'Airspeed drops below the published stall speed',
+      'The engine loses power',
+      'The airplane exceeds its maximum gross weight'],
+      why:'It is <b>always</b> angle of attack. A wing can stall at any airspeed, any attitude, any power setting, and any weight — that sentence is worth memorizing verbatim.' },
+
+    { t:'aero', q:'Which two things does the pilot directly control in the lift equation?', a:[
+      'Angle of attack and airspeed',
+      'Air density and wing area',
+      'Weight and drag',
+      'Thrust and altitude'],
+      why:'L = C<sub>L</sub> × ½ρV² × S. You change <b>C<sub>L</sub></b> with angle of attack and flaps, and <b>V</b> with the throttle and pitch. Density and wing area are handed to you.' },
+
+    { t:'aero', q:'If you double your airspeed, lift changes by a factor of…', a:[
+      'Four — velocity is squared in the lift equation',
+      'Two',
+      'Eight',
+      'It does not change if angle of attack is constant'],
+      why:'The <b>V²</b> term is why small speed changes matter so much near the ground, and why a stall speed rises so quickly with load factor.' },
+
+    { t:'aero', q:'P-factor is caused by…', a:[
+      'The descending propeller blade taking a bigger bite of air at high angles of attack',
+      'The propeller wash striking the vertical stabilizer',
+      'Newton\'s third law acting on the airframe',
+      'Gyroscopic forces in the spinning propeller'],
+      why:'At high AOA the <b>descending blade on the right</b> has a higher effective angle and makes more thrust than the ascending blade, so the nose yaws left.' },
+
+    { t:'aero', q:'Spiraling slipstream yaws the nose left because the corkscrewing prop wash strikes…', a:[
+      'The left side of the vertical stabilizer',
+      'The right side of the vertical stabilizer',
+      'The bottom of the horizontal stabilizer',
+      'The left wing root'],
+      why:'The wash wraps around the fuselage and hits the tail on the <b>left</b>, pushing the tail right and the nose left. It is strongest at <b>high power and low airspeed</b> — the takeoff roll.' },
+
+    { t:'aero', q:'Gyroscopic precession means a force applied to the spinning propeller is felt…', a:[
+      '90° ahead, in the direction of rotation',
+      'At the point where it was applied',
+      '180° opposite the point of application',
+      '45° behind the point of application'],
+      why:'Push the nose over and the force applied at the top of the disc shows up on the <b>right side</b>, yawing you left. Dramatic in a tailwheel airplane; mild in a 172.' },
+
+    { t:'aero', q:'Torque makes the airplane want to…', a:[
+      'Roll left, because the propeller turns clockwise',
+      'Roll right',
+      'Pitch up',
+      'Yaw right at high airspeed'],
+      why:'Newton\'s third law: the engine turns the prop clockwise, so the airframe is pushed counter-clockwise — <b>left roll</b>. On the ground it loads the left main and yaws you left too.' },
+
+    { t:'aero', q:'What is the pilot\'s correction for all the left-turning tendencies?', a:[
+      'Right rudder',
+      'Right aileron',
+      'Left rudder',
+      'Nose-down trim'],
+      why:'<b>Right rudder.</b> And note the airplane is rigged to help: the engine and vertical fin are offset so the tendencies cancel at cruise — which is why you need so much rudder in a full-power climb and almost none in level flight.' },
+
+    { t:'aero', q:'The left-turning tendencies are strongest at…', a:[
+      'High power, low airspeed, high angle of attack',
+      'Low power, high airspeed',
+      'Cruise flight',
+      'Any descent'],
+      why:'That combination is exactly a <b>full-power climb</b> or the takeoff roll — which is where the airplane tries hardest to leave the runway on the left side.' },
+
+    /* ── Systems ── */
+    { t:'sys', q:'In the engine designation <code>IO-360</code>, what does the <code>I</code> mean?', a:[
+      'Fuel injected',
+      'Inline cylinders',
+      'Inverted',
+      'Improved'],
+      why:'<b>I</b> = injected, <b>O</b> = horizontally opposed, <b>360</b> = cubic inches of displacement. An <code>O-320</code> with no I is <b>carbureted</b> — which changes your rough-engine answer completely.' },
+
+    { t:'sys', q:'What does the <code>O</code> in <code>O-320</code> stand for?', a:[
+      'Horizontally opposed cylinders',
+      'Overhead cam',
+      'Oil-cooled',
+      'Octane rating'],
+      why:'Horizontally <b>opposed</b> — the cylinders lie flat, half on each side of the crankshaft. That is what makes the engine short and wide and easy to cool with ram air.' },
+
+    { t:'sys', q:'Fuel reaches the engine in a high-wing Cessna primarily by…', a:[
+      'Gravity — the tanks sit above the engine',
+      'An electric fuel pump that must be on for flight',
+      'The engine-driven pump alone',
+      'Positive pressure from the tank vents'],
+      why:'<b>Gravity feed</b> is the headline fact for a high wing. On a fuel-injected model there is still an engine-driven pump and an electric aux pump, but a low-wing airplane <i>needs</i> a pump — a high wing does not.' },
+
+    { t:'sys', q:'100LL avgas is dyed…', a:[
+      'Blue',
+      'Green',
+      'Clear',
+      'Red'],
+      why:'<b>100LL is blue.</b> Jet A is clear and smells like kerosene. 100 octane, low lead — "low" only relative to what came before it.' },
+
+    { t:'sys', q:'You sump the fuel tanks primarily to check for…', a:[
+      'Water, sediment, and the correct grade of fuel',
+      'Fuel quantity',
+      'Fuel pressure',
+      'Whether the vents are clear'],
+      why:'Water sinks and shows as clear beads or a distinct line. Sump <b>every</b> drain, because water pools at whichever low point the airplane\'s attitude creates.' },
+
+    { t:'sys', q:'Why does a piston aircraft engine have two magnetos?', a:[
+      'Redundancy, plus a more complete and even burn from two spark plugs per cylinder',
+      'To double the ignition voltage',
+      'One runs the engine, the other charges the battery',
+      'To allow starting without a battery only'],
+      why:'Both reasons matter. The more complete burn is why <b>RPM drops slightly</b> when you switch to a single mag during runup — you are deliberately making the burn worse to prove the other one works.' },
+
+    { t:'sys', q:'The magnetos get their electrical power from…', a:[
+      'The engine itself — they are engine-driven and independent of the aircraft electrical system',
+      'The battery',
+      'The alternator',
+      'The master switch bus'],
+      why:'This is why the engine <b>keeps running with the master off</b>, and why a propeller must always be treated as live even with everything switched off.' },
+
+    { t:'sys', q:'The four-stroke cycle, in order, is…', a:[
+      'Intake, compression, power, exhaust',
+      'Compression, intake, power, exhaust',
+      'Intake, power, compression, exhaust',
+      'Intake, compression, exhaust, power'],
+      why:'"Suck, squeeze, bang, blow." It takes <b>two crankshaft revolutions</b> to complete one full cycle in each cylinder.' },
+
+    { t:'sys', q:'Avgas weighs approximately…', a:[
+      '6 pounds per gallon',
+      '7.5 pounds per gallon',
+      '5 pounds per gallon',
+      '8.35 pounds per gallon'],
+      why:'<b>6 lb/gal</b> for avgas — you will use this constantly in weight and balance. (Oil is 7.5 lb/gal and water is 8.35, which is where the distractors come from.)' },
+
+    { t:'sys', q:'You apply carburetor heat and the engine runs <i>rougher</i> for a few seconds. This means…', a:[
+      'It was working — melted ice is passing through the engine',
+      'The carb heat system is broken; turn it off',
+      'You have a fouled spark plug',
+      'The mixture is too lean'],
+      why:'That brief roughness is your <b>confirmation</b>, not a reason to shut it off. Leave it in and let it clear.' },
+
+    { t:'sys', q:'A fuel-injected engine has no carburetor heat. What do you reach for instead if you suspect induction blockage?', a:[
+      'Alternate air',
+      'The primer',
+      'Cowl flaps',
+      'The mixture, full lean'],
+      why:'<b>Alternate air</b> draws induction air from inside the cowling, bypassing a blocked filter. On many injected singles it opens automatically.' },
+
+    { t:'sys', q:'"Total" and "usable" fuel differ because…', a:[
+      'Some fuel sits below the pickup and cannot reach the engine',
+      'Usable fuel excludes what you burn during taxi',
+      'Total fuel includes the oil supply',
+      'They are the same thing, expressed in different units'],
+      why:'That difference is <b>unusable fuel</b>. It shows on the gauge and it will never reach the engine, so plan every fuel calculation on the <b>usable</b> number.' },
+
+    /* ── Emergencies ── */
+    { t:'emer', q:'The engine starts running rough in cruise. Your very first priority is…', a:[
+      'Fly the airplane — pitch for best glide and start turning toward a field',
+      'Switch fuel tanks',
+      'Call ATC and declare an emergency',
+      'Check the engine instruments'],
+      why:'<b>Aviate, navigate, communicate.</b> A rough engine can become no engine while your head is down troubleshooting. Get the airplane pointed somewhere survivable first.' },
+
+    { t:'emer', q:'In a <i>carbureted</i> engine running rough, what is the first item to reach for?', a:[
+      'Carburetor heat — ON',
+      'Mixture — full lean',
+      'Magnetos — OFF then ON',
+      'Master switch — OFF'],
+      why:'Carb ice is both the most likely cause and the most fixable one. Injected engines skip this step entirely — <b>know which engine you fly.</b>' },
+
+    { t:'emer', q:'The transponder code for an emergency is…', a:[
+      '7700','7600','7500','1200'],
+      why:'<b>7700</b> emergency, <b>7600</b> lost communications, <b>7500</b> hijack, <b>1200</b> VFR. "Seven-seven, going to heaven; seven-six, radio fix; seven-five, taken alive."' },
+
+    { t:'emer', q:'You lose radios in the traffic pattern. What do you squawk?', a:[
+      '7600','7700','7500','7000'],
+      why:'<b>7600</b> — then stay in the pattern, keep flying, and watch the tower for a light gun signal.' },
+
+    { t:'emer', q:'The emergency frequency is…', a:[
+      '121.5 MHz','123.45 MHz','122.0 MHz','118.0 MHz'],
+      why:'<b>121.5</b> is guard, monitored continuously. If you are already talking to someone, though, just tell <i>them</i> — do not go hunting for a new frequency in an emergency.' },
+
+    { t:'emer', q:'Under §91.3(b), in an in-flight emergency the pilot in command may…', a:[
+      'Deviate from any rule in Part 91 to the extent required to meet that emergency',
+      'Deviate only from altitude and airspace rules',
+      'Deviate only after receiving ATC approval',
+      'Not deviate from any rule without a prior waiver'],
+      why:'<b>Any rule</b>, and you do not need permission first. It is the broadest authority a pilot has, and it exists precisely so you never hesitate.' },
+
+    { t:'emer', q:'After deviating from a rule under emergency authority, when must you file a written report?', a:[
+      'Only if the Administrator requests one',
+      'Always, within 24 hours',
+      'Always, within 10 days',
+      'Never — emergency deviations are never reportable'],
+      why:'§91.3(c): <b>upon request</b>. Separately, consider filing a <b>NASA ASRS</b> report — it is confidential, free, and can waive the sanction for an inadvertent violation.' },
+
+    { t:'emer', q:'You handle an engine problem and land safely at an airport that is not ARR. What do you do about the airplane?', a:[
+      'Secure it, leave it there, and call your CFI — a mechanic has to look at it',
+      'Run it up on the ground; if it is smooth, fly it home',
+      'Fly it home at low altitude, staying near fields',
+      'Have another student come get it'],
+      why:'<b>You do not fly it again.</b> "It seems fine now" is how a second, worse failure happens — and your solo endorsement authorized a specific flight, not a ferry from an unfamiliar field.' },
+
+    { t:'emer', q:'After an off-field or diversion landing, your first phone call should be to…', a:[
+      'Your CFI and the flight school',
+      'The FAA',
+      'The nearest maintenance shop',
+      'Your family'],
+      why:'Before anything else, before posting anything anywhere. Your instructor decides what happens next — to the airplane and to you.' },
+
+    { t:'emer', q:'You declared an emergency and landed safely at another field. If you had a flight plan or flight following, you must…', a:[
+      'Close it, or a search will be launched for you',
+      'Leave it open until you return to ARR',
+      'Do nothing — ATC closes it automatically',
+      'Refile it from the new airport'],
+      why:'An open flight plan that nobody closes triggers an <b>ALNOT</b> and people start looking. Close the loop with whoever was watching you.' },
+
+    /* ── V-speeds ── */
+    { t:'vsp', q:'Vx is…', a:[
+      'Best angle of climb — the most altitude gained per unit of horizontal distance',
+      'Best rate of climb — the most altitude per unit of time',
+      'The maximum structural cruising speed',
+      'The stall speed in the landing configuration'],
+      why:'<b>X for the x-axis</b> — horizontal distance. Angle. Obstacles. Use it on a short field when there are trees off the end.' },
+
+    { t:'vsp', q:'Vy is…', a:[
+      'Best rate of climb — the most altitude gained per unit of time',
+      'Best angle of climb',
+      'The never-exceed speed',
+      'The maximum flap extension speed'],
+      why:'<b>Y for the y-axis</b> — altitude over time. Rate. It is the everyday climb speed on a normal departure.' },
+
+    { t:'vsp', q:'As altitude increases, Vx and Vy do what?', a:[
+      'Vx increases and Vy decreases, converging at the absolute ceiling',
+      'Both increase',
+      'Both decrease',
+      'Vx decreases and Vy increases'],
+      why:'They meet at the <b>absolute ceiling</b>, where excess power is zero and the airplane can no longer climb at all. Service ceiling is defined a bit lower, where you can still manage 100 fpm.' },
+
+    { t:'vsp', q:'Vso is defined as the stalling speed…', a:[
+      'In the landing configuration — full flaps, gear down, power off, at maximum gross weight',
+      'In the clean configuration',
+      'At the moment of rotation',
+      'At any weight, in any configuration'],
+      why:'The <b>0</b> means "zero flap retraction" — flaps fully extended. Compare <b>Vs1</b>, which is a specific configuration, conventionally clean.' },
+
+    { t:'vsp', q:'The bottom of the white arc on the airspeed indicator is…', a:[
+      'Vso','Vs1','Vfe','Va'],
+      why:'White arc = the <b>full-flap operating range</b>: bottom is <b>Vso</b>, top is <b>Vfe</b>. Green arc: bottom is <b>Vs1</b>, top is <b>Vno</b>.' },
+
+    { t:'vsp', q:'The top of the white arc is…', a:[
+      'Vfe — maximum flap extended speed',
+      'Vno — maximum structural cruising speed',
+      'Vne — never exceed',
+      'Va — maneuvering speed'],
+      why:'Above <b>Vfe</b> the flaps can be damaged by air loads. That is why the white arc stops where it does.' },
+
+    { t:'vsp', q:'The top of the green arc is…', a:[
+      'Vno — maximum structural cruising speed',
+      'Vne','Vfe','Vy'],
+      why:'Above <b>Vno</b> you are in the <b>yellow arc</b>: smooth air only, and no abrupt control inputs. Turbulence up there can overstress the airframe.' },
+
+    { t:'vsp', q:'The yellow arc means…', a:[
+      'Caution range — smooth air only, no abrupt control movements',
+      'Normal operating range',
+      'Flap operating range',
+      'Never exceed this speed'],
+      why:'It is legal to fly there, but only in <b>smooth air</b>. A single sharp gust in the yellow arc can exceed the design load limit.' },
+
+    { t:'vsp', q:'The red line on the airspeed indicator is…', a:[
+      'Vne — never exceed',
+      'Vno','Vfe','Va'],
+      why:'<b>Never exceed. Ever.</b> There is no margin built in past that line — it is where structural failure or flutter becomes a real possibility.' },
+
+    { t:'vsp', q:'Vr is…', a:[
+      'Rotation speed — where you apply back pressure to lift the nosewheel',
+      'The speed for best range',
+      'Reference landing speed',
+      'The maximum speed for retracting flaps'],
+      why:'Light singles often do not mark Vr as a limitation — look in <b>POH Section 4, Normal Procedures</b>, where it says "lift off at __ KIAS." Short-field usually specifies a different, lower number.' },
+
+    { t:'vsp', q:'Can Vr be less than Vso?', a:[
+      'Yes — Vso is published at max gross weight, and ground effect lets the airplane fly below its free-air stall speed',
+      'No — you can never become airborne below Vso',
+      'No — Vso is an absolute structural minimum',
+      'Only in an airplane with retractable gear'],
+      why:'This is the trick question. Stall speed <b>falls with weight</b>, and inside about one wingspan of the ground, reduced induced drag lets the wing fly slower. That is exactly what a <b>soft-field takeoff</b> exploits.' },
+
+    { t:'vsp', q:'The "V" in V-speed comes from…', a:[
+      'The French word <i>vitesse</i>, meaning speed',
+      'The English word "velocity"',
+      '"Variable," since the speeds change with weight',
+      '"Vertical," from the original climb speeds'],
+      why:'Early international aviation standards work was conducted largely in French. <b>Vitesse.</b> Do not write "velocity" — this is a five-point gift question with exactly one right answer.' },
+
+    { t:'vsp', q:'As aircraft weight decreases, stall speed…', a:[
+      'Decreases',
+      'Increases',
+      'Stays exactly the same',
+      'Decreases only if flaps are extended'],
+      why:'A lighter wing needs less lift, so it can fly slower before reaching the critical angle of attack. This is why the published Vso — measured at <b>max gross</b> — is conservative when you fly solo.' },
+
+    { t:'vsp', q:'Ground effect is significant within roughly…', a:[
+      'One wingspan of the surface',
+      'Ten feet of the surface',
+      'Three wingspans of the surface',
+      'The length of the runway'],
+      why:'Inside that height the ground interferes with the wingtip vortices, cutting induced drag. It is why an overloaded airplane can stagger off and then settle back on when it climbs out of the cushion.' },
+
+    { t:'vsp', q:'As weight decreases, maneuvering speed (Va)…', a:[
+      'Decreases',
+      'Increases',
+      'Stays the same',
+      'Increases up to Vno, then stays constant'],
+      why:'Counter-intuitive but true: a <b>lighter</b> airplane accelerates more sharply under a gust load, so it must be flown <b>slower</b> in turbulence. Va is only published at gross weight.' },
+
+    /* ── Regs & student limits ── */
+    { t:'regs', q:'May a student pilot carry a passenger?', a:[
+      'No — never, under any circumstances',
+      'Yes, with a CFI endorsement',
+      'Yes, after 40 hours of flight time',
+      'Yes, if the passenger is another student pilot'],
+      why:'§61.89(a)(1). No passengers, full stop. Not your instructor as a passenger, not a friend, not a family member.' },
+
+    { t:'regs', q:'You own a small business. May you fly solo as a student pilot in furtherance of that business?', a:[
+      'No — §61.89 prohibits a student from flying in furtherance of a business',
+      'Yes, as long as nobody pays you',
+      'Yes, if you own the aircraft',
+      'Yes, if the flight would have happened anyway'],
+      why:'"In furtherance of a business" is <b>wide</b> — it does not require that you be paid. Flying your own product, meeting a supplier, even repositioning empty for a business purpose all fall inside it.' },
+
+    { t:'regs', q:'Once you hold a private pilot certificate, when may you fly in connection with a business?', a:[
+      'When the flight is only incidental to that business and carries no passengers or property for compensation or hire',
+      'Never, under any circumstances',
+      'Any time, as long as you log it',
+      'Only if your employer holds a Part 135 certificate'],
+      why:'§61.113(b). The test is whether <b>the flying itself</b> is the thing of value being sold. If you would have driven and flying is just how you got there, it is incidental.' },
+
+    { t:'regs', q:'A student pilot\'s solo endorsement must be renewed by an instructor every…', a:[
+      '90 days','30 days','6 calendar months','12 calendar months'],
+      why:'§61.87(p) — <b>90 days</b>. The pre-solo knowledge test and the §61.87(n) endorsement are separate items that live in your logbook.' },
+
+    { t:'regs', q:'Position (navigation) lights are required equipment for…', a:[
+      'Night flight',
+      'All flight, day and night',
+      'Day VFR flight only',
+      'Flight in controlled airspace only'],
+      why:'§91.205(<b>c</b>) covers night and adds <b>FLAPS</b> — Fuses, Landing light (if for hire), Anticollision, <b>Position lights</b>, Source of power. §91.205(b) day VFR does not list them.' },
+
+    { t:'regs', q:'"A TOMATO FLAMES" is the mnemonic for…', a:[
+      'Required equipment for day VFR flight',
+      'Required equipment for night VFR flight',
+      'Required aircraft documents',
+      'Required inspections'],
+      why:'Day VFR under <b>§91.205(b)</b>. Night adds <b>FLAPS</b> on top of it. Documents are <b>ARROW</b>; inspections are <b>AV1ATE</b>.' },
+
+    { t:'regs', q:'You find an inoperative item that is not required by §91.205, the type certificate, or an AD. Under §91.213(d), before flight it must be…', a:[
+      'Deactivated or removed by a mechanic and placarded "INOPERATIVE," then the PIC determines it is safe',
+      'Simply noted in the aircraft logbook by the pilot',
+      'Repaired before the next flight, with no exceptions',
+      'Placarded by the pilot, who may then deactivate it'],
+      why:'Deactivation or removal is <b>maintenance</b> — a certificated mechanic or repairman does it and makes the entry. You cannot placard your way around a squawk on your own.' },
+
+    { t:'regs', q:'As a student pilot who finds a discrepancy on preflight, the right call is almost always…', a:[
+      'Write it up, call your instructor and dispatch, and do not fly',
+      'Fly it if it is not on the §91.205 list',
+      'Fix it yourself if it is minor',
+      'Fly a shorter pattern to reduce the risk'],
+      why:'Nobody has ever been criticized for grounding an airplane over a light. <b>When in doubt, it does not fly</b> — that instinct is a large part of what a solo endorsement is certifying.' },
+
+    { t:'regs', q:'A student pilot may fly solo when…', a:[
+      'They have a current 90-day solo endorsement and comply with every limitation written in it',
+      'Their CFI is present at the airport',
+      'They have logged at least 20 hours',
+      'They have passed the FAA written exam'],
+      why:'§61.89(a)(9): flying <b>contrary to any limitation in your endorsement</b> is itself a violation. The wind limits and airport restrictions your CFI wrote are regulatory, not advisory.' },
+
+    /* ── Light gun ── */
+    { t:'light', q:'You are in the traffic pattern with a failed radio and the tower shines a <b>steady green</b> light. It means…', a:[
+      'Cleared to land',
+      'Cleared for the option',
+      'Depart the airspace immediately',
+      'Use extreme caution'],
+      why:'<b>Steady green in flight = cleared to land.</b> On the ground it means cleared for takeoff. "Cleared for the option" is not a light gun signal at all.' },
+
+    { t:'light', q:'A <b>flashing green</b> light to an aircraft in flight means…', a:[
+      'Return for landing — a steady green will follow',
+      'Cleared to land immediately',
+      'Cleared to taxi',
+      'Airport unsafe, do not land'],
+      why:'Flashing = <b>not yet</b>. Come back around; they will give you the steady green when it is your turn.' },
+
+    { t:'light', q:'A <b>steady red</b> light to an aircraft in flight means…', a:[
+      'Give way to other aircraft and continue circling',
+      'Stop',
+      'Land immediately',
+      'Airport unsafe, do not land'],
+      why:'Steady red in the air = <b>keep circling, let others go first</b>. "Stop" is what steady red means on the <b>ground</b>.' },
+
+    { t:'light', q:'A <b>flashing red</b> light to an aircraft in flight means…', a:[
+      'Airport unsafe — do not land',
+      'Give way and continue circling',
+      'Return to your starting point',
+      'Taxi clear of the runway'],
+      why:'In the air: <b>do not land.</b> On the ground the same signal means taxi clear of the runway in use.' },
+
+    { t:'light', q:'An <b>alternating red and green</b> light means…', a:[
+      'General warning — exercise extreme caution',
+      'Cleared to land with caution',
+      'Return for landing',
+      'Hold your position'],
+      why:'It is the only signal that means the <b>same thing in the air and on the ground</b>, and it never means "cleared" for anything.' },
+
+    { t:'light', q:'A <b>flashing white</b> light is only ever given to…', a:[
+      'Aircraft on the ground — return to your starting point on the airport',
+      'Aircraft in flight — return for landing',
+      'Aircraft in flight — airport unsafe',
+      'Ground vehicles only'],
+      why:'"Return to your starting point on the airport" is <b>meaningless in the air</b>, which is why this signal has no in-flight column.' },
+
+    { t:'light', q:'How do you acknowledge a light gun signal during the day?', a:[
+      'Rock your wings',
+      'Blink your landing light',
+      'Make a 360° turn',
+      'Squawk 7600 and continue'],
+      why:'<b>Rock your wings</b> by day, <b>blink the landing light</b> at night. The tower needs to know you saw it.' },
+
+    { t:'light', q:'Your radio fails while inbound to KARR. Are you allowed to enter the Class D and land?', a:[
+      'Yes — §91.129(d)(2) provides for it if you get a light gun clearance and weather permits',
+      'No — two-way radio is absolutely required, so you must divert',
+      'Only if you first declare an emergency',
+      'Only at an uncontrolled field'],
+      why:'A radio that fails <b>in flight</b> is treated differently from one that was already broken before you departed. Squawk 7600, stay in the pattern, and watch the tower.' },
+
+    /* ── Weight, balance & performance ── */
+    { t:'wb', q:'Center of gravity is calculated as…', a:[
+      'Total moment ÷ total weight',
+      'Total weight ÷ total moment',
+      'Total weight × total arm',
+      'Empty weight + useful load'],
+      why:'And <b>moment = weight × arm</b>. Build the table, sum both columns, divide, then plot the result on the CG envelope in POH Section 6.' },
+
+    { t:'wb', q:'Zero fuel weight is…', a:[
+      'Everything except fuel — empty weight plus crew, passengers, and baggage',
+      'The empty weight of the aircraft',
+      'The weight after landing',
+      'Maximum gross weight minus full fuel'],
+      why:'It is the <b>floor</b> your weight can never drop below in flight, because it is the only part of the load that does not burn off.' },
+
+    { t:'wb', q:'A CG that is too far <b>aft</b> is dangerous mainly because…', a:[
+      'The airplane becomes unstable in pitch and may be unrecoverable from a spin',
+      'The stall speed increases sharply',
+      'It becomes impossible to flare for landing',
+      'Cruise speed drops significantly'],
+      why:'Aft CG is the one to fear. Forward CG makes the airplane <b>heavy and hard to flare</b> with a higher stall speed — unpleasant, but stable.' },
+
+    { t:'wb', q:'A CG that is too far <b>forward</b> causes…', a:[
+      'A higher stall speed and possibly not enough elevator authority to flare',
+      'A tendency to pitch up uncontrollably',
+      'A reduced stall speed',
+      'No handling change, only a legal violation'],
+      why:'Nose-heavy means the tail has to push down harder, which the wing must carry — so effective weight and stall speed go <b>up</b>, and you may run out of elevator in the roundout.' },
+
+    { t:'wb', q:'Pressure altitude is…', a:[
+      'The altitude read with 29.92 set in the altimeter',
+      'Field elevation',
+      'Indicated altitude corrected for temperature',
+      'Altitude above ground level'],
+      why:'Set <b>29.92</b> and read it, or compute it. Every performance chart in Section 5 is entered with pressure altitude and temperature — not field elevation.' },
+
+    { t:'wb', q:'On a takeoff performance chart, a <b>tailwind</b>…', a:[
+      'Increases the required distance substantially — the penalty per knot is much larger than the headwind credit',
+      'Has the same magnitude of effect as an equal headwind',
+      'Is not accounted for on light aircraft charts',
+      'Slightly reduces the ground roll'],
+      why:'Read the chart notes. The tailwind penalty is <b>brutal</b> and asymmetric — which is why taking off downwind "just this once" ends badly so often.' },
+
+    { t:'wb', q:'Book takeoff and landing distances should be treated as…', a:[
+      'A best case flown by a factory test pilot in a new airplane — add your own margin',
+      'A guaranteed maximum for any pilot',
+      'Already conservative by 50%',
+      'Valid only above 5,000 ft pressure altitude'],
+      why:'Those numbers came from a new airframe, a fresh engine, and a professional flying the profile perfectly. <b>Add at least 50%</b> before you decide a runway is long enough.' },
+
+    { t:'wb', q:'Maximum fuel weight for weight-and-balance purposes is based on…', a:[
+      'Usable fuel × 6 lb/gal',
+      'Total fuel × 6 lb/gal',
+      'Usable fuel × 7.5 lb/gal',
+      'Total fuel capacity in gallons, no conversion'],
+      why:'Use <b>usable</b> fuel. And expect to find that on many trainers, full fuel plus two adults exceeds max gross — which is exactly the lesson the question is built to teach.' },
+
+    { t:'wb', q:'Projected landing weight matters because…', a:[
+      'Burning fuel moves the CG, so the CG must be checked at landing weight too',
+      'Landing weight limits are always lower than takeoff limits on a 172',
+      'It determines your required runway length only',
+      'It has no practical effect on a light single'],
+      why:'The CG must remain <b>inside the envelope for the entire flight</b>, not just at takeoff. Check both ends.' }
+  ];
+
+  /* ═══════════════ STATE ═══════════════ */
+  var KEY = 'presoloquiz.v1';
+  var saved = { best: 0, bestAcc: 0, bestStreak: 0, seen: {}, missed: {}, sound: true };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) {
+      var p = JSON.parse(raw);
+      if (p && typeof p === 'object') {
+        saved.best       = p.best || 0;
+        saved.bestAcc    = p.bestAcc || 0;
+        saved.bestStreak = p.bestStreak || 0;
+        saved.seen       = p.seen || {};
+        saved.missed     = p.missed || {};
+        saved.sound      = p.sound !== false;
+      }
+    }
+  } catch (e) {}
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} }
+
+  var cfg = { topics: Object.keys(TOPICS).slice(), len: 10, time: 20 };
+  var game = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ═══════════════ SOUND ═══════════════ */
+  var actx = null;
+  function beep(freqs, dur, type) {
+    if (!saved.sound) { return; }
+    try {
+      if (!actx) { actx = new (window.AudioContext || window.webkitAudioContext)(); }
+      if (actx.state === 'suspended') { actx.resume(); }
+      freqs.forEach(function (f, i) {
+        var o = actx.createOscillator();
+        var g = actx.createGain();
+        o.type = type || 'sine';
+        o.frequency.value = f;
+        var t0 = actx.currentTime + i * (dur * 0.55);
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.09, t0 + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        o.connect(g); g.connect(actx.destination);
+        o.start(t0); o.stop(t0 + dur + 0.02);
+      });
+    } catch (e) {}
+  }
+  var sndRight = function () { beep([660, 880], 0.14, 'triangle'); };
+  var sndWrong = function () { beep([220, 165], 0.2, 'sawtooth'); };
+  var sndTick  = function () { beep([440], 0.05, 'sine'); };
+  var sndDone  = function () { beep([523, 659, 784, 1047], 0.16, 'triangle'); };
+
+  /* ═══════════════ SETUP SCREEN ═══════════════ */
+  var chipWrap = $('topic-chips');
+  Object.keys(TOPICS).forEach(function (k) {
+    var n = BANK.filter(function (q) { return q.t === k; }).length;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip';
+    b.setAttribute('data-topic', k);
+    b.setAttribute('aria-pressed', 'true');
+    b.innerHTML = TOPICS[k] + ' <span class="n">' + n + '</span>';
+    b.addEventListener('click', function () {
+      var on = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', String(!on));
+      syncTopics();
+    });
+    chipWrap.appendChild(b);
+  });
+
+  function syncTopics() {
+    cfg.topics = Array.prototype.slice
+      .call(chipWrap.querySelectorAll('.chip[aria-pressed="true"]'))
+      .map(function (b) { return b.getAttribute('data-topic'); });
+    updateStartNote();
+  }
+
+  function pool() {
+    return BANK.filter(function (q) { return cfg.topics.indexOf(q.t) !== -1; });
+  }
+
+  function updateStartNote() {
+    var n = pool().length;
+    var take = cfg.len === 0 ? n : Math.min(cfg.len, n);
+    $('btn-start').disabled = n === 0;
+    $('start-note').textContent = n === 0
+      ? 'Pick at least one topic.'
+      : take + ' question' + (take === 1 ? '' : 's') + ' from a pool of ' + n + '.';
+  }
+
+  $('pick-all').addEventListener('click', function () {
+    chipWrap.querySelectorAll('.chip').forEach(function (b) { b.setAttribute('aria-pressed', 'true'); });
+    syncTopics();
+  });
+  $('pick-none').addEventListener('click', function () {
+    chipWrap.querySelectorAll('.chip').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    syncTopics();
+  });
+  $('pick-weak').addEventListener('click', function () {
+    var missedTopics = {};
+    Object.keys(saved.missed).forEach(function (i) {
+      if (saved.missed[i] > 0 && BANK[i]) { missedTopics[BANK[i].t] = true; }
+    });
+    if (!Object.keys(missedTopics).length) {
+      $('start-note').textContent = 'Nothing missed yet — play a round first.';
+      return;
+    }
+    chipWrap.querySelectorAll('.chip').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(!!missedTopics[b.getAttribute('data-topic')]));
+    });
+    syncTopics();
+  });
+
+  function segWire(id, key, cast) {
+    $(id).querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        $(id).querySelectorAll('button').forEach(function (x) {
+          x.setAttribute('aria-pressed', String(x === b));
+        });
+        cfg[key] = cast(b.getAttribute('data-' + key));
+        updateStartNote();
+      });
+    });
+  }
+  segWire('seg-len',  'len',  function (v) { return parseInt(v, 10); });
+  segWire('seg-time', 'time', function (v) { return parseInt(v, 10); });
+
+  $('bank-count').textContent = BANK.length + ' questions';
+
+  function paintBests() {
+    $('best-score').textContent  = saved.best;
+    $('best-acc').textContent    = saved.bestAcc ? saved.bestAcc + '%' : '—';
+    $('best-streak').textContent = saved.bestStreak;
+    $('seen-count').textContent  = Object.keys(saved.seen).length + '/' + BANK.length;
+  }
+
+  /* ═══════════════ HELPERS ═══════════════ */
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(function (s) { s.classList.toggle('on', s.id === id); });
+    $('btn-quit').hidden = id !== 'scr-play';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  /* ═══════════════ GAME ═══════════════ */
+  function startGame(subset) {
+    var qs = subset || pool();
+    if (!qs.length) { return; }
+    qs = shuffle(qs);
+    if (cfg.len > 0 && !subset) { qs = qs.slice(0, cfg.len); }
+
+    game = {
+      qs: qs, i: 0, score: 0, right: 0,
+      streak: 0, bestStreak: 0,
+      misses: [], byTopic: {},
+      locked: false, t0: 0, raf: null
+    };
+    show('scr-play');
+    renderQ();
+  }
+
+  function renderQ() {
+    var g = game, q = g.qs[g.i];
+    g.locked = false;
+    $('feedback-slot').innerHTML = '';
+
+    $('q-topic').textContent = TOPICS[q.t];
+    $('q-text').innerHTML = q.q;
+    $('hud-q').textContent = (g.i + 1) + '/' + g.qs.length;
+    $('hud-score').textContent = g.score;
+    $('hud-right').textContent = g.right;
+    $('hud-prog').style.width = (g.i / g.qs.length * 100) + '%';
+    $('hud-streak').textContent = g.streak >= 2 ? g.streak + ' in a row' : 'No streak';
+    $('hud-streak').classList.toggle('live', g.streak >= 2);
+
+    var order = shuffle([0, 1, 2, 3]);
+    var tiles = $('tiles');
+    tiles.className = 'tiles';
+    tiles.innerHTML = '';
+    var letters = ['A', 'B', 'C', 'D'];
+
+    order.forEach(function (origIdx, pos) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tile t' + pos;
+      b.setAttribute('data-correct', String(origIdx === 0));
+      b.innerHTML = '<span class="key">' + letters[pos] + '</span><span>' + q.a[origIdx] + '</span>';
+      b.addEventListener('click', function () { answer(b); });
+      tiles.appendChild(b);
+    });
+
+    // timer
+    var timer = $('hud-timer'), fill = $('hud-timer-fill');
+    if (cfg.time > 0) {
+      timer.classList.remove('off');
+      fill.className = '';
+      fill.style.width = '100%';
+      g.t0 = performance.now();
+      var lastTick = -1;
+      var step = function () {
+        if (g.locked) { return; }
+        var el = (performance.now() - g.t0) / 1000;
+        var frac = Math.max(0, 1 - el / cfg.time);
+        fill.style.width = (frac * 100) + '%';
+        fill.className = frac < 0.2 ? 'crit' : (frac < 0.45 ? 'warn' : '');
+        var secs = Math.ceil(frac * cfg.time);
+        if (secs <= 3 && secs !== lastTick && secs > 0) { lastTick = secs; sndTick(); }
+        if (frac <= 0) { answer(null); return; }
+        g.raf = requestAnimationFrame(step);
+      };
+      g.raf = requestAnimationFrame(step);
+    } else {
+      timer.classList.add('off');
+      g.t0 = performance.now();
+    }
+  }
+
+  function answer(btn) {
+    var g = game;
+    if (g.locked) { return; }
+    g.locked = true;
+    if (g.raf) { cancelAnimationFrame(g.raf); g.raf = null; }
+
+    var q = g.qs[g.i];
+    var qIdx = BANK.indexOf(q);
+    var timedOut = btn === null;
+    var correct = !timedOut && btn.getAttribute('data-correct') === 'true';
+
+    var tiles = $('tiles');
+    tiles.classList.add('locked');
+    tiles.querySelectorAll('.tile').forEach(function (t) {
+      t.disabled = true;
+      if (t.getAttribute('data-correct') === 'true') { t.classList.add('right'); }
+    });
+    if (!correct && !timedOut) { btn.classList.add('wrong'); }
+
+    // scoring
+    var gained = 0;
+    if (correct) {
+      g.right++;
+      g.streak++;
+      g.bestStreak = Math.max(g.bestStreak, g.streak);
+      gained = 100;
+      if (cfg.time > 0) {
+        var el = (performance.now() - g.t0) / 1000;
+        gained += Math.max(0, Math.round(100 * (1 - el / cfg.time)));
+      }
+      if (g.streak >= 2) { gained += Math.min(100, (g.streak - 1) * 25); }
+      g.score += gained;
+      sndRight();
+    } else {
+      g.streak = 0;
+      sndWrong();
+      g.misses.push({
+        q: q.q,
+        right: q.a[0],
+        yours: timedOut ? null : btn.querySelector('span:last-child').innerHTML,
+        why: q.why
+      });
+      if (qIdx >= 0) { saved.missed[qIdx] = (saved.missed[qIdx] || 0) + 1; }
+    }
+    if (qIdx >= 0) { saved.seen[qIdx] = true; }
+    persist();
+
+    if (!g.byTopic[q.t]) { g.byTopic[q.t] = { right: 0, total: 0 }; }
+    g.byTopic[q.t].total++;
+    if (correct) { g.byTopic[q.t].right++; }
+
+    $('hud-score').textContent = g.score;
+    $('hud-right').textContent = g.right;
+    $('hud-streak').textContent = g.streak >= 2 ? g.streak + ' in a row' : 'No streak';
+    $('hud-streak').classList.toggle('live', g.streak >= 2);
+
+    // feedback
+    var last = g.i === g.qs.length - 1;
+    var fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.setAttribute('data-v', correct ? 'right' : (timedOut ? 'time' : 'wrong'));
+
+    var verdictText = correct
+      ? 'Correct'
+      : (timedOut ? 'Out of time' : 'Not quite');
+    var ptsHtml = correct ? '<span class="pts">+' + gained + '</span>' : '';
+    var streakHtml = (correct && g.streak >= 3) ? '<span class="pts">' + g.streak + ' streak</span>' : '';
+
+    fb.innerHTML =
+      '<div class="verdict">' + verdictText + ptsHtml + streakHtml + '</div>' +
+      (correct ? '' : '<p class="why"><b>' + q.a[0] + '</b></p>') +
+      '<p class="why">' + q.why + '</p>';
+
+    var next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'btn sm next';
+    next.textContent = last ? 'See results' : 'Next question';
+    next.addEventListener('click', advance);
+    fb.appendChild(next);
+
+    $('feedback-slot').appendChild(fb);
+    next.focus({ preventScroll: true });
+  }
+
+  function advance() {
+    var g = game;
+    g.i++;
+    if (g.i >= g.qs.length) { finish(); } else { renderQ(); }
+  }
+
+  function finish() {
+    var g = game;
+    var acc = Math.round(g.right / g.qs.length * 100);
+
+    saved.best = Math.max(saved.best, g.score);
+    if (g.qs.length >= 5) { saved.bestAcc = Math.max(saved.bestAcc, acc); }
+    saved.bestStreak = Math.max(saved.bestStreak, g.bestStreak);
+    persist();
+    paintBests();
+
+    $('res-score').textContent  = g.score;
+    $('res-acc').textContent    = acc + '%';
+    $('res-streak').textContent = g.bestStreak;
+    $('done-cap').textContent   = g.right + ' of ' + g.qs.length + ' correct';
+
+    var verdict;
+    if (acc === 100)     { verdict = 'Clean sweep. Go do it again with the clock turned down and the topics you have been avoiding.'; }
+    else if (acc >= 85)  { verdict = 'Solid. Read through the misses below — those are the ones that will come up in the oral.'; }
+    else if (acc >= 65)  { verdict = 'Getting there. Drill the misses, then run the same topics again.'; }
+    else if (acc >= 40)  { verdict = 'Worth going back to the study deck for these topics before the next round.'; }
+    else                 { verdict = 'Read the explanations below carefully — every one of these has a reason behind it, and the reasons are what your CFI will actually ask about.'; }
+    $('res-verdict').textContent = verdict;
+
+    var bars = $('res-bars');
+    bars.innerHTML = '';
+    Object.keys(g.byTopic).sort(function (a, b) {
+      return (g.byTopic[a].right / g.byTopic[a].total) - (g.byTopic[b].right / g.byTopic[b].total);
+    }).forEach(function (k) {
+      var d = g.byTopic[k];
+      var pct = Math.round(d.right / d.total * 100);
+      var row = document.createElement('div');
+      row.className = 'barrow';
+      row.innerHTML =
+        '<span class="lab">' + TOPICS[k] + '</span>' +
+        '<span class="track"><i class="' + (pct >= 80 ? '' : pct >= 50 ? 'mid' : 'low') + '" style="width:' + pct + '%"></i></span>' +
+        '<span class="num">' + d.right + '/' + d.total + '</span>';
+      bars.appendChild(row);
+    });
+
+    var rev = $('res-review');
+    rev.innerHTML = '';
+    $('res-review-panel').hidden = g.misses.length === 0;
+    $('btn-missed').hidden = g.misses.length === 0;
+    g.misses.forEach(function (m) {
+      var el = document.createElement('div');
+      el.className = 'miss';
+      el.innerHTML =
+        '<p class="q">' + m.q + '</p>' +
+        (m.yours ? '<p class="yours">You picked: <b>' + m.yours + '</b></p>' : '<p class="yours">Ran out of time.</p>') +
+        '<p class="ans">Correct: <b>' + m.right + '</b></p>' +
+        '<p class="why">' + m.why + '</p>';
+      rev.appendChild(el);
+    });
+
+    sndDone();
+    show('scr-done');
+  }
+
+  /* ═══════════════ CONTROLS ═══════════════ */
+  $('btn-start').addEventListener('click', function () { startGame(null); });
+  $('btn-again').addEventListener('click', function () { startGame(null); });
+  $('btn-home').addEventListener('click', function () { paintBests(); show('scr-setup'); });
+  $('btn-quit').addEventListener('click', function () {
+    if (game && game.raf) { cancelAnimationFrame(game.raf); }
+    show('scr-setup');
+  });
+  $('btn-missed').addEventListener('click', function () {
+    var texts = {};
+    game.misses.forEach(function (m) { texts[m.q] = true; });
+    var subset = BANK.filter(function (q) { return texts[q.q]; });
+    if (subset.length) { startGame(subset); }
+  });
+
+  $('btn-sound').addEventListener('click', function () {
+    saved.sound = !saved.sound;
+    persist();
+    $('btn-sound').setAttribute('aria-pressed', String(saved.sound));
+    $('btn-sound').textContent = saved.sound ? 'Sound on' : 'Sound off';
+    if (saved.sound) { sndTick(); }
+  });
+  $('btn-sound').setAttribute('aria-pressed', String(saved.sound));
+  $('btn-sound').textContent = saved.sound ? 'Sound on' : 'Sound off';
+
+  document.addEventListener('keydown', function (e) {
+    if (!$('scr-play').classList.contains('on')) { return; }
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) { return; }
+
+    if (game && game.locked) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        var n = document.querySelector('.feedback .next');
+        if (n && e.target === n) { return; }   // the button will fire its own click
+        e.preventDefault();
+        if (n) { n.click(); }
+      }
+      return;
+    }
+    var map = { '1':0, '2':1, '3':2, '4':3, 'a':0, 'b':1, 'c':2, 'd':3 };
+    var idx = map[e.key.toLowerCase()];
+    if (idx !== undefined) {
+      e.preventDefault();
+      var tile = $('tiles').children[idx];
+      if (tile) { tile.click(); }
+    }
+  });
+
+  /* ═══════════════ GO ═══════════════ */
+  syncTopics();
+  paintBests();
+})();
+</script>
+
+<nav id="__nav" aria-label="Site"><a href="./">Home</a><a href="study.html">Study</a><button type="button" id="__theme" aria-label="Switch between light and dark">Theme</button></nav>
+
+<script>
+  (function () {
+    var btn = document.getElementById('__theme');
+    if (!btn) { return; }
+    btn.addEventListener('click', function () {
+      var root = document.documentElement;
+      var cur = root.getAttribute('data-theme');
+      if (!cur) {
+        cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('presolo.theme', next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

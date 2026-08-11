@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EDEAE0">
+<meta name="description" content="Study tools for the Pre-Solo 5.1 written exam — a worked study deck and a multiple-choice quiz game.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pre-Solo">
+<title>Pre-Solo 5.1 — Study Tools</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%9B%A9%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%9B%A9%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Pre-Solo 5.1 — Study Tools">
+<meta property="og:description" content="A worked study deck and a multiple-choice quiz game for the pre-solo written exam.">
+<meta property="og:type" content="website">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('presolo.theme');
+      if (t === 'light' || t === 'dark') { document.documentElement.setAttribute('data-theme', t); }
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+:root {
+  --paper:      #EDEAE0;
+  --surface:    #F7F5EF;
+  --surface-2:  #E2DFD2;
+  --ink:        #15202A;
+  --ink-2:      #4C5C68;
+  --ink-3:      #7B8A94;
+  --rule:       #CECABB;
+  --blue:       #23577D;
+  --blue-soft:  #D5E3EC;
+  --magenta:    #9C3364;
+  --amber:      #916419;
+  --shadow: 0 1px 2px rgba(21,32,42,.05), 0 8px 22px -12px rgba(21,32,42,.28);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0F161C; --surface: #172129; --surface-2: #1F2B34;
+    --ink: #E5EAED; --ink-2: #A0B1BC; --ink-3: #6B7D8A; --rule: #29373F;
+    --blue: #7CB7DE; --blue-soft: #14303F; --magenta: #E68CB2; --amber: #DCAC4E;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F161C; --surface: #172129; --surface-2: #1F2B34;
+  --ink: #E5EAED; --ink-2: #A0B1BC; --ink-3: #6B7D8A; --rule: #29373F;
+  --blue: #7CB7DE; --blue-soft: #14303F; --magenta: #E68CB2; --amber: #DCAC4E;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.7);
+}
+:root[data-theme="light"] {
+  --paper: #EDEAE0; --surface: #F7F5EF; --surface-2: #E2DFD2;
+  --ink: #15202A; --ink-2: #4C5C68; --ink-3: #7B8A94; --rule: #CECABB;
+  --blue: #23577D; --blue-soft: #D5E3EC; --magenta: #9C3364; --amber: #916419;
+  --shadow: 0 1px 2px rgba(21,32,42,.05), 0 8px 22px -12px rgba(21,32,42,.28);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh;
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column;
+}
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem; opacity: .22;
+  mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 15%, transparent 75%);
+}
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 46rem; width: 100%;
+  margin: 0 auto; padding: clamp(2rem, 8vh, 5rem) 1.25rem 5rem;
+  display: flex; flex-direction: column; gap: 2rem; flex: 1;
+}
+h1, h2 { margin: 0; font-weight: 640; letter-spacing: -.015em; text-wrap: balance; }
+p { margin: 0; }
+.eyebrow {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--blue);
+  display: flex; align-items: center; gap: .55rem;
+}
+.eyebrow i { width: 1.6rem; height: 0; border-top: 2px dashed var(--blue); }
+.hero { display: flex; flex-direction: column; gap: .6rem; }
+.hero h1 { font-size: clamp(1.9rem, 6vw, 2.75rem); line-height: 1.08; }
+.hero p { color: var(--ink-2); font-size: 1.0625rem; max-width: 34rem; }
+
+.cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+.card {
+  display: flex; flex-direction: column; gap: .55rem;
+  padding: 1.5rem; border-radius: 4px;
+  background: var(--surface); border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent, var(--rule));
+  box-shadow: var(--shadow); text-decoration: none; color: inherit;
+  transition: transform .16s ease, box-shadow .16s ease, border-left-color .16s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,.06), 0 18px 34px -16px rgba(0,0,0,.35); }
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.card.study { --accent: var(--blue); }
+.card.quiz  { --accent: var(--magenta); }
+.card .tag {
+  font-family: var(--mono); font-size: .625rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent);
+}
+.card h2 { font-size: 1.3rem; }
+.card p { color: var(--ink-2); font-size: .9375rem; }
+.card ul {
+  margin: .35rem 0 0; padding-left: 1.05rem;
+  font-size: .875rem; color: var(--ink-2);
+}
+.card li + li { margin-top: .2rem; }
+.card .go {
+  margin-top: auto; padding-top: .8rem;
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent);
+}
+
+.note {
+  border-left: 2px solid var(--amber);
+  padding: .9rem 1.1rem; border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--amber) 12%, var(--surface));
+  font-size: .875rem; color: var(--ink);
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.note .eyebrow { color: var(--amber); }
+.note .eyebrow i { border-top-color: var(--amber); }
+
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--rule); margin-top: auto;
+  padding: 1.25rem; text-align: center;
+  font-size: .8125rem; color: var(--ink-3);
+}
+footer a { color: var(--ink-2); }
+
+#__nav {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 999;
+  display: flex; padding: 3px; border-radius: 99px;
+  background: rgba(128,140,150,.16);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px -4px rgba(0,0,0,.4);
+  opacity: .55; transition: opacity .2s;
+}
+#__nav:hover, #__nav:focus-within { opacity: 1; }
+#__nav button {
+  font: 600 .75rem/1 var(--mono); letter-spacing: .06em;
+  color: inherit; background: transparent; border: 0; cursor: pointer;
+  padding: .5rem .7rem; border-radius: 99px;
+}
+#__nav button:hover { background: rgba(128,140,150,.3); }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<div class="wrap">
+  <div class="hero">
+    <p class="eyebrow"><i></i> Aurora Muni · KARR · Class D</p>
+    <h1>Pre-Solo 5.1</h1>
+    <p>Two ways to get ready for the written exam and the oral that follows it. Read it through, or drill it under a clock.</p>
+  </div>
+
+  <div class="cards">
+    <a class="card study" href="study.html">
+      <span class="tag">Read it through</span>
+      <h2>Study Deck</h2>
+      <p>All 24 questions from the form, worked through with the reasoning behind each answer.</p>
+      <ul>
+        <li>Live METAR decoder — paste the one from the form</li>
+        <li>Crosswind calculator for the KARR runways</li>
+        <li>Save your own POH numbers and V-speeds</li>
+        <li>Mark cards solid or flag them for review</li>
+      </ul>
+      <span class="go">Open the deck →</span>
+    </a>
+
+    <a class="card quiz" href="quiz.html">
+      <span class="tag">Drill it</span>
+      <h2>Quiz Game</h2>
+      <p>100 multiple-choice questions. Four options, one right, points for speed and streaks.</p>
+      <ul>
+        <li>Pick your topics and set a clock</li>
+        <li>Every miss explains itself before you move on</li>
+        <li>Per-topic scoring, worst subject first</li>
+        <li>Replays the questions you keep getting wrong</li>
+      </ul>
+      <span class="go">Start a round →</span>
+    </a>
+  </div>
+
+  <div class="note">
+    <p class="eyebrow"><i></i> Before you rely on any of this</p>
+    <p>These are study aids, not an authority. The <strong>POH for your tail number</strong>, the <strong>current FARs</strong>, and <strong>your CFI</strong> outrank anything written here, in that order. Regulation citations are included so you can look them up yourself — and you should. Aircraft-specific numbers shown as examples are for a Cessna 172S; replace them with yours.</p>
+  </div>
+</div>
+
+<footer>
+  Works offline once loaded. Progress is saved in your browser only — nothing is sent anywhere.
+</footer>
+
+<nav id="__nav" aria-label="Site">
+  <button type="button" id="__theme" aria-label="Switch between light and dark">Theme</button>
+</nav>
+
+<script>
+  (function () {
+    var btn = document.getElementById('__theme');
+    btn.addEventListener('click', function () {
+      var root = document.documentElement;
+      var cur = root.getAttribute('data-theme');
+      if (!cur) { cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('presolo.theme', next); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
