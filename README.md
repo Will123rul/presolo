@@ -1,13 +1,15 @@
-# Pre-Solo 5.1 — Study Tools
+# Student Pilot Study Tools
 
-Study tools for a student pilot pre-solo written exam at Aurora Municipal (KARR).
-Two self-contained web pages, no build step, no dependencies, no network calls.
+Study tools for a student pilot flying out of Aurora Municipal (KARR) — the pre-solo
+exam, and the FAA Private Pilot knowledge test after it. Self-contained web pages:
+no build step, no dependencies, no network calls.
 
 | Page | What it is |
 | --- | --- |
 | [`index.html`](index.html) | Landing page |
-| [`study.html`](study.html) | Study deck — all 24 questions from the form, worked through |
+| [`study.html`](study.html) | Study deck — all 24 questions from the pre-solo form, worked through |
 | [`quiz.html`](quiz.html) | Quiz game — 100 multiple-choice questions, timed, scored |
+| [`written.html`](written.html) | Private Pilot knowledge test prep — 123 questions, mock exam, E6B tools |
 
 ## Study deck
 
@@ -33,6 +35,30 @@ engine & fuel systems, emergencies, V-speeds & the arcs, regs & student limits,
 light gun signals, weight & balance.
 
 Keyboard: `1`–`4` or `A`–`D` to answer, `Enter` for the next question.
+
+## Private Pilot written
+
+Four tabs:
+
+- **Practice** — pick subjects, answer with immediate feedback and an explanation.
+  "My weak areas" auto-selects the subjects you score below 80% on.
+- **Mock exam** — 60 questions drawn across every subject in roughly the real test's
+  proportions, 150 minutes, 70% to pass. No feedback until you submit. Skip, flag, and
+  jump around with the question navigator, the way the testing-centre software works.
+- **Tools & tables** — density altitude, the wind triangle (true course → compass
+  heading and groundspeed), time/distance/fuel, crosswind components, the full VFR
+  minimums table, and a quick-reference sheet.
+- **Progress** — lifetime accuracy per subject, bank coverage, and exam history.
+
+123 questions across the twelve ACS subject areas.
+
+### Scope
+
+The real FAA bank runs to several hundred items, many of which reference figures in
+the printed **FAA-CT-8080-2** supplement — sectional excerpts, performance charts,
+weight and balance tables — that can't be reproduced here. This bank covers the
+*concepts* behind every subject area. Use it alongside a full prep course and the
+official supplement for the figure-based questions.
 
 ## Running it
 
