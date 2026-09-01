@@ -372,8 +372,9 @@ footer a { color: var(--ink-2); }
         </div>
         <span class="spacer"></span>
         <div class="seg" id="drill-mode">
-          <button type="button" data-mode="type" aria-pressed="true">Type it</button>
-          <button type="button" data-mode="flip" aria-pressed="false">Flashcards</button>
+          <button type="button" data-mode="choice" aria-pressed="true">Multiple choice</button>
+          <button type="button" data-mode="type"   aria-pressed="false">Type it</button>
+          <button type="button" data-mode="flip"   aria-pressed="false">Flashcards</button>
         </div>
       </div>
     </div>
@@ -390,6 +391,8 @@ footer a { color: var(--ink-2); }
       <div id="drill-body" style="display:flex;flex-direction:column;gap:.9rem">
         <div class="prompt-big" id="drill-letter">A</div>
         <p class="prompt-sub" id="drill-sub">Letter 1 of A TOMATO FLAMES</p>
+
+        <div class="opts" id="drill-choicewrap" style="display:none"></div>
 
         <div id="drill-typewrap" style="display:flex;flex-direction:column;gap:.6rem">
           <input class="answer-in" id="drill-input" type="text" autocomplete="off" autocapitalize="off"
@@ -415,6 +418,11 @@ footer a { color: var(--ink-2); }
           <button class="btn ghost" type="button" id="drill-missed-only">Just the ones I missed</button>
         </div>
       </div>
+    </div>
+
+    <div class="note-box">
+      <p class="eyebrow"><i></i> Keyboard</p>
+      <p><b>1</b>–<b>4</b> or <b>A</b>–<b>D</b> to answer, <b>Enter</b> for the next card.</p>
     </div>
   </section>
 
@@ -892,7 +900,33 @@ footer a { color: var(--ink-2); }
 
   /* ═══════════════ DRILL ═══════════════ */
 
-  var drill = { scope:'all', mode:'type', deck:[], i:0, got:0, missed:0, missedItems:[], answered:false };
+  var drill = { scope:'all', mode:'choice', deck:[], i:0, got:0, missed:0, missedItems:[], answered:false, choices:[] };
+
+  /* Two items are "too close" to sit in the same question — the day list's
+     "Anticollision light system" and the night list's "Anticollision lights"
+     are the same answer twice, and offering both is just unfair.            */
+  function tooClose(a, b) {
+    var x = norm(a.name), y = norm(b.name);
+    return x.indexOf(y.slice(0, 12)) === 0 || y.indexOf(x.slice(0, 12)) === 0;
+  }
+
+  /* Distractors come from the other items on the two lists, with same-letter
+     items preferred — so the L question offers the landing light against the
+     landing gear indicator, which is the confusion actually worth breaking.  */
+  function buildChoices(it) {
+    var others = ITEMS.filter(function (x) { return x !== it && !tooClose(x, it); });
+    var deduped = [];
+    shuffle(others).forEach(function (x) {
+      var clash = deduped.some(function (d) { return tooClose(d, x); });
+      if (!clash) deduped.push(x);
+    });
+    var sameLetter = deduped.filter(function (x) { return x.L === it.L; });
+    var rest       = deduped.filter(function (x) { return x.L !== it.L; });
+    var picks = sameLetter.concat(rest).slice(0, 3);
+    return shuffle(picks.concat([it]).map(function (x) {
+      return { item: x, correct: x === it };
+    }));
+  }
 
   function drillDeck(scope, only) {
     if (only && only.length) return only.slice();
@@ -940,13 +974,40 @@ footer a { color: var(--ink-2); }
     $('drill-input').disabled = false;
     $('drill-check').disabled = false;
 
-    var typing = drill.mode === 'type';
-    $('drill-typewrap').style.display = typing ? 'flex' : 'none';
-    $('drill-flipwrap').style.display = typing ? 'none' : 'block';
+    $('drill-choicewrap').style.display = drill.mode === 'choice' ? 'flex' : 'none';
+    $('drill-typewrap').style.display   = drill.mode === 'type'   ? 'flex' : 'none';
+    $('drill-flipwrap').style.display   = drill.mode === 'flip'   ? 'block' : 'none';
     $('drill-flip').textContent = 'Flip the card';
-    if (typing) $('drill-input').focus();
+
+    if (drill.mode === 'choice') renderChoices();
+    if (drill.mode === 'type')   $('drill-input').focus();
 
     renderStrip();
+  }
+
+  function renderChoices() {
+    var it = drill.deck[drill.i];
+    drill.choices = buildChoices(it);
+    $('drill-choicewrap').innerHTML = drill.choices.map(function (c, i) {
+      return '<button class="opt" type="button" data-i="' + i + '">' +
+             '<span class="k">' + 'ABCD'[i] + '</span><span>' + esc(c.item.name) + '</span></button>';
+    }).join('');
+    Array.prototype.forEach.call($('drill-choicewrap').children, function (b) {
+      b.addEventListener('click', function () { answerChoice(parseInt(b.dataset.i, 10)); });
+    });
+  }
+
+  function answerChoice(pick) {
+    if (drill.answered) return;
+    drill.answered = true;
+    var ok = drill.choices[pick].correct;
+    Array.prototype.forEach.call($('drill-choicewrap').children, function (b, i) {
+      b.disabled = true;
+      if (drill.choices[i].correct) b.classList.add('right');
+      else if (i === pick) b.classList.add('wrong');
+    });
+    markCard(ok);
+    revealCard(ok ? 'good' : 'bad');
   }
 
   function revealCard(state) {
@@ -963,7 +1024,8 @@ footer a { color: var(--ink-2); }
         (it.note ? '<span class="note" style="border-color:var(--amber)">' + it.note + '</span>' : '') +
         '<span class="reg">' + it.reg + '</span>' +
         '<div class="controls" style="margin-top:.4rem">' +
-          (state === 'good' ? '' :
+          /* no reprieve in multiple choice — you picked it */
+          (state === 'good' || drill.mode === 'choice' ? '' :
             '<button class="btn ghost" type="button" id="drill-forgive">I actually knew that</button>') +
           '<button class="btn" type="button" id="drill-next">Next card</button>' +
         '</div>' +
@@ -1056,6 +1118,24 @@ footer a { color: var(--ink-2); }
     $('fc-got').addEventListener('click',  function () { markCard(true);  nextCard(); });
     $('fc-miss').addEventListener('click', function () { markCard(false); nextCard(); });
   });
+  document.addEventListener('keydown', function (e) {
+    if (!$('p-drill').classList.contains('on')) return;
+    if (drill.mode !== 'choice') return;
+    if ($('drill-body').style.display === 'none') return;
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+
+    if (!drill.answered) {
+      var n = -1;
+      if (e.key >= '1' && e.key <= '4') n = parseInt(e.key, 10) - 1;
+      var up = (e.key || '').toUpperCase();
+      if (up.length === 1 && 'ABCD'.indexOf(up) >= 0) n = 'ABCD'.indexOf(up);
+      if (n >= 0 && n < drill.choices.length) { e.preventDefault(); answerChoice(n); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); nextCard();
+    }
+  });
+
   $('drill-again').addEventListener('click', function () { startDrill(null); });
   $('drill-missed-only').addEventListener('click', function () { startDrill(drill.missedItems); });
 

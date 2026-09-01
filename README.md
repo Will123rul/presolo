@@ -69,10 +69,14 @@ official supplement for the figure-based questions.
 - **Learn** — every letter with the regulation it comes from and the condition attached
   to it, since that is where the questions live: "if the aircraft has retractable gear,"
   "for hire," "certificated after March 11, 1996."
-- **Drill** — type what each letter stands for and get marked on it, or work the same
-  material as flashcards. The matcher distinguishes oil *pressure* from oil
-  *temperature*, and the landing *gear indicator* from the landing *light* — the two
-  pairs that are easiest to blur together.
+- **Drill** — you get a letter, you say what it stands for. Three ways: **multiple
+  choice** (four options), **type it** in free text, or **flashcards**.
+
+  In multiple choice the wrong answers are drawn from the other items on the two
+  lists, same letter preferred — so the L question offers the landing *light* against
+  the landing *gear indicator*, and the two O questions put oil *pressure* against oil
+  *temperature*. Those are the confusions worth breaking. The free-text matcher
+  enforces the same distinction rather than accepting a keyword that fits both.
 - **Quiz** — 32 multiple-choice questions weighted toward the traps: items people put
   on the wrong list, the two dates that get swapped, and the three separate
   regulations that each define "night" differently.
