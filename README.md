@@ -69,19 +69,22 @@ official supplement for the figure-based questions.
 - **Learn** — every letter with the regulation it comes from and the condition attached
   to it, since that is where the questions live: "if the aircraft has retractable gear,"
   "for hire," "certificated after March 11, 1996."
-- **Drill** — you get a letter, you say what it stands for. Three ways: **multiple
-  choice** (four options), **type it** in free text, or **flashcards**.
+- **Drill** — you get a letter, you say what it stands for, from memory. No options to
+  pick from: either **type it** in free text and get marked, or work it as
+  **flashcards** and grade yourself.
 
-  In multiple choice the wrong answers are drawn from the other items on the two
-  lists, same letter preferred — so the L question offers the landing *light* against
-  the landing *gear indicator*, and the two O questions put oil *pressure* against oil
-  *temperature*. Those are the confusions worth breaking. The free-text matcher
-  enforces the same distinction rather than accepting a keyword that fits both.
+  The matcher is deliberately loose about wording and strict about substance. "oil
+  temp" passes for the oil temperature gauge; bare "temperature" comes back *nearly —
+  be more specific*, because the point of that letter is that it is the **oil** one.
+  Naming the sibling item is a clean miss rather than a near miss, so "oil temperature"
+  typed at the oil-*pressure* slot fails outright, as does "landing light" at the
+  landing-*gear* slot. Those two pairs are the ones that blur together.
 - **Quiz** — 32 multiple-choice questions weighted toward the traps: items people put
   on the wrong list, the two dates that get swapped, and the three separate
   regulations that each define "night" differently.
 
-Keyboard in the quiz: `1`–`4` or `A`–`D` to answer, `Enter` for the next question.
+Keyboard in the quiz tab: `1`–`4` or `A`–`D` to answer, `Enter` for the next question.
+In the drill, `Enter` checks your answer and `Enter` again advances.
 
 ## Running it
 
