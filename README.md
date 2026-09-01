@@ -64,8 +64,14 @@ official supplement for the figure-based questions.
 ## Required equipment
 
 `equipment.html` drills the two §91.205 lists — **A TOMATO FLAMES** for day VFR and
-**FLAPS** for what night adds on top of it. Three tabs:
+**FLAPS** for what night adds on top of it. Four tabs:
 
+- **Letter round** — one multiple-choice question per letter, eighteen in all: thirteen
+  for A TOMATO FLAMES and five for FLAPS. Four options, and **every option starts with
+  the letter under test**, so the first initial gives nothing away and you have to know
+  which one it actually is. The second A offers airspeed, altimeter, attitude indicator
+  and anchor; the first O offers oil pressure against oil temperature. Runs in acronym
+  order by default, with the whole word shown above so you can see where you are.
 - **Learn** — every letter with the regulation it comes from and the condition attached
   to it, since that is where the questions live: "if the aircraft has retractable gear,"
   "for hire," "certificated after March 11, 1996."

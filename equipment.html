@@ -220,6 +220,50 @@ a { color: var(--blue); }
 }
 .why b { font-weight: 640; }
 
+/* ── letter round: four big tiles, one per option ── */
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.tile {
+  position: relative; min-height: 5.75rem;
+  display: flex; align-items: center; gap: .7rem;
+  padding: 1rem 1.1rem; border: 0; border-radius: 10px; cursor: pointer;
+  font: 640 1.0625rem/1.3 var(--font); color: #fff; text-align: left;
+  box-shadow: 0 3px 0 rgba(0,0,0,.22), 0 10px 22px -14px rgba(0,0,0,.6);
+  transition: transform .12s ease, opacity .18s ease, filter .18s ease;
+}
+.tile:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.07); }
+.tile:active:not(:disabled) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.22); }
+.tile:disabled { cursor: default; }
+.tile .n {
+  flex: none; width: 1.6rem; height: 1.6rem; border-radius: 5px;
+  background: rgba(255,255,255,.25);
+  font: 700 .8125rem/1.6rem var(--mono); text-align: center;
+}
+.tile.c0 { background: #C4453C; }
+.tile.c1 { background: #2B6FB5; }
+.tile.c2 { background: #C88A20; }
+.tile.c3 { background: #35814F; }
+.tiles.done .tile { opacity: .35; }
+.tiles.done .tile.is-right { opacity: 1; outline: 3px solid #fff; outline-offset: -3px; }
+.tiles.done .tile.is-picked-wrong { opacity: .85; outline: 3px solid rgba(255,255,255,.6); outline-offset: -3px; }
+.tile .mark {
+  position: absolute; top: .5rem; right: .6rem;
+  font: 700 1.0625rem/1 var(--font);
+}
+@media (max-width: 30rem) {
+  .tiles { grid-template-columns: 1fr; }
+  .tile { min-height: 4.25rem; font-size: 1rem; }
+}
+
+.letter-head { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.letter-big {
+  font: 700 3.25rem/1 var(--mono); color: var(--blue);
+  width: 4.5rem; height: 4.5rem; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px dashed var(--blue); border-radius: 8px;
+}
+.letter-ask { font-size: 1.125rem; font-weight: 640; min-width: 0; }
+.letter-ask span { color: var(--ink-2); font-weight: 400; display: block; font-size: .875rem; }
+
 /* ── shared controls ── */
 .btn {
   font: 600 .8125rem/1 var(--font); letter-spacing: .01em;
@@ -310,13 +354,77 @@ footer a { color: var(--ink-2); }
   </div>
 
   <div class="tabs" role="tablist">
-    <button role="tab" id="t-learn" aria-selected="true"  aria-controls="p-learn">Learn</button>
-    <button role="tab" id="t-drill" aria-selected="false" aria-controls="p-drill">Drill</button>
-    <button role="tab" id="t-quiz"  aria-selected="false" aria-controls="p-quiz">Quiz</button>
+    <button role="tab" id="t-letters" aria-selected="true"  aria-controls="p-letters">Letter round</button>
+    <button role="tab" id="t-learn"   aria-selected="false" aria-controls="p-learn">Learn</button>
+    <button role="tab" id="t-drill"   aria-selected="false" aria-controls="p-drill">Drill</button>
+    <button role="tab" id="t-quiz"    aria-selected="false" aria-controls="p-quiz">Quiz</button>
   </div>
 
+  <!-- ══════════ LETTER ROUND ══════════ -->
+  <section class="panel on" id="p-letters" role="tabpanel" aria-labelledby="t-letters">
+
+    <div id="lt-setup" class="card">
+      <h3 style="font-size:1.125rem">One question per letter</h3>
+      <p style="font-size:.9375rem;color:var(--ink-2)">Every letter of the acronym gets its own question, and every option starts with that same letter — so you can't get there by first initial. You have to actually know which one it is.</p>
+      <div class="seg" id="lt-set">
+        <button type="button" data-set="atomato" aria-pressed="true">A TOMATO FLAMES <span style="opacity:.7">· 13</span></button>
+        <button type="button" data-set="flaps"   aria-pressed="false">FLAPS <span style="opacity:.7">· 5</span></button>
+        <button type="button" data-set="all"     aria-pressed="false">Both <span style="opacity:.7">· 18</span></button>
+      </div>
+      <div class="seg" id="lt-order">
+        <button type="button" data-order="seq"     aria-pressed="true">In order</button>
+        <button type="button" data-order="shuffle" aria-pressed="false">Shuffle</button>
+      </div>
+      <div class="controls"><button class="btn" type="button" id="lt-start">Start the round</button></div>
+      <div id="lt-lifetime" class="meta"></div>
+    </div>
+
+    <div id="lt-play" class="card" style="display:none">
+      <div class="acr" id="lt-strip"></div>
+      <div class="bar"><i id="lt-bar" style="width:0%"></i></div>
+      <div class="meta">
+        <span>Letter <b id="lt-pos">1</b> / <b id="lt-total">13</b></span>
+        <span>Score <b id="lt-score">0</b></span>
+        <span>Streak <b id="lt-streak">0</b></span>
+      </div>
+
+      <div class="letter-head">
+        <div class="letter-big" id="lt-letter">A</div>
+        <div class="letter-ask">
+          <div id="lt-ask">The first A in A TOMATO FLAMES stands for…</div>
+          <span id="lt-where">Day VFR · §91.205(b)</span>
+        </div>
+      </div>
+
+      <div class="tiles" id="lt-tiles"></div>
+
+      <div id="lt-after" style="display:none;flex-direction:column;gap:.8rem">
+        <p class="why" id="lt-why"></p>
+        <div class="controls">
+          <button class="btn" type="button" id="lt-next">Next letter</button>
+          <span class="reg" id="lt-reg"></span>
+        </div>
+      </div>
+    </div>
+
+    <div id="lt-results" class="card" style="display:none">
+      <h3 id="lt-res-h" style="font-size:1.375rem"></h3>
+      <p id="lt-res-p" style="color:var(--ink-2);font-size:.9375rem"></p>
+      <div class="scorelist" id="lt-res-list"></div>
+      <div class="controls">
+        <button class="btn" type="button" id="lt-replay">Run it again</button>
+        <button class="btn ghost" type="button" id="lt-replay-missed">Just the letters I missed</button>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <p class="eyebrow"><i></i> Keyboard</p>
+      <p><b>1</b>–<b>4</b> or <b>A</b>–<b>D</b> to answer, <b>Enter</b> for the next letter.</p>
+    </div>
+  </section>
+
   <!-- ══════════ LEARN ══════════ -->
-  <section class="panel on" id="p-learn" role="tabpanel" aria-labelledby="t-learn">
+  <section class="panel" id="p-learn" role="tabpanel" aria-labelledby="t-learn">
     <div class="card accent" style="--accent: var(--blue)">
       <p class="eyebrow"><i></i> §91.205(b) — Day VFR</p>
       <div class="acr" id="acr-day" aria-hidden="true"></div>
@@ -591,6 +699,106 @@ footer a { color: var(--ink-2); }
     flaps:   { title:'FLAPS',           sub:'Night VFR · §91.205(c)', spaces:[] }
   };
 
+  /* ═══════════════ LETTER ROUND ═══════════════
+     One question per letter of each acronym. Every option starts with that
+     letter, so the first initial gives nothing away — the real distractors
+     are the other items on the lists that happen to share it. First option
+     is always correct; they get shuffled at render.                         */
+
+  var LETTERS = [
+    /* ── A TOMATO FLAMES ── */
+    { ac:'atomato', L:'A', which:'The first A',
+      a:['Altimeter', 'Airspeed indicator', 'Anticollision lights', 'Apple'],
+      why:'<b>Altimeter.</b> Airspeed and anticollision are the <em>other</em> two As — this list has three of them, in the order altimeter, airspeed, anticollision.',
+      reg:'§91.205(b)(2)' },
+
+    { ac:'atomato', L:'T', which:'The first T',
+      a:['Tachometer — one for each engine', 'Temperature gauge for each liquid-cooled engine', 'Transponder', 'Tacos'],
+      why:'<b>Tachometer</b>, one per engine. The temperature gauge is the second T. A transponder is not on 91.205 at all — that requirement lives in §91.215.',
+      reg:'§91.205(b)(4)' },
+
+    { ac:'atomato', L:'O', which:'The first O',
+      a:['Oil pressure gauge', 'Oil temperature gauge', 'Outside air temperature gauge', 'Octopus'],
+      why:'<b>Oil pressure</b> comes first, oil <em>temperature</em> is the second O. Pressure before temperature — that is the only thing you have to hold on to.',
+      reg:'§91.205(b)(5)' },
+
+    { ac:'atomato', L:'M', which:'The first M',
+      a:['Manifold pressure gauge', 'Magnetic compass', 'Mixture control', 'Marshmallow'],
+      why:'<b>Manifold pressure</b> first, magnetic compass second. And manifold pressure is only required for an <em>altitude engine</em> — turbocharged or supercharged — so it does not apply to a basic trainer at all.',
+      reg:'§91.205(b)(8)' },
+
+    { ac:'atomato', L:'A', which:'The second A',
+      a:['Airspeed indicator', 'Altimeter', 'Attitude indicator', 'Anchor'],
+      why:'<b>Airspeed indicator.</b> Watch the attitude indicator sitting there — it is an <em>IFR</em> item under 91.205(d), not a day VFR one.',
+      reg:'§91.205(b)(1)' },
+
+    { ac:'atomato', L:'T', which:'The second T',
+      a:['Temperature gauge for each liquid-cooled engine', 'Tachometer', 'Turn coordinator', 'Toaster'],
+      why:'<b>Temperature gauge</b>, for liquid-cooled engines. Most trainers are air-cooled, so this one usually does not apply — the air-cooled equivalent is the second O.',
+      reg:'§91.205(b)(6)' },
+
+    { ac:'atomato', L:'O', which:'The second O',
+      a:['Oil temperature gauge for each air-cooled engine', 'Oil pressure gauge', 'Oil quantity dipstick', 'Orange juice'],
+      why:'<b>Oil temperature</b>, and this is the one that <em>does</em> apply to your air-cooled 172. A dipstick is how you check oil quantity, but it is not required equipment under 91.205.',
+      reg:'§91.205(b)(7)' },
+
+    { ac:'atomato', L:'F', which:'The F',
+      a:['Fuel quantity gauge for each tank', 'Fuses — one spare set', 'Flaps', 'French fries'],
+      why:'<b>Fuel gauge</b>, indicating the quantity in <em>each</em> tank. Fuses are the F in FLAPS, the night list. And flaps themselves are nowhere on 91.205.',
+      reg:'§91.205(b)(9)' },
+
+    { ac:'atomato', L:'L', which:'The L',
+      a:['Landing gear position indicator', 'Landing light', 'Logbook', 'Llama'],
+      why:'<b>Landing gear position indicator</b> — and only if the gear actually retracts. The landing <em>light</em> is the L in FLAPS, and even there it is required only if the aircraft is operated for hire.',
+      reg:'§91.205(b)(10)' },
+
+    { ac:'atomato', L:'A', which:'The third A',
+      a:['Anticollision light system', 'Airspeed indicator', 'Altimeter', 'Avocado'],
+      why:'<b>Anticollision lights.</b> For day VFR these are required on small airplanes certificated after <b>March 11, 1996</b> — at night, 91.205(c) requires them of every U.S.-registered civil aircraft regardless of age.',
+      reg:'§91.205(b)(11)' },
+
+    { ac:'atomato', L:'M', which:'The second M',
+      a:['Magnetic compass', 'Manifold pressure gauge', 'Master switch', 'Motorcycle'],
+      why:'<b>Magnetic direction indicator</b> — the wet compass. Manifold pressure was the first M.',
+      reg:'§91.205(b)(3)' },
+
+    { ac:'atomato', L:'E', which:'The E',
+      a:['ELT — emergency locator transmitter', 'Engine temperature gauge', 'Electrical power source', 'Elephant'],
+      why:'<b>ELT</b>, if one is required by §91.207. Electrical power <em>source</em> is the S in FLAPS — a genuinely easy one to cross over.',
+      reg:'§91.205(b)(15)' },
+
+    { ac:'atomato', L:'S', which:'The S',
+      a:['Safety belts', 'Source of electrical power', 'Strobe lights', 'Spaghetti'],
+      why:'<b>Safety belts</b> — for each occupant two years old or older, plus shoulder harnesses in the front seats of airplanes built after July 18, 1978. Source of electrical power is the <em>other</em> S, over in FLAPS.',
+      reg:'§91.205(b)(13)' },
+
+    /* ── FLAPS ── */
+    { ac:'flaps', L:'F', which:'The F',
+      a:['Fuses — one spare set, accessible in flight', 'Fuel quantity gauge', 'Flashlight', 'Fried chicken'],
+      why:'<b>Fuses.</b> One spare set, or three of each kind required, and they must be <em>reachable from your seat</em>. A flashlight is excellent airmanship and not a regulation.',
+      reg:'§91.205(c)(5)' },
+
+    { ac:'flaps', L:'L', which:'The L',
+      a:['Landing light — but only if operated for hire', 'Landing gear position indicator', 'Logbook', 'Lasagna'],
+      why:'<b>Landing light</b>, and the qualifier is the whole question: required <b>only if the aircraft is operated for hire</b>. Flying your own airplane at night, no landing light is legally required.',
+      reg:'§91.205(c)(3)' },
+
+    { ac:'flaps', L:'A', which:'The A',
+      a:['Anticollision lights', 'Airspeed indicator', 'Altimeter', 'Alligator'],
+      why:'<b>Anticollision lights</b> — at night, on all U.S.-registered civil aircraft, with no certification-date exception. Airspeed and altimeter are already required by the day list you are building on top of.',
+      reg:'§91.205(c)(2)' },
+
+    { ac:'flaps', L:'P', which:'The P',
+      a:['Position lights', 'Pitot heat', 'Parachute', 'Pancakes'],
+      why:'<b>Position lights</b> — red left, green right, white tail — lit from <b>sunset to sunrise</b> under §91.209(a)(1). Pitot heat is an IFR item; parachutes live in §91.307.',
+      reg:'§91.205(c)(1)' },
+
+    { ac:'flaps', L:'S', which:'The S',
+      a:['Source of electrical power', 'Safety belts', 'Stall warning horn', 'Sandwich'],
+      why:'<b>Source of electrical power</b> — adequate for every installed electrical and radio item, meaning the alternator and battery. Safety belts are the S on the <em>day</em> list.',
+      reg:'§91.205(c)(4)' }
+  ];
+
   /* ═══════════════ QUESTION BANK ═══════════════
      First option is always correct; options are shuffled at render.          */
 
@@ -854,16 +1062,192 @@ footer a { color: var(--ink-2); }
 
   /* ═══════════════ TABS ═══════════════ */
 
-  ['learn', 'drill', 'quiz'].forEach(function (n) {
+  var TABS = ['letters', 'learn', 'drill', 'quiz'];
+  TABS.forEach(function (n) {
     $('t-' + n).addEventListener('click', function () {
-      ['learn', 'drill', 'quiz'].forEach(function (m) {
+      TABS.forEach(function (m) {
         var on = m === n;
         $('t-' + m).setAttribute('aria-selected', on ? 'true' : 'false');
         $('p-' + m).classList.toggle('on', on);
       });
       if (n === 'quiz') renderLifetime();
+      if (n === 'letters') renderLetterLifetime();
     });
   });
+
+  /* ═══════════════ LETTER ROUND ═══════════════ */
+
+  var lt = { set:'atomato', order:'seq', deck:[], i:0, score:0, streak:0, best:0,
+             missed:[], locked:false, opts:[] };
+
+  function renderLetterLifetime() {
+    var s = store('letterstats') || { seen:0, right:0, rounds:0 };
+    $('lt-lifetime').innerHTML = s.seen
+      ? '<span>Lifetime <b>' + Math.round(s.right / s.seen * 100) + '%</b></span>' +
+        '<span>Letters answered <b>' + s.seen + '</b></span>' +
+        '<span>Rounds <b>' + s.rounds + '</b></span>'
+      : '<span>No rounds yet</span>';
+  }
+
+  function startLetters(only) {
+    var pool = only && only.length
+      ? only.slice()
+      : LETTERS.filter(function (q) { return lt.set === 'all' || q.ac === lt.set; });
+    lt.deck = (lt.order === 'shuffle' && !only) ? shuffle(pool) : pool;
+    lt.i = 0; lt.score = 0; lt.streak = 0; lt.best = 0; lt.missed = [];
+    $('lt-setup').style.display = 'none';
+    $('lt-results').style.display = 'none';
+    $('lt-play').style.display = 'flex';
+    $('lt-total').textContent = lt.deck.length;
+    showLetter();
+  }
+
+  /* The whole acronym with the letter under test marked, so you always know
+     where in the word you are — LETTERS is written in the same order as
+     ITEMS, so the position within the acronym is just the index.          */
+  function letterStripFor(q) {
+    var here = LETTERS.filter(function (x) { return x.ac === q.ac; }).indexOf(q);
+    return ITEMS.filter(function (x) { return x.ac === q.ac; }).map(function (it, i) {
+      return '<span class="chip"' + (i === here ? ' aria-current="true"' : '') +
+             ' style="cursor:default">' + it.L + '</span>';
+    }).join('');
+  }
+
+  function showLetter() {
+    var q = lt.deck[lt.i];
+    if (!q) return finishLetters();
+    lt.locked = false;
+
+    var spec = ACRONYMS[q.ac];
+    $('lt-strip').innerHTML = letterStripFor(q);
+    $('lt-letter').textContent = q.L;
+    $('lt-ask').innerHTML = q.which + ' in <strong>' + spec.title + '</strong> stands for…';
+    $('lt-where').textContent = spec.sub;
+    $('lt-pos').textContent = lt.i + 1;
+    $('lt-score').textContent = lt.score;
+    $('lt-streak').textContent = lt.streak;
+    $('lt-bar').style.width = (lt.i / lt.deck.length * 100) + '%';
+    $('lt-after').style.display = 'none';
+
+    lt.opts = shuffle(q.a.map(function (text, idx) { return { text: text, correct: idx === 0 }; }));
+    var tiles = $('lt-tiles');
+    tiles.className = 'tiles';
+    tiles.innerHTML = lt.opts.map(function (o, i) {
+      return '<button class="tile c' + i + '" type="button" data-i="' + i + '">' +
+             '<span class="n">' + (i + 1) + '</span><span>' + esc(o.text) + '</span></button>';
+    }).join('');
+    Array.prototype.forEach.call(tiles.children, function (b) {
+      b.addEventListener('click', function () { answerLetter(parseInt(b.dataset.i, 10)); });
+    });
+  }
+
+  function answerLetter(pick) {
+    if (lt.locked) return;
+    lt.locked = true;
+    var q = lt.deck[lt.i];
+    var right = lt.opts[pick].correct;
+    var tiles = $('lt-tiles');
+
+    tiles.classList.add('done');
+    Array.prototype.forEach.call(tiles.children, function (b, i) {
+      b.disabled = true;
+      if (lt.opts[i].correct) {
+        b.classList.add('is-right');
+        b.insertAdjacentHTML('beforeend', '<span class="mark">✓</span>');
+      } else if (i === pick) {
+        b.classList.add('is-picked-wrong');
+        b.insertAdjacentHTML('beforeend', '<span class="mark">✗</span>');
+      }
+    });
+
+    if (right) {
+      lt.score++; lt.streak++;
+      if (lt.streak > lt.best) lt.best = lt.streak;
+    } else {
+      lt.streak = 0;
+      lt.missed.push(q);
+    }
+    $('lt-score').textContent = lt.score;
+    $('lt-streak').textContent = lt.streak;
+
+    var s = store('letterstats') || { seen:0, right:0, rounds:0 };
+    s.seen++; if (right) s.right++;
+    store('letterstats', s);
+
+    $('lt-why').innerHTML = q.why;
+    $('lt-reg').textContent = q.reg;
+    $('lt-after').style.display = 'flex';
+    $('lt-next').textContent = lt.i === lt.deck.length - 1 ? 'See results' : 'Next letter';
+    $('lt-next').focus();
+  }
+
+  function finishLetters() {
+    $('lt-play').style.display = 'none';
+    $('lt-results').style.display = 'flex';
+    var pct = Math.round(lt.score / lt.deck.length * 100);
+    $('lt-res-h').textContent = lt.score + ' of ' + lt.deck.length + ' — ' + pct + '%';
+    $('lt-res-p').innerHTML = pct === 100
+      ? 'Every letter. Longest streak ' + lt.best + '.'
+      : 'Longest streak ' + lt.best + '. The letters below are the ones to go back over.';
+
+    $('lt-res-list').innerHTML = lt.missed.length
+      ? '<p style="font-size:.8125rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)">Missed</p>' +
+        lt.missed.map(function (m) {
+          return '<div class="scoreitem"><div class="top">' +
+                 '<b>' + m.which + ' in ' + ACRONYMS[m.ac].title + '</b>' +
+                 '<span class="reg">' + m.reg + '</span></div>' +
+                 '<span style="font-size:.875rem;color:var(--ink-2)">' + esc(m.a[0]) + '</span></div>';
+        }).join('')
+      : '';
+    $('lt-replay-missed').style.display = lt.missed.length ? '' : 'none';
+
+    var s = store('letterstats') || { seen:0, right:0, rounds:0 };
+    s.rounds++; store('letterstats', s);
+    renderLetterLifetime();
+  }
+
+  $('lt-start').addEventListener('click', function () { startLetters(null); });
+  $('lt-next').addEventListener('click', function () { lt.i++; showLetter(); });
+  $('lt-replay').addEventListener('click', function () {
+    $('lt-results').style.display = 'none';
+    $('lt-setup').style.display = 'flex';
+    renderLetterLifetime();
+  });
+  $('lt-replay-missed').addEventListener('click', function () { startLetters(lt.missed); });
+
+  Array.prototype.forEach.call($('lt-set').children, function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call($('lt-set').children, function (o) { o.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      lt.set = b.dataset.set;
+    });
+  });
+  Array.prototype.forEach.call($('lt-order').children, function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call($('lt-order').children, function (o) { o.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      lt.order = b.dataset.order;
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!$('p-letters').classList.contains('on')) return;
+    if ($('lt-play').style.display === 'none') return;
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+
+    if (!lt.locked) {
+      var n = -1;
+      if (e.key >= '1' && e.key <= '4') n = parseInt(e.key, 10) - 1;
+      var up = (e.key || '').toUpperCase();
+      if (up.length === 1 && 'ABCD'.indexOf(up) >= 0) n = 'ABCD'.indexOf(up);
+      if (n >= 0 && n < lt.opts.length) { e.preventDefault(); answerLetter(n); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); lt.i++; showLetter();
+    }
+  });
+
+  renderLetterLifetime();
 
   /* ═══════════════ LEARN ═══════════════ */
 
