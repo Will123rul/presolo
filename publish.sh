@@ -62,9 +62,10 @@ cat <<EOF
   wait a moment and refresh.
 
   Pages:
-    /              landing page
-    /study.html    pre-solo study deck
-    /quiz.html     quiz game
-    /written.html  Private Pilot written test prep
+    /                landing page
+    /study.html      pre-solo study deck
+    /quiz.html       quiz game
+    /written.html    Private Pilot written test prep
+    /equipment.html  A TOMATO FLAMES / FLAPS drill
 ────────────────────────────────────────────────────────────
 EOF

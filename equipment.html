@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EDEAE0">
+<meta name="description" content="Drill A TOMATO FLAMES and FLAPS — the 14 CFR 91.205 required-equipment lists for day and night VFR.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="91.205">
+<title>A TOMATO FLAMES · FLAPS — Required Equipment Drill</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%8D%85%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%8D%85%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="A TOMATO FLAMES · FLAPS">
+<meta property="og:description" content="Drill the 91.205 required-equipment lists for day and night VFR.">
+<meta property="og:type" content="website">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('presolo.theme');
+      if (t === 'light' || t === 'dark') { document.documentElement.setAttribute('data-theme', t); }
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+:root {
+  --paper:      #EDEAE0;
+  --surface:    #F7F5EF;
+  --surface-2:  #E2DFD2;
+  --ink:        #15202A;
+  --ink-2:      #4C5C68;
+  --ink-3:      #7B8A94;
+  --rule:       #CECABB;
+  --blue:       #23577D;
+  --blue-soft:  #D5E3EC;
+  --magenta:    #9C3364;
+  --amber:      #916419;
+  --green:      #2F6B43;
+  --red:        #A33224;
+  --shadow: 0 1px 2px rgba(21,32,42,.05), 0 8px 22px -12px rgba(21,32,42,.28);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0F161C; --surface: #172129; --surface-2: #1F2B34;
+    --ink: #E5EAED; --ink-2: #A0B1BC; --ink-3: #6B7D8A; --rule: #29373F;
+    --blue: #7CB7DE; --blue-soft: #14303F; --magenta: #E68CB2; --amber: #DCAC4E;
+    --green: #6FBE8A; --red: #E8897A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F161C; --surface: #172129; --surface-2: #1F2B34;
+  --ink: #E5EAED; --ink-2: #A0B1BC; --ink-3: #6B7D8A; --rule: #29373F;
+  --blue: #7CB7DE; --blue-soft: #14303F; --magenta: #E68CB2; --amber: #DCAC4E;
+  --green: #6FBE8A; --red: #E8897A;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.7);
+}
+:root[data-theme="light"] {
+  --paper: #EDEAE0; --surface: #F7F5EF; --surface-2: #E2DFD2;
+  --ink: #15202A; --ink-2: #4C5C68; --ink-3: #7B8A94; --rule: #CECABB;
+  --blue: #23577D; --blue-soft: #D5E3EC; --magenta: #9C3364; --amber: #916419;
+  --green: #2F6B43; --red: #A33224;
+  --shadow: 0 1px 2px rgba(21,32,42,.05), 0 8px 22px -12px rgba(21,32,42,.28);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh;
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column;
+}
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem; opacity: .22;
+  mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 15%, transparent 75%);
+}
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 48rem; width: 100%;
+  margin: 0 auto; padding: clamp(1.5rem, 5vh, 3rem) 1.25rem 5rem;
+  display: flex; flex-direction: column; gap: 1.5rem; flex: 1;
+}
+h1, h2, h3 { margin: 0; font-weight: 640; letter-spacing: -.015em; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--blue); }
+
+.eyebrow {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--blue);
+  display: flex; align-items: center; gap: .55rem;
+}
+.eyebrow i { width: 1.6rem; height: 0; border-top: 2px dashed var(--blue); }
+.hero { display: flex; flex-direction: column; gap: .5rem; }
+.hero h1 { font-size: clamp(1.6rem, 5vw, 2.25rem); line-height: 1.1; }
+.hero p { color: var(--ink-2); font-size: 1rem; max-width: 36rem; }
+.back {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .12em;
+  text-transform: uppercase; text-decoration: none; color: var(--ink-3);
+}
+.back:hover { color: var(--blue); }
+
+/* ── tabs ── */
+.tabs {
+  display: flex; gap: .25rem; flex-wrap: wrap;
+  border-bottom: 1px solid var(--rule); padding-bottom: 0;
+}
+.tabs button {
+  font: 600 .8125rem/1 var(--font); letter-spacing: .01em;
+  color: var(--ink-3); background: transparent; border: 0; cursor: pointer;
+  padding: .7rem .9rem; border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--blue); border-bottom-color: var(--blue); }
+.panel { display: none; flex-direction: column; gap: 1.25rem; }
+.panel.on { display: flex; }
+
+.card {
+  padding: 1.25rem; border-radius: 4px;
+  background: var(--surface); border: 1px solid var(--rule);
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: .8rem;
+}
+.card.accent { border-left: 3px solid var(--accent, var(--blue)); }
+
+/* ── the acronym strip ── */
+.acr { display: flex; flex-wrap: wrap; gap: .3rem; }
+.acr .sp { width: .6rem; }
+.chip {
+  font: 700 1rem/1 var(--mono);
+  width: 2.1rem; height: 2.4rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 3px; border: 1px solid var(--rule);
+  background: var(--surface-2); color: var(--ink-2);
+  cursor: pointer; padding: 0; transition: background .15s, color .15s, border-color .15s;
+}
+.chip:hover { border-color: var(--blue); color: var(--blue); }
+.chip[aria-current="true"] { background: var(--blue); border-color: var(--blue); color: var(--paper); }
+.chip.got { border-color: var(--green); color: var(--green); }
+.chip.miss { border-color: var(--red); color: var(--red); }
+
+/* ── learn list ── */
+.rows { display: flex; flex-direction: column; }
+.row {
+  display: grid; grid-template-columns: 2.2rem 1fr; gap: .9rem;
+  padding: .85rem 0; border-top: 1px solid var(--rule); align-items: start;
+}
+.row:first-child { border-top: 0; }
+.row .L {
+  font: 700 1.125rem/1.4 var(--mono); color: var(--accent, var(--blue));
+  text-align: center;
+}
+.row .body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+.row .name { font-weight: 640; }
+.row .desc { font-size: .9375rem; color: var(--ink-2); }
+.row .note {
+  font-size: .875rem; color: var(--ink-2);
+  border-left: 2px solid var(--amber); padding-left: .7rem; margin-top: .2rem;
+}
+.reg {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .06em;
+  color: var(--ink-3); white-space: nowrap;
+}
+
+/* ── drill ── */
+.prompt-big {
+  font: 700 3.5rem/1 var(--mono); color: var(--blue);
+  text-align: center; padding: .5rem 0;
+}
+.prompt-sub { text-align: center; color: var(--ink-2); font-size: .9375rem; }
+.answer-in {
+  width: 100%; font: 400 1.0625rem/1.4 var(--font);
+  padding: .7rem .85rem; border-radius: 4px;
+  border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+}
+.answer-in:focus { outline: 2px solid var(--blue); outline-offset: 1px; border-color: transparent; }
+.reveal {
+  border-radius: 4px; padding: .9rem 1rem;
+  background: var(--surface-2); display: flex; flex-direction: column; gap: .35rem;
+}
+.reveal.good { background: color-mix(in srgb, var(--green) 14%, var(--surface)); border-left: 3px solid var(--green); }
+.reveal.bad  { background: color-mix(in srgb, var(--red) 12%, var(--surface)); border-left: 3px solid var(--red); }
+.reveal.near { background: color-mix(in srgb, var(--amber) 14%, var(--surface)); border-left: 3px solid var(--amber); }
+.reveal .verdict {
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .16em; text-transform: uppercase;
+}
+.reveal.good .verdict { color: var(--green); }
+.reveal.bad  .verdict { color: var(--red); }
+.reveal.near .verdict { color: var(--amber); }
+
+/* ── quiz ── */
+.opts { display: flex; flex-direction: column; gap: .5rem; }
+.opt {
+  display: grid; grid-template-columns: 1.6rem 1fr; gap: .65rem; align-items: start;
+  text-align: left; width: 100%;
+  font: 400 .9375rem/1.5 var(--font); color: var(--ink);
+  padding: .75rem .85rem; border-radius: 4px;
+  border: 1px solid var(--rule); background: var(--paper); cursor: pointer;
+  transition: border-color .14s, background .14s;
+}
+.opt:hover:not(:disabled) { border-color: var(--blue); }
+.opt:disabled { cursor: default; }
+.opt .k { font: 600 .75rem/1.6 var(--mono); color: var(--ink-3); }
+.opt.right { border-color: var(--green); background: color-mix(in srgb, var(--green) 12%, var(--paper)); }
+.opt.right .k { color: var(--green); }
+.opt.wrong { border-color: var(--red); background: color-mix(in srgb, var(--red) 10%, var(--paper)); }
+.opt.wrong .k { color: var(--red); }
+.why {
+  font-size: .9375rem; color: var(--ink);
+  border-left: 2px solid var(--blue); padding: .1rem 0 .1rem .8rem;
+}
+.why b { font-weight: 640; }
+
+/* ── shared controls ── */
+.btn {
+  font: 600 .8125rem/1 var(--font); letter-spacing: .01em;
+  padding: .7rem 1.1rem; border-radius: 4px; cursor: pointer;
+  border: 1px solid var(--blue); background: var(--blue); color: var(--paper);
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--blue); }
+.btn.ghost:hover { background: var(--blue-soft); filter: none; }
+.btn:disabled { opacity: .45; cursor: default; filter: none; }
+.controls { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.spacer { flex: 1; }
+
+.meta {
+  display: flex; gap: 1.25rem; flex-wrap: wrap;
+  font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.meta b { color: var(--ink); font-weight: 700; }
+
+.seg { display: flex; gap: .3rem; flex-wrap: wrap; }
+.seg button {
+  font: 600 .75rem/1 var(--font);
+  padding: .5rem .75rem; border-radius: 99px; cursor: pointer;
+  border: 1px solid var(--rule); background: var(--paper); color: var(--ink-2);
+}
+.seg button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-soft); color: var(--blue); }
+
+.bar { height: 5px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--blue); border-radius: 99px; transition: width .3s ease; }
+
+.scorelist { display: flex; flex-direction: column; gap: .6rem; }
+.scoreitem { display: flex; flex-direction: column; gap: .3rem; }
+.scoreitem .top { display: flex; justify-content: space-between; gap: 1rem; font-size: .875rem; }
+.scoreitem .top b { font-weight: 640; }
+
+.note-box {
+  border-left: 2px solid var(--amber);
+  padding: .9rem 1.1rem; border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--amber) 12%, var(--surface));
+  font-size: .875rem; display: flex; flex-direction: column; gap: .45rem;
+}
+.note-box .eyebrow { color: var(--amber); }
+.note-box .eyebrow i { border-top-color: var(--amber); }
+
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--rule); margin-top: auto;
+  padding: 1.25rem; text-align: center;
+  font-size: .8125rem; color: var(--ink-3);
+}
+footer a { color: var(--ink-2); }
+
+#__nav {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 999;
+  display: flex; padding: 3px; border-radius: 99px;
+  background: rgba(128,140,150,.16);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px -4px rgba(0,0,0,.4);
+  opacity: .55; transition: opacity .2s;
+}
+#__nav:hover, #__nav:focus-within { opacity: 1; }
+#__nav button {
+  font: 600 .75rem/1 var(--mono); letter-spacing: .06em;
+  color: inherit; background: transparent; border: 0; cursor: pointer;
+  padding: .5rem .7rem; border-radius: 99px;
+}
+#__nav button:hover { background: rgba(128,140,150,.3); }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; } }
+@media (max-width: 30rem) {
+  .prompt-big { font-size: 2.75rem; }
+  .chip { width: 1.85rem; height: 2.2rem; font-size: .9375rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<div class="wrap">
+  <a class="back" href="index.html">← Study tools</a>
+
+  <div class="hero">
+    <p class="eyebrow"><i></i> 14 CFR 91.205 · Required equipment</p>
+    <h1>A TOMATO FLAMES <span style="color:var(--ink-3);font-weight:400">·</span> FLAPS</h1>
+    <p>What has to be working before you go. <strong>A TOMATO FLAMES</strong> is the day VFR list; <strong>FLAPS</strong> is what night adds on top of it.</p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t-learn" aria-selected="true"  aria-controls="p-learn">Learn</button>
+    <button role="tab" id="t-drill" aria-selected="false" aria-controls="p-drill">Drill</button>
+    <button role="tab" id="t-quiz"  aria-selected="false" aria-controls="p-quiz">Quiz</button>
+  </div>
+
+  <!-- ══════════ LEARN ══════════ -->
+  <section class="panel on" id="p-learn" role="tabpanel" aria-labelledby="t-learn">
+    <div class="card accent" style="--accent: var(--blue)">
+      <p class="eyebrow"><i></i> §91.205(b) — Day VFR</p>
+      <div class="acr" id="acr-day" aria-hidden="true"></div>
+      <div class="rows" id="rows-day" style="--accent: var(--blue)"></div>
+    </div>
+
+    <div class="card accent" style="--accent: var(--magenta)">
+      <p class="eyebrow" style="color:var(--magenta)"><i style="border-top-color:var(--magenta)"></i> §91.205(c) — Night VFR, <em style="text-transform:none;letter-spacing:0">in addition to all of the above</em></p>
+      <div class="acr" id="acr-night" aria-hidden="true"></div>
+      <div class="rows" id="rows-night" style="--accent: var(--magenta)"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1.0625rem">The three "nights" that are not the same night</h3>
+      <p style="font-size:.9375rem;color:var(--ink-2)">Examiners like this one because three different regulations use three different clocks.</p>
+      <div class="rows">
+        <div class="row"><span class="L" style="font-size:.8rem">1</span><div class="body">
+          <span class="name">Position lights on — sunset to sunrise</span>
+          <span class="desc">§91.209(a)(1). The lights go on at sunset, whatever the twilight is doing.</span>
+        </div></div>
+        <div class="row"><span class="L" style="font-size:.8rem">2</span><div class="body">
+          <span class="name">"Night" itself — end of evening civil twilight to beginning of morning civil twilight</span>
+          <span class="desc">§1.1. This is the definition that governs logging night flight time.</span>
+        </div></div>
+        <div class="row"><span class="L" style="font-size:.8rem">3</span><div class="body">
+          <span class="name">Night passenger currency — 1 hour after sunset to 1 hour before sunrise</span>
+          <span class="desc">§61.57(b). Three takeoffs and landings to a full stop in the preceding 90 days before you carry anyone.</span>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1.0625rem">When something on the list is broken</h3>
+      <p style="font-size:.9375rem;color:var(--ink-2)">§91.213(d) is the small-aircraft path for flying with inoperative equipment. All four have to be true:</p>
+      <div class="rows">
+        <div class="row"><span class="L" style="font-size:.8rem">1</span><div class="body"><span class="desc">It is <strong>not</strong> required by §91.205 for the kind of flight you're making, <strong>not</strong> on the aircraft's equipment list or KOEL, and <strong>not</strong> required by an airworthiness directive.</span></div></div>
+        <div class="row"><span class="L" style="font-size:.8rem">2</span><div class="body"><span class="desc">It is deactivated or removed.</span></div></div>
+        <div class="row"><span class="L" style="font-size:.8rem">3</span><div class="body"><span class="desc">It is placarded <strong>"Inoperative."</strong></span></div></div>
+        <div class="row"><span class="L" style="font-size:.8rem">4</span><div class="body"><span class="desc">A pilot or a mechanic has determined it isn't a hazard.</span></div></div>
+      </div>
+      <p style="font-size:.875rem;color:var(--ink-2)">The anticollision light system is the notable exception written into §91.205 itself: if a light in it fails <em>in flight</em>, you may continue to a place where repairs can be made.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ DRILL ══════════ -->
+  <section class="panel" id="p-drill" role="tabpanel" aria-labelledby="t-drill">
+    <div class="card">
+      <div class="controls">
+        <div class="seg" id="drill-scope">
+          <button type="button" data-scope="all"      aria-pressed="true">Both lists</button>
+          <button type="button" data-scope="atomato"  aria-pressed="false">A TOMATO FLAMES</button>
+          <button type="button" data-scope="flaps"    aria-pressed="false">FLAPS</button>
+        </div>
+        <span class="spacer"></span>
+        <div class="seg" id="drill-mode">
+          <button type="button" data-mode="type" aria-pressed="true">Type it</button>
+          <button type="button" data-mode="flip" aria-pressed="false">Flashcards</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="acr" id="drill-strip"></div>
+      <div class="bar"><i id="drill-bar" style="width:0%"></i></div>
+      <div class="meta">
+        <span>Card <b id="drill-pos">1</b> / <b id="drill-total">18</b></span>
+        <span>Got it <b id="drill-got">0</b></span>
+        <span>Missed <b id="drill-missed">0</b></span>
+      </div>
+
+      <div id="drill-body" style="display:flex;flex-direction:column;gap:.9rem">
+        <div class="prompt-big" id="drill-letter">A</div>
+        <p class="prompt-sub" id="drill-sub">Letter 1 of A TOMATO FLAMES</p>
+
+        <div id="drill-typewrap" style="display:flex;flex-direction:column;gap:.6rem">
+          <input class="answer-in" id="drill-input" type="text" autocomplete="off" autocapitalize="off"
+                 spellcheck="false" placeholder="What does it stand for?" aria-label="Your answer">
+          <div class="controls">
+            <button class="btn" type="button" id="drill-check">Check</button>
+            <button class="btn ghost" type="button" id="drill-skip">Show me</button>
+          </div>
+        </div>
+
+        <div id="drill-flipwrap" style="display:none">
+          <div class="controls"><button class="btn" type="button" id="drill-flip">Flip the card</button></div>
+        </div>
+
+        <div id="drill-reveal"></div>
+      </div>
+
+      <div id="drill-done" style="display:none;flex-direction:column;gap:.8rem">
+        <h3 id="drill-done-h" style="font-size:1.25rem">Round complete</h3>
+        <p id="drill-done-p" style="color:var(--ink-2);font-size:.9375rem"></p>
+        <div class="controls">
+          <button class="btn" type="button" id="drill-again">Go again</button>
+          <button class="btn ghost" type="button" id="drill-missed-only">Just the ones I missed</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ QUIZ ══════════ -->
+  <section class="panel" id="p-quiz" role="tabpanel" aria-labelledby="t-quiz">
+    <div id="quiz-setup" class="card">
+      <h3 style="font-size:1.125rem">Multiple choice</h3>
+      <p style="font-size:.9375rem;color:var(--ink-2)">Recall questions mixed with the traps — the items people put on the wrong list, and the conditions that make an item required in the first place.</p>
+      <div class="seg" id="quiz-len">
+        <button type="button" data-len="12" aria-pressed="true">12 questions</button>
+        <button type="button" data-len="20" aria-pressed="false">20 questions</button>
+        <button type="button" data-len="0"  aria-pressed="false">Everything</button>
+      </div>
+      <div class="controls"><button class="btn" type="button" id="quiz-start">Start</button></div>
+      <div id="quiz-lifetime" class="meta"></div>
+    </div>
+
+    <div id="quiz-play" class="card" style="display:none">
+      <div class="bar"><i id="quiz-bar" style="width:0%"></i></div>
+      <div class="meta">
+        <span>Question <b id="quiz-pos">1</b> / <b id="quiz-total">12</b></span>
+        <span>Score <b id="quiz-score">0</b></span>
+        <span>Streak <b id="quiz-streak">0</b></span>
+      </div>
+      <h3 id="quiz-q" style="font-size:1.0625rem;line-height:1.45"></h3>
+      <div class="opts" id="quiz-opts"></div>
+      <div id="quiz-after" style="display:none;flex-direction:column;gap:.8rem">
+        <p class="why" id="quiz-why"></p>
+        <div class="controls">
+          <button class="btn" type="button" id="quiz-next">Next</button>
+          <span class="reg" id="quiz-reg"></span>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-results" class="card" style="display:none">
+      <h3 id="quiz-res-h" style="font-size:1.375rem"></h3>
+      <p id="quiz-res-p" style="color:var(--ink-2);font-size:.9375rem"></p>
+      <div class="scorelist" id="quiz-res-list"></div>
+      <div class="controls">
+        <button class="btn" type="button" id="quiz-replay">Another round</button>
+        <button class="btn ghost" type="button" id="quiz-replay-missed">Retry what I missed</button>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <p class="eyebrow"><i></i> Keyboard</p>
+      <p><b>1</b>–<b>4</b> or <b>A</b>–<b>D</b> to answer, <b>Enter</b> for the next question.</p>
+    </div>
+  </section>
+
+  <div class="note-box">
+    <p class="eyebrow"><i></i> Before you rely on any of this</p>
+    <p>Study aid, not an authority. Read the actual text of <strong>§91.205</strong> — it is short, and the conditions attached to each item ("if the aircraft has retractable gear," "for hire," "certificated after March 11, 1996") are where the exam questions live. Your <strong>POH equipment list</strong> and any <strong>airworthiness directives</strong> can require more than 91.205 does, never less.</p>
+  </div>
+</div>
+
+<footer>
+  Works offline once loaded. Progress is saved in your browser only — nothing is sent anywhere.
+</footer>
+
+<nav id="__nav" aria-label="Site">
+  <button type="button" id="__theme" aria-label="Switch between light and dark">Theme</button>
+</nav>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ═══════════════ THE LISTS ═══════════════
+     `match` holds alternative keyword sets — a set passes if every word in it
+     appears in the normalized answer. `near` catches answers that are on the
+     right track but not specific enough to be worth a mark.                  */
+
+  var ITEMS = [
+    /* ── A TOMATO FLAMES · §91.205(b) · day VFR ── */
+    { ac:'atomato', L:'A', name:'Altimeter',
+      desc:'An altimeter. Day VFR needs a plain altimeter — the <em>sensitive</em> altimeter adjustable for barometric pressure is an IFR item.',
+      match:[['altimeter']], reg:'§91.205(b)(2)' },
+
+    { ac:'atomato', L:'T', name:'Tachometer for each engine',
+      desc:'One per engine, not one per aircraft.',
+      match:[['tach']], reg:'§91.205(b)(4)' },
+
+    { ac:'atomato', L:'O', name:'Oil pressure gauge',
+      desc:'For each engine using a pressure system.',
+      note:'Not to be confused with the second O — that one is oil <em>temperature</em>.',
+      match:[['oil','press']], near:[['oil'],['press']], reg:'§91.205(b)(5)' },
+
+    { ac:'atomato', L:'M', name:'Manifold pressure gauge',
+      desc:'For each altitude engine — an engine with a manifold pressure that can be held at altitude, i.e. turbocharged or supercharged.',
+      note:'A normally aspirated 172 has no altitude engine, so this one simply does not apply to it.',
+      match:[['manifold']], reg:'§91.205(b)(8)' },
+
+    { ac:'atomato', L:'A', name:'Airspeed indicator',
+      desc:'',
+      match:[['air','speed']], reg:'§91.205(b)(1)' },
+
+    { ac:'atomato', L:'T', name:'Temperature gauge for each liquid-cooled engine',
+      desc:'Coolant temperature. Most trainers are air-cooled, so this is the one that usually does not apply.',
+      match:[['temp']], reg:'§91.205(b)(6)' },
+
+    { ac:'atomato', L:'O', name:'Oil temperature gauge for each air-cooled engine',
+      desc:'This is the one that <em>does</em> apply to your 172.',
+      note:'Liquid-cooled gets the coolant temperature gauge; air-cooled gets the oil temperature gauge. The list covers both because it has to cover both kinds of engine.',
+      match:[['oil','temp']], near:[['temp'],['oil']], reg:'§91.205(b)(7)' },
+
+    { ac:'atomato', L:'F', name:'Fuel quantity gauge for each tank',
+      desc:'It has to indicate the quantity in <em>each</em> tank.',
+      note:'The gauge only has to be accurate when it reads empty. That is not a licence to trust it — it is the reason you dip the tanks.',
+      match:[['fuel']], reg:'§91.205(b)(9)' },
+
+    { ac:'atomato', L:'L', name:'Landing gear position indicator',
+      desc:'Only if the aircraft has retractable landing gear.',
+      note:'Fixed gear, no requirement. Say "landing gear position indicator," not "landing light" — the landing light belongs to FLAPS.',
+      match:[['gear']], reg:'§91.205(b)(10)' },
+
+    { ac:'atomato', L:'A', name:'Anticollision light system',
+      desc:'Aviation red or aviation white. Required for small civil airplanes certificated after <strong>March 11, 1996</strong>.',
+      note:'That date is the whole question. An older airframe is not required to have one for <em>day</em> VFR under 91.205(b) — but at night, 91.205(c) requires it of all U.S.-registered civil aircraft, no date qualifier.',
+      match:[['anti','collision']], reg:'§91.205(b)(11)' },
+
+    { ac:'atomato', L:'M', name:'Magnetic direction indicator',
+      desc:'The wet compass.',
+      note:'The other M. Manifold pressure comes fourth, the compass comes eleventh.',
+      match:[['magnetic'],['compass']], reg:'§91.205(b)(3)' },
+
+    { ac:'atomato', L:'E', name:'Emergency locator transmitter (ELT)',
+      desc:'If one is required by §91.207.',
+      note:'Battery replaced or recharged after <strong>1 cumulative hour</strong> of use, or when 50% of its useful life has expired. Inspected every <strong>12 calendar months</strong>.',
+      match:[['elt'],['emergency','locator']], reg:'§91.205(b)(15)' },
+
+    { ac:'atomato', L:'S', name:'Safety belts',
+      desc:'An approved safety belt with a metal-to-metal latch for each occupant two years old or older.',
+      note:'Plus an approved <strong>shoulder harness</strong> for each front seat on small airplanes manufactured after <strong>July 18, 1978</strong>.',
+      match:[['belt'],['harness'],['restraint']], reg:'§91.205(b)(13)–(14)' },
+
+    /* ── FLAPS · §91.205(c) · night VFR, on top of the above ── */
+    { ac:'flaps', L:'F', name:'Fuses — one spare set',
+      desc:'One spare set of fuses, or three spare fuses of each kind required, accessible to the pilot in flight.',
+      note:'"Accessible in flight" is the part that gets dropped. A spare set locked in the baggage compartment behind a bulkhead does not count.',
+      match:[['fuse']], reg:'§91.205(c)(5)' },
+
+    { ac:'flaps', L:'L', name:'Landing light — only if operated for hire',
+      desc:'One electric landing light, required <strong>only</strong> if the aircraft is operated for hire.',
+      note:'The single most-missed item on this list. A private night flight in your own airplane does not require a landing light at all. Sensible to have one; not required.',
+      match:[['landing','light']], near:[['light']], reg:'§91.205(c)(3)' },
+
+    { ac:'flaps', L:'A', name:'Anticollision lights',
+      desc:'Aviation red or aviation white, on all U.S.-registered civil aircraft — no certification-date qualifier at night.',
+      note:'§91.209(b): they stay on whenever the aircraft is operating, unless the pilot in command determines that turning them off is in the interest of safety. Flying into cloud at night is the classic reason.',
+      match:[['anti','collision']], reg:'§91.205(c)(2)' },
+
+    { ac:'flaps', L:'P', name:'Position lights',
+      desc:'The navigation lights — red left, green right, white tail.',
+      note:'§91.209(a)(1) requires them lit from <strong>sunset to sunrise</strong>, which is a different clock from the §1.1 definition of night.',
+      match:[['position'],['nav']], reg:'§91.205(c)(1)' },
+
+    { ac:'flaps', L:'S', name:'Source of electrical power',
+      desc:'An adequate source of electrical energy for all installed electrical and radio equipment.',
+      note:'In practice the alternator or generator plus the battery.',
+      match:[['electric']], near:[['power'],['source'],['alternator'],['battery'],['generator']], reg:'§91.205(c)(4)' }
+  ];
+
+  var ACRONYMS = {
+    atomato: { title:'A TOMATO FLAMES', sub:'Day VFR · §91.205(b)', spaces:[1,7] },
+    flaps:   { title:'FLAPS',           sub:'Night VFR · §91.205(c)', spaces:[] }
+  };
+
+  /* ═══════════════ QUESTION BANK ═══════════════
+     First option is always correct; options are shuffled at render.          */
+
+  var BANK = [
+    { q:'A TOMATO FLAMES is the mnemonic for the equipment required for…', a:[
+      'Day VFR flight',
+      'Night VFR flight',
+      'IFR flight',
+      'Any flight in controlled airspace'],
+      why:'<b>§91.205(b)</b> — the day VFR list. Night adds FLAPS on top of it; IFR adds another list on top of that.', reg:'§91.205(b)' },
+
+    { q:'FLAPS lists the equipment that…', a:[
+      'Night VFR requires in addition to everything on the day list',
+      'Replaces the day VFR list after sunset',
+      'Is required only for flight into Class B airspace',
+      'Must be inspected every 100 hours'],
+      why:'Night is day <em>plus</em> FLAPS. You never stop needing the day items — you add five more.', reg:'§91.205(c)' },
+
+    { q:'The <b>L</b> in A TOMATO FLAMES is…', a:[
+      'Landing gear position indicator',
+      'Landing light',
+      'Locator beacon',
+      'Low-voltage warning'],
+      why:'Landing gear position indicator, and only <b>if the aircraft has retractable gear</b>. The landing <em>light</em> is the L in FLAPS.', reg:'§91.205(b)(10)' },
+
+    { q:'The <b>L</b> in FLAPS is a landing light — required when?', a:[
+      'Only if the aircraft is operated for hire',
+      'On every night flight without exception',
+      'Only when the destination has no runway lighting',
+      'Only for flights carrying passengers'],
+      why:'<b>Only if operated for hire.</b> This is the most commonly missed item on the list. Flying your own aircraft at night privately, no landing light is required — which is not the same as it being a good idea.', reg:'§91.205(c)(3)' },
+
+    { q:'The <b>E</b> in A TOMATO FLAMES stands for…', a:[
+      'Emergency locator transmitter',
+      'Engine temperature gauge',
+      'Electrical source',
+      'Exhaust gas temperature'],
+      why:'The ELT, if one is required by §91.207. Electrical <em>source</em> is the S in FLAPS.', reg:'§91.205(b)(15)' },
+
+    { q:'The <b>S</b> in FLAPS stands for…', a:[
+      'Source of electrical power',
+      'Safety belts',
+      'Spare bulbs',
+      'Strobe lights'],
+      why:'An adequate source of electrical energy for all installed electrical and radio equipment. <em>Safety belts</em> is the S in A TOMATO FLAMES — the two S items are easy to swap.', reg:'§91.205(c)(4)' },
+
+    { q:'A TOMATO FLAMES contains two <b>O</b>s. What are they?', a:[
+      'Oil pressure gauge, and oil temperature gauge',
+      'Oil pressure gauge, and outside air temperature',
+      'Oil temperature gauge, and oxygen supply',
+      'Oil quantity, and oil pressure'],
+      why:'Oil <b>pressure</b> for each engine using a pressure system, and oil <b>temperature</b> for each air-cooled engine.', reg:'§91.205(b)(5),(7)' },
+
+    { q:'A TOMATO FLAMES contains two <b>M</b>s. What are they?', a:[
+      'Manifold pressure gauge, and magnetic direction indicator',
+      'Manifold pressure gauge, and minimum fuel placard',
+      'Magneto switch, and magnetic compass',
+      'Master switch, and manifold pressure gauge'],
+      why:'Manifold pressure (for each <em>altitude</em> engine) and the magnetic direction indicator — the wet compass.', reg:'§91.205(b)(3),(8)' },
+
+    { q:'Which of these is <b>not</b> on the day VFR required equipment list?', a:[
+      'Position lights',
+      'Magnetic direction indicator',
+      'Fuel quantity gauge for each tank',
+      'Tachometer for each engine'],
+      why:'Position lights are a <b>night</b> item — the P in FLAPS. Putting them on the day list is the classic error.', reg:'§91.205(b),(c)(1)' },
+
+    { q:'Which of these is <b>not</b> required for day VFR under §91.205(b)?', a:[
+      'Attitude indicator',
+      'Altimeter',
+      'Airspeed indicator',
+      'Oil pressure gauge'],
+      why:'The <b>attitude indicator</b> is an IFR item under §91.205(d). Day VFR needs airspeed, altimeter and compass — not a full gyro panel.', reg:'§91.205(d)' },
+
+    { q:'The manifold pressure gauge is required for…', a:[
+      'Each altitude engine',
+      'Every engine, without exception',
+      'Each air-cooled engine',
+      'Each engine driving a constant-speed propeller'],
+      why:'Each <b>altitude engine</b> — one able to maintain manifold pressure at altitude, i.e. turbocharged or supercharged. A normally aspirated trainer has none, so the requirement never bites.', reg:'§91.205(b)(8)' },
+
+    { q:'The oil temperature gauge is required for…', a:[
+      'Each air-cooled engine',
+      'Each liquid-cooled engine',
+      'Each engine over 200 horsepower',
+      'Every engine, without exception'],
+      why:'Air-cooled engines get the <b>oil temperature</b> gauge; liquid-cooled engines get a coolant <b>temperature</b> gauge. Your trainer is air-cooled.', reg:'§91.205(b)(7)' },
+
+    { q:'A landing gear position indicator is required…', a:[
+      'Only if the aircraft has retractable landing gear',
+      'On every aircraft certificated after 1996',
+      'Only for night flight',
+      'On every aircraft regardless of gear type'],
+      why:'Only if the gear retracts. A fixed-gear 172 has nothing to indicate.', reg:'§91.205(b)(10)' },
+
+    { q:'For <b>day</b> VFR, an anticollision light system is required on small civil airplanes certificated after…', a:[
+      'March 11, 1996',
+      'July 18, 1978',
+      'August 11, 1971',
+      'January 1, 1980'],
+      why:'<b>March 11, 1996.</b> The other dates are real but belong elsewhere: July 18, 1978 is the shoulder-harness date, and August 11, 1971 appears in the anticollision standards for night.', reg:'§91.205(b)(11)' },
+
+    { q:'A 1975 Cessna 172 is flown at <b>night</b>. Is an anticollision light system required?', a:[
+      'Yes — at night it is required of all U.S.-registered civil aircraft',
+      'No — it was certificated before March 11, 1996',
+      'Only if the flight is for hire',
+      'Only if the flight enters controlled airspace'],
+      why:'The March 1996 date qualifies the <b>day</b> requirement only. §91.205(c)(2) requires the anticollision light system at night on all U.S.-registered civil aircraft, with no date qualifier. Older airframe, still required after dark.', reg:'§91.205(c)(2)' },
+
+    { q:'One light in the anticollision system fails while you are airborne. What does §91.205 permit?', a:[
+      'Continue to a place where repairs or replacement can be made',
+      'Land immediately at the nearest suitable airport',
+      'Continue only if the flight remains in day VFR conditions',
+      'Nothing — the aircraft is unairworthy the moment it fails'],
+      why:'Written into the rule itself, for both the day and the night paragraph: you may continue to a stop where repairs can be made. It is the one item on these lists with its own in-flight failure provision.', reg:'§91.205(b)(11),(c)(2)' },
+
+    { q:'When must anticollision lights be on?', a:[
+      'Any time the aircraft is operating, unless the PIC determines it is in the interest of safety to turn them off',
+      'Only between sunset and sunrise',
+      'Only when the engine is running on the ground',
+      'Only in Class B, C and D airspace'],
+      why:'<b>§91.209(b).</b> They stay on day and night. The PIC discretion exists for cases like entering cloud at night, where the strobes reflect back and are worse than useless.', reg:'§91.209(b)' },
+
+    { q:'Position lights must be lit during what period?', a:[
+      'Sunset to sunrise',
+      'End of evening civil twilight to beginning of morning civil twilight',
+      'One hour after sunset to one hour before sunrise',
+      'Any time the aircraft is operating'],
+      why:'<b>Sunset to sunrise</b>, §91.209(a)(1). Note this is <em>not</em> the §1.1 definition of night, and not the §61.57(b) currency window. Three regulations, three clocks.', reg:'§91.209(a)(1)' },
+
+    { q:'How is "night" defined for the purpose of logging night flight time?', a:[
+      'End of evening civil twilight to beginning of morning civil twilight',
+      'Sunset to sunrise',
+      'One hour after sunset to one hour before sunrise',
+      'When the sun is more than 6 degrees below the horizon anywhere in the U.S.'],
+      why:'<b>§1.1.</b> Sunset-to-sunrise is the position light rule; one-hour-after to one-hour-before is night <em>passenger currency</em> under §61.57(b).', reg:'§1.1' },
+
+    { q:'To carry passengers at night you need three takeoffs and landings to a full stop in the preceding 90 days, made during…', a:[
+      'The period from 1 hour after sunset to 1 hour before sunrise',
+      'The period from sunset to sunrise',
+      'Civil twilight or later',
+      'Any period of official darkness'],
+      why:'<b>§61.57(b)</b> — the one-hour buffer on each end, and they must be to a <em>full stop</em>. Touch-and-goes do not count for night currency.', reg:'§61.57(b)' },
+
+    { q:'The fuse requirement for night VFR is…', a:[
+      'One spare set of fuses, or three spare fuses of each kind required, accessible to the pilot in flight',
+      'One spare fuse of each kind, stowed anywhere in the aircraft',
+      'A complete spare set, carried in the baggage compartment',
+      'No spares — only that all installed fuses are serviceable'],
+      why:'A spare set <em>or</em> three of each kind, and critically <b>accessible in flight</b>. Spares you cannot reach from the seat do not satisfy it. Aircraft with resettable circuit breakers instead of fuses have nothing to carry.', reg:'§91.205(c)(5)' },
+
+    { q:'A shoulder harness is required for each front seat on small civil airplanes manufactured after…', a:[
+      'July 18, 1978',
+      'March 11, 1996',
+      'August 11, 1971',
+      'December 12, 1985'],
+      why:'<b>July 18, 1978</b> — and note it is <em>manufactured</em> after, whereas the anticollision date is <em>certificated</em> after. Different verb, different date.', reg:'§91.205(b)(14)' },
+
+    { q:'An ELT battery must be replaced or recharged when…', a:[
+      'It has been in use for 1 cumulative hour, or 50% of its useful life has expired',
+      'It has been in use for 30 cumulative minutes, or annually',
+      'The 12-month inspection is due',
+      'The transmitter has been activated at any time, for any duration'],
+      why:'<b>1 cumulative hour of use, or 50% of useful life.</b> Separately, the ELT itself is inspected every <b>12 calendar months</b> under §91.207(c) — two different intervals, often confused.', reg:'§91.207(d)' },
+
+    { q:'The fuel quantity gauge requirement is satisfied by…', a:[
+      'A gauge indicating the quantity of fuel in each tank',
+      'A single gauge showing total fuel aboard',
+      'A calibrated dipstick carried in the aircraft',
+      'Any gauge accurate to within 10% at all quantities'],
+      why:'<b>Each tank.</b> Worth knowing separately: the gauge is only certified to read accurately when the tank is <em>empty</em>. That is precisely why you dip the tanks before flight.', reg:'§91.205(b)(9)' },
+
+    { q:'Approved flotation gear and a pyrotechnic signalling device are required when the aircraft is…', a:[
+      'Operated for hire over water, beyond power-off gliding distance from shore',
+      'Operated over any water at all',
+      'Operated at night over water',
+      'Carrying more than four occupants over water'],
+      why:'Both conditions must hold: <b>for hire</b> <em>and</em> beyond power-off gliding distance from shore. A private flight over Lake Michigan triggers no 91.205 flotation requirement — which says more about the rule than about the wisdom of the flight.', reg:'§91.205(b)(12)' },
+
+    { q:'The vacuum-driven attitude indicator in your fixed-gear 172 fails. It is a day VFR flight. Under §91.213(d), what must happen before you may fly?', a:[
+      'Deactivate or remove it, placard it "Inoperative," and have a pilot or mechanic determine it is not a hazard',
+      'Nothing — equipment not on the 91.205 day list can simply be ignored',
+      'It must be repaired before any further flight',
+      'Note it in the maintenance log and continue'],
+      why:'All four conditions of <b>§91.213(d)</b>: not required by 91.205 for this flight, not on the equipment list or KOEL, not required by an AD; deactivated or removed; <b>placarded "Inoperative"</b>; and determined not to be a hazard. The placard is the step people forget.', reg:'§91.213(d)' },
+
+    { q:'Which of the following is required for day VFR but has <b>no</b> application to a normally aspirated, air-cooled, fixed-gear trainer?', a:[
+      'Manifold pressure gauge',
+      'Oil temperature gauge',
+      'Magnetic direction indicator',
+      'Fuel quantity gauge'],
+      why:'The manifold pressure gauge applies to <em>altitude engines</em> only. Three items on the list are conditional in this way — manifold pressure (altitude engines), coolant temperature (liquid-cooled), and gear position (retractable) — and none of the three apply to a basic trainer.', reg:'§91.205(b)(8)' },
+
+    { q:'A tachometer is required…', a:[
+      'For each engine',
+      'For the aircraft, one gauge regardless of engine count',
+      'Only for engines with a constant-speed propeller',
+      'Only for night flight'],
+      why:'<b>Each engine.</b> Several items on the list are written per-engine: tachometer, oil pressure, coolant temperature, oil temperature, manifold pressure.', reg:'§91.205(b)(4)' },
+
+    { q:'You plan a night VFR flight. Which set correctly captures what night <em>adds</em>?', a:[
+      'Fuses, landing light (for hire), anticollision lights, position lights, source of electrical power',
+      'Fuses, landing light, altimeter, position lights, safety belts',
+      'Flashlight, landing light, anticollision lights, parachute, spare fuses',
+      'Fuel gauge, landing gear indicator, anticollision lights, pitot heat, source of electrical power'],
+      why:'That is FLAPS in order. Note the third option — "flashlight" is sound airmanship and not a 91.205 requirement, and "parachute" belongs to §91.307 entirely.', reg:'§91.205(c)' },
+
+    { q:'Safety belts are required for each occupant…', a:[
+      'Two years of age or older',
+      'Of any age, without exception',
+      'Occupying a front seat only',
+      'Twelve years of age or older'],
+      why:'<b>Two years of age or older</b>, with an approved metal-to-metal latching device. The shoulder harness requirement is separate, and applies to front seats on airplanes manufactured after July 18, 1978.', reg:'§91.205(b)(13)' },
+
+    { q:'Under §91.205(a), the required instruments and equipment must be…', a:[
+      'In operable condition',
+      'Inspected within the preceding 30 days',
+      'Listed on the aircraft registration',
+      'Certified by the manufacturer annually'],
+      why:'<b>In operable condition</b> — installed is not enough. This is the sentence that turns the whole list from an inventory into an airworthiness requirement.', reg:'§91.205(a)' },
+
+    { q:'Your aircraft equipment list requires a piece of equipment that §91.205 does not. It is inoperative. May you fly?', a:[
+      'No — the equipment list is independently binding, and §91.213(d) is unavailable',
+      'Yes — §91.205 governs, and it does not require the item',
+      'Yes, if it is placarded inoperative',
+      'Only in day VFR conditions'],
+      why:'<b>No.</b> §91.213(d) requires the item to be absent from <em>all</em> of: the 91.205 list, the aircraft equipment list or KOEL, and any applicable AD. Any one of them can ground the flight. The POH and ADs can require more than 91.205 — never less.', reg:'§91.213(d)(2)' }
+  ];
+
+  /* ═══════════════ HELPERS ═══════════════ */
+
+  var $  = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+
+  function shuffle(a) {
+    var out = a.slice();
+    for (var i = out.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = out[i]; out[i] = out[j]; out[j] = t;
+    }
+    return out;
+  }
+  function norm(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function hits(sets, n) {
+    if (!sets) return false;
+    return sets.some(function (set) {
+      return set.every(function (w) { return n.indexOf(w) >= 0; });
+    });
+  }
+  function store(key, val) {
+    try {
+      if (val === undefined) {
+        var raw = localStorage.getItem('presolo.equipment.' + key);
+        return raw ? JSON.parse(raw) : null;
+      }
+      localStorage.setItem('presolo.equipment.' + key, JSON.stringify(val));
+    } catch (e) { return null; }
+  }
+
+  /* ═══════════════ TABS ═══════════════ */
+
+  ['learn', 'drill', 'quiz'].forEach(function (n) {
+    $('t-' + n).addEventListener('click', function () {
+      ['learn', 'drill', 'quiz'].forEach(function (m) {
+        var on = m === n;
+        $('t-' + m).setAttribute('aria-selected', on ? 'true' : 'false');
+        $('p-' + m).classList.toggle('on', on);
+      });
+      if (n === 'quiz') renderLifetime();
+    });
+  });
+
+  /* ═══════════════ LEARN ═══════════════ */
+
+  function letterStrip(which, container) {
+    var spec = ACRONYMS[which];
+    var list = ITEMS.filter(function (it) { return it.ac === which; });
+    var html = '';
+    list.forEach(function (it, i) {
+      if (spec.spaces.indexOf(i) >= 0) html += '<span class="sp"></span>';
+      html += '<span class="chip" style="cursor:default">' + it.L + '</span>';
+    });
+    container.innerHTML = html;
+  }
+
+  function renderLearn(which, container) {
+    var list = ITEMS.filter(function (it) { return it.ac === which; });
+    container.innerHTML = list.map(function (it) {
+      return '<div class="row">' +
+        '<span class="L">' + it.L + '</span>' +
+        '<div class="body">' +
+          '<span class="name">' + it.name + '</span>' +
+          (it.desc ? '<span class="desc">' + it.desc + '</span>' : '') +
+          (it.note ? '<span class="note">' + it.note + '</span>' : '') +
+          '<span class="reg">' + it.reg + '</span>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  letterStrip('atomato', $('acr-day'));
+  letterStrip('flaps',   $('acr-night'));
+  renderLearn('atomato', $('rows-day'));
+  renderLearn('flaps',   $('rows-night'));
+
+  /* ═══════════════ DRILL ═══════════════ */
+
+  var drill = { scope:'all', mode:'type', deck:[], i:0, got:0, missed:0, missedItems:[], answered:false };
+
+  function drillDeck(scope, only) {
+    if (only && only.length) return only.slice();
+    var pool = ITEMS.filter(function (it) { return scope === 'all' || it.ac === scope; });
+    return shuffle(pool);
+  }
+
+  function startDrill(only) {
+    drill.deck = drillDeck(drill.scope, only);
+    drill.i = 0; drill.got = 0; drill.missed = 0; drill.missedItems = [];
+    $('drill-done').style.display = 'none';
+    $('drill-body').style.display = 'flex';
+    $('drill-total').textContent = drill.deck.length;
+    renderStrip();
+    showCard();
+  }
+
+  function renderStrip() {
+    $('drill-strip').innerHTML = drill.deck.map(function (it, i) {
+      var cls = 'chip';
+      if (it._mark === 'got') cls += ' got';
+      if (it._mark === 'miss') cls += ' miss';
+      return '<span class="' + cls + '"' + (i === drill.i ? ' aria-current="true"' : '') +
+             ' style="cursor:default">' + it.L + '</span>';
+    }).join('');
+  }
+
+  function showCard() {
+    var it = drill.deck[drill.i];
+    if (!it) return finishDrill();
+    drill.answered = false;
+
+    var spec = ACRONYMS[it.ac];
+    var within = ITEMS.filter(function (x) { return x.ac === it.ac; });
+    var ord = within.indexOf(it) + 1;
+
+    $('drill-letter').textContent = it.L;
+    $('drill-sub').innerHTML = 'Letter ' + ord + ' of ' + within.length + ' — <strong>' + spec.title + '</strong> · ' + spec.sub;
+    $('drill-pos').textContent = drill.i + 1;
+    $('drill-got').textContent = drill.got;
+    $('drill-missed').textContent = drill.missed;
+    $('drill-bar').style.width = (drill.i / drill.deck.length * 100) + '%';
+    $('drill-reveal').innerHTML = '';
+    $('drill-input').value = '';
+    $('drill-input').disabled = false;
+    $('drill-check').disabled = false;
+
+    var typing = drill.mode === 'type';
+    $('drill-typewrap').style.display = typing ? 'flex' : 'none';
+    $('drill-flipwrap').style.display = typing ? 'none' : 'block';
+    $('drill-flip').textContent = 'Flip the card';
+    if (typing) $('drill-input').focus();
+
+    renderStrip();
+  }
+
+  function revealCard(state) {
+    var it = drill.deck[drill.i];
+    var verdict = state === 'good' ? 'Got it'
+                : state === 'near' ? 'Nearly — be more specific'
+                : state === 'shown' ? 'The answer' : 'Not quite';
+    var cls = state === 'shown' ? '' : state;
+    $('drill-reveal').innerHTML =
+      '<div class="reveal ' + cls + '">' +
+        '<span class="verdict">' + verdict + '</span>' +
+        '<strong>' + it.name + '</strong>' +
+        (it.desc ? '<span style="font-size:.9375rem;color:var(--ink-2)">' + it.desc + '</span>' : '') +
+        (it.note ? '<span class="note" style="border-color:var(--amber)">' + it.note + '</span>' : '') +
+        '<span class="reg">' + it.reg + '</span>' +
+        '<div class="controls" style="margin-top:.4rem">' +
+          (state === 'good' ? '' :
+            '<button class="btn ghost" type="button" id="drill-forgive">I actually knew that</button>') +
+          '<button class="btn" type="button" id="drill-next">Next card</button>' +
+        '</div>' +
+      '</div>';
+
+    $('drill-next').addEventListener('click', nextCard);
+    var f = $('drill-forgive');
+    if (f) f.addEventListener('click', function () {
+      if (drill.deck[drill.i]._mark === 'miss') {
+        drill.missed--; drill.got++;
+        drill.deck[drill.i]._mark = 'got';
+        var idx = drill.missedItems.indexOf(drill.deck[drill.i]);
+        if (idx >= 0) drill.missedItems.splice(idx, 1);
+        $('drill-got').textContent = drill.got;
+        $('drill-missed').textContent = drill.missed;
+        renderStrip();
+      }
+      nextCard();
+    });
+    $('drill-next').focus();
+  }
+
+  function markCard(ok) {
+    var it = drill.deck[drill.i];
+    it._mark = ok ? 'got' : 'miss';
+    if (ok) { drill.got++; } else { drill.missed++; drill.missedItems.push(it); }
+    $('drill-got').textContent = drill.got;
+    $('drill-missed').textContent = drill.missed;
+    renderStrip();
+  }
+
+  function checkTyped() {
+    if (drill.answered) return;
+    var it = drill.deck[drill.i];
+    var n = norm($('drill-input').value);
+    if (!n) { $('drill-input').focus(); return; }
+    drill.answered = true;
+    $('drill-input').disabled = true;
+    $('drill-check').disabled = true;
+
+    if (hits(it.match, n))      { markCard(true);  revealCard('good'); }
+    else if (hits(it.near, n))  { markCard(false); revealCard('near'); }
+    else                        { markCard(false); revealCard('bad'); }
+  }
+
+  function nextCard() { drill.i++; showCard(); }
+
+  function finishDrill() {
+    $('drill-body').style.display = 'none';
+    $('drill-done').style.display = 'flex';
+    $('drill-bar').style.width = '100%';
+    $('drill-pos').textContent = drill.deck.length;
+    var total = drill.got + drill.missed;
+    var pct = total ? Math.round(drill.got / total * 100) : 0;
+    $('drill-done-h').textContent = pct === 100 ? 'Clean sweep — ' + drill.got + ' for ' + total
+                                  : drill.got + ' of ' + total + ' — ' + pct + '%';
+    $('drill-done-p').innerHTML = drill.missedItems.length
+      ? 'Still shaky on: <strong>' + drill.missedItems.map(function (m) { return esc(m.name.split(/[—,(]/)[0].trim()); }).join(', ') + '</strong>.'
+      : 'Nothing left flagged. Try the quiz — that is where the conditions and the dates get tested.';
+    $('drill-missed-only').style.display = drill.missedItems.length ? '' : 'none';
+  }
+
+  $('drill-check').addEventListener('click', checkTyped);
+  $('drill-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); checkTyped(); }
+  });
+  $('drill-skip').addEventListener('click', function () {
+    if (drill.answered) return;
+    drill.answered = true;
+    $('drill-input').disabled = true;
+    $('drill-check').disabled = true;
+    markCard(false);
+    revealCard('shown');
+  });
+  $('drill-flip').addEventListener('click', function () {
+    if (drill.answered) return;
+    drill.answered = true;
+    var it = drill.deck[drill.i];
+    $('drill-reveal').innerHTML =
+      '<div class="reveal">' +
+        '<strong>' + it.name + '</strong>' +
+        (it.desc ? '<span style="font-size:.9375rem;color:var(--ink-2)">' + it.desc + '</span>' : '') +
+        (it.note ? '<span class="note" style="border-color:var(--amber)">' + it.note + '</span>' : '') +
+        '<span class="reg">' + it.reg + '</span>' +
+        '<div class="controls" style="margin-top:.4rem">' +
+          '<button class="btn" type="button" id="fc-got">Got it</button>' +
+          '<button class="btn ghost" type="button" id="fc-miss">Flag it</button>' +
+        '</div>' +
+      '</div>';
+    $('fc-got').addEventListener('click',  function () { markCard(true);  nextCard(); });
+    $('fc-miss').addEventListener('click', function () { markCard(false); nextCard(); });
+  });
+  $('drill-again').addEventListener('click', function () { startDrill(null); });
+  $('drill-missed-only').addEventListener('click', function () { startDrill(drill.missedItems); });
+
+  Array.prototype.forEach.call($('drill-scope').children, function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call($('drill-scope').children, function (o) { o.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      drill.scope = b.dataset.scope;
+      startDrill(null);
+    });
+  });
+  Array.prototype.forEach.call($('drill-mode').children, function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call($('drill-mode').children, function (o) { o.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      drill.mode = b.dataset.mode;
+      startDrill(null);
+    });
+  });
+
+  startDrill(null);
+
+  /* ═══════════════ QUIZ ═══════════════ */
+
+  var quiz = { len:12, deck:[], i:0, score:0, streak:0, best:0, missed:[], locked:false, opts:[] };
+
+  function renderLifetime() {
+    var s = store('stats') || { seen:0, right:0, rounds:0 };
+    $('quiz-lifetime').innerHTML = s.seen
+      ? '<span>Lifetime <b>' + Math.round(s.right / s.seen * 100) + '%</b></span>' +
+        '<span>Questions answered <b>' + s.seen + '</b></span>' +
+        '<span>Rounds <b>' + s.rounds + '</b></span>'
+      : '<span>No rounds yet</span>';
+  }
+
+  function startQuiz(only) {
+    var pool = only && only.length ? only.slice() : shuffle(BANK);
+    quiz.deck = (quiz.len && !only) ? pool.slice(0, Math.min(quiz.len, pool.length)) : pool;
+    quiz.i = 0; quiz.score = 0; quiz.streak = 0; quiz.best = 0; quiz.missed = [];
+    $('quiz-setup').style.display = 'none';
+    $('quiz-results').style.display = 'none';
+    $('quiz-play').style.display = 'flex';
+    $('quiz-total').textContent = quiz.deck.length;
+    showQuestion();
+  }
+
+  function showQuestion() {
+    var q = quiz.deck[quiz.i];
+    if (!q) return finishQuiz();
+    quiz.locked = false;
+
+    $('quiz-pos').textContent = quiz.i + 1;
+    $('quiz-score').textContent = quiz.score;
+    $('quiz-streak').textContent = quiz.streak;
+    $('quiz-bar').style.width = (quiz.i / quiz.deck.length * 100) + '%';
+    $('quiz-q').innerHTML = q.q;
+    $('quiz-after').style.display = 'none';
+
+    quiz.opts = shuffle(q.a.map(function (text, idx) { return { text: text, correct: idx === 0 }; }));
+    $('quiz-opts').innerHTML = quiz.opts.map(function (o, i) {
+      return '<button class="opt" type="button" data-i="' + i + '">' +
+             '<span class="k">' + 'ABCD'[i] + '</span><span>' + esc(o.text) + '</span></button>';
+    }).join('');
+
+    Array.prototype.forEach.call($('quiz-opts').children, function (b) {
+      b.addEventListener('click', function () { answer(parseInt(b.dataset.i, 10)); });
+    });
+  }
+
+  function answer(pick) {
+    if (quiz.locked) return;
+    quiz.locked = true;
+    var q = quiz.deck[quiz.i];
+    var right = quiz.opts[pick].correct;
+
+    Array.prototype.forEach.call($('quiz-opts').children, function (b, i) {
+      b.disabled = true;
+      if (quiz.opts[i].correct) b.classList.add('right');
+      else if (i === pick) b.classList.add('wrong');
+    });
+
+    if (right) {
+      quiz.score++; quiz.streak++;
+      if (quiz.streak > quiz.best) quiz.best = quiz.streak;
+    } else {
+      quiz.streak = 0;
+      quiz.missed.push(q);
+    }
+    $('quiz-score').textContent = quiz.score;
+    $('quiz-streak').textContent = quiz.streak;
+
+    var s = store('stats') || { seen:0, right:0, rounds:0 };
+    s.seen++; if (right) s.right++;
+    store('stats', s);
+
+    $('quiz-why').innerHTML = q.why;
+    $('quiz-reg').textContent = q.reg;
+    $('quiz-after').style.display = 'flex';
+    $('quiz-next').textContent = quiz.i === quiz.deck.length - 1 ? 'See results' : 'Next';
+    $('quiz-next').focus();
+  }
+
+  function finishQuiz() {
+    $('quiz-play').style.display = 'none';
+    $('quiz-results').style.display = 'flex';
+    var pct = Math.round(quiz.score / quiz.deck.length * 100);
+    $('quiz-res-h').textContent = quiz.score + ' of ' + quiz.deck.length + ' — ' + pct + '%';
+    $('quiz-res-p').innerHTML = pct === 100
+      ? 'Perfect round. Longest streak ' + quiz.best + '.'
+      : pct >= 80
+        ? 'Solid. Longest streak ' + quiz.best + '. The ones below are worth another look.'
+        : 'Longest streak ' + quiz.best + '. Go back to the Learn tab for the items below, then run it again.';
+
+    $('quiz-res-list').innerHTML = quiz.missed.length
+      ? '<p style="font-size:.8125rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)">Missed</p>' +
+        quiz.missed.map(function (m) {
+          return '<div class="scoreitem"><div class="top"><b>' + m.q + '</b><span class="reg">' + m.reg + '</span></div>' +
+                 '<span style="font-size:.875rem;color:var(--ink-2)">' + m.a[0] + '</span></div>';
+        }).join('')
+      : '';
+    $('quiz-replay-missed').style.display = quiz.missed.length ? '' : 'none';
+
+    var s = store('stats') || { seen:0, right:0, rounds:0 };
+    s.rounds++; store('stats', s);
+    renderLifetime();
+  }
+
+  $('quiz-start').addEventListener('click', function () { startQuiz(null); });
+  $('quiz-next').addEventListener('click', function () { quiz.i++; showQuestion(); });
+  $('quiz-replay').addEventListener('click', function () {
+    $('quiz-results').style.display = 'none';
+    $('quiz-setup').style.display = 'flex';
+    renderLifetime();
+  });
+  $('quiz-replay-missed').addEventListener('click', function () { startQuiz(quiz.missed); });
+
+  Array.prototype.forEach.call($('quiz-len').children, function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call($('quiz-len').children, function (o) { o.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      quiz.len = parseInt(b.dataset.len, 10);
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!$('p-quiz').classList.contains('on')) return;
+    if ($('quiz-play').style.display === 'none') return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+
+    if (!quiz.locked) {
+      var n = -1;
+      if (e.key >= '1' && e.key <= '4') n = parseInt(e.key, 10) - 1;
+      var up = (e.key || '').toUpperCase();
+      if ('ABCD'.indexOf(up) >= 0 && up.length === 1) n = 'ABCD'.indexOf(up);
+      if (n >= 0 && n < quiz.opts.length) { e.preventDefault(); answer(n); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); quiz.i++; showQuestion();
+    }
+  });
+
+  renderLifetime();
+
+  /* ═══════════════ THEME ═══════════════ */
+
+  $('__theme').addEventListener('click', function () {
+    var root = document.documentElement;
+    var cur = root.getAttribute('data-theme');
+    if (!cur) { cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('presolo.theme', next); } catch (e) {}
+  });
+})();
+</script>
+
+</body>
+</html>

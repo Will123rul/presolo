@@ -37,6 +37,7 @@
   --blue-soft:  #D5E3EC;
   --magenta:    #9C3364;
   --amber:      #916419;
+  --green:      #2F6B43;
   --shadow: 0 1px 2px rgba(21,32,42,.05), 0 8px 22px -12px rgba(21,32,42,.28);
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -46,6 +47,7 @@
     --paper: #0F161C; --surface: #172129; --surface-2: #1F2B34;
     --ink: #E5EAED; --ink-2: #A0B1BC; --ink-3: #6B7D8A; --rule: #29373F;
     --blue: #7CB7DE; --blue-soft: #14303F; --magenta: #E68CB2; --amber: #DCAC4E;
+    --green: #6FBE8A;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.7);
   }
 }
@@ -53,12 +55,14 @@
   --paper: #0F161C; --surface: #172129; --surface-2: #1F2B34;
   --ink: #E5EAED; --ink-2: #A0B1BC; --ink-3: #6B7D8A; --rule: #29373F;
   --blue: #7CB7DE; --blue-soft: #14303F; --magenta: #E68CB2; --amber: #DCAC4E;
+  --green: #6FBE8A;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -14px rgba(0,0,0,.7);
 }
 :root[data-theme="light"] {
   --paper: #EDEAE0; --surface: #F7F5EF; --surface-2: #E2DFD2;
   --ink: #15202A; --ink-2: #4C5C68; --ink-3: #7B8A94; --rule: #CECABB;
   --blue: #23577D; --blue-soft: #D5E3EC; --magenta: #9C3364; --amber: #916419;
+  --green: #2F6B43;
   --shadow: 0 1px 2px rgba(21,32,42,.05), 0 8px 22px -12px rgba(21,32,42,.28);
 }
 
@@ -111,6 +115,7 @@ p { margin: 0; }
 .card.study { --accent: var(--blue); }
 .card.quiz  { --accent: var(--magenta); }
 .card.written { --accent: var(--amber); }
+.card.equip { --accent: var(--green); }
 .card .tag {
   font-family: var(--mono); font-size: .625rem; letter-spacing: .16em;
   text-transform: uppercase; color: var(--accent);
@@ -173,7 +178,7 @@ footer a { color: var(--ink-2); }
   <div class="hero">
     <p class="eyebrow"><i></i> Aurora Muni · KARR · Class D</p>
     <h1>Student Pilot Study Tools</h1>
-    <p>Three ways to get ready — the pre-solo exam and the oral that follows it, and the FAA Private Pilot knowledge test after that.</p>
+    <p>Four ways to get ready — the pre-solo exam and the oral that follows it, and the FAA Private Pilot knowledge test after that.</p>
   </div>
 
   <div class="cards">
@@ -214,6 +219,19 @@ footer a { color: var(--ink-2); }
         <li>Lifetime accuracy tracked per subject</li>
       </ul>
       <span class="go">Open test prep →</span>
+    </a>
+
+    <a class="card equip" href="equipment.html">
+      <span class="tag">Memorize it</span>
+      <h2>A TOMATO FLAMES · FLAPS</h2>
+      <p>The §91.205 required-equipment lists — what has to be working before you go, day and night.</p>
+      <ul>
+        <li>Every letter with its regulation and its catch</li>
+        <li>Type-the-answer drill and flashcards</li>
+        <li>32 questions built around the traps</li>
+        <li>The three different clocks that all mean "night"</li>
+      </ul>
+      <span class="go">Start drilling →</span>
     </a>
   </div>
 

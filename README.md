@@ -10,6 +10,7 @@ no build step, no dependencies, no network calls.
 | [`study.html`](study.html) | Study deck — all 24 questions from the pre-solo form, worked through |
 | [`quiz.html`](quiz.html) | Quiz game — 100 multiple-choice questions, timed, scored |
 | [`written.html`](written.html) | Private Pilot knowledge test prep — 123 questions, mock exam, E6B tools |
+| [`equipment.html`](equipment.html) | A TOMATO FLAMES and FLAPS — the §91.205 required-equipment lists, drilled |
 
 ## Study deck
 
@@ -60,6 +61,24 @@ weight and balance tables — that can't be reproduced here. This bank covers th
 *concepts* behind every subject area. Use it alongside a full prep course and the
 official supplement for the figure-based questions.
 
+## Required equipment
+
+`equipment.html` drills the two §91.205 lists — **A TOMATO FLAMES** for day VFR and
+**FLAPS** for what night adds on top of it. Three tabs:
+
+- **Learn** — every letter with the regulation it comes from and the condition attached
+  to it, since that is where the questions live: "if the aircraft has retractable gear,"
+  "for hire," "certificated after March 11, 1996."
+- **Drill** — type what each letter stands for and get marked on it, or work the same
+  material as flashcards. The matcher distinguishes oil *pressure* from oil
+  *temperature*, and the landing *gear indicator* from the landing *light* — the two
+  pairs that are easiest to blur together.
+- **Quiz** — 32 multiple-choice questions weighted toward the traps: items people put
+  on the wrong list, the two dates that get swapped, and the three separate
+  regulations that each define "night" differently.
+
+Keyboard in the quiz: `1`–`4` or `A`–`D` to answer, `Enter` for the next question.
+
 ## Running it
 
 Open `index.html` in a browser. That's the whole procedure — there is no toolchain.
@@ -71,8 +90,8 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-Both pages store progress in `localStorage` under the `presolo*` keys. Nothing is
-transmitted anywhere, and both pages work offline once loaded.
+All pages store progress in `localStorage` under the `presolo*` keys. Nothing is
+transmitted anywhere, and every page works offline once loaded.
 
 ## A caveat that matters
 
